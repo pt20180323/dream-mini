@@ -1,0 +1,101 @@
+/*积分样式*/
+.integral_box{
+  position: relative;
+  padding: 20rpx 18rpx 20rpx 25rpx;
+}
+.integral_input{
+  width: 156rpx;
+  height: 60rpx;
+  border: 1rpx solid #eee;
+  border-radius: 8rpx;
+  text-align: center;
+  margin: 0 15rpx 0 20rpx;
+}
+.integral_nums{
+  margin: 20rpx 0 30rpx 0;
+}
+.btn_box{
+  position: relative;
+  padding: 20rpx 0 15rpx 0;
+}
+.in_btn{
+  width: 200rpx;
+  height: 68rpx;
+  border: 1rpx solid #e2e2e2;
+  border-radius: 10rpx;
+  background: #fff;
+  line-height: 68rpx;
+}
+/*弹窗*/
+.pop_prop_box{
+  position:fixed;
+  width:100%;
+  z-index:12;
+  bottom:0;
+  left:0;  
+}
+.mask{
+  width:100%;
+  height:100%;
+  bottom:0;
+  left:0; 
+  position:fixed;
+  background:rgba(0,0,0,0.5);
+  transition:all 0.3s ease-in-out;
+  display:none;
+}
+.m_slideUp .mask{
+  display:block;
+}
+.m_bot_box{
+  position:absolute;
+  left:0;
+  bottom:0;
+  width:100%;
+  box-sizing:border-box;
+  background:#FFF;
+  transition:all 0.3s ease-in-out 0.08s;
+  transform:translate3d(0,110%,0);
+}
+.m_slideUp .m_bot_box{
+  transform:translate3d(0,0,0);
+}
+.pp_close{
+  display:inline-block;
+  position:absolute;
+  top:15rpx;
+  right:20rpx;
+  width:60rpx;
+  height:60rpx;
+  border-radius:50%;
+}
+.pp_close>image{
+  width:48rpx;
+  height:48rpx;
+  position:absolute;
+  top:50%;
+  left:50%;
+  margin:-24rpx 0 0 -24rpx;
+}
+.rel_store_tit{
+  height:96rpx;
+  line-height:96rpx;
+  position:relative;
+  padding:0 30rpx;
+  font-size:32rpx;
+  color:#000;
+}
+.rel_s_txt{
+  width:620rpx;
+  text-align:center;
+}
+.rel_st_list{
+  max-height:800rpx;
+  overflow-x:hidden;
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+  flex-shrink:0;
+}
+.r_sub_lisit{
+  flex-shrink:0;
+}

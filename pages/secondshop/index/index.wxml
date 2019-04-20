@@ -1,0 +1,55 @@
+<import src="../../template/copyright/copyright.wxml" />
+<import src="../../template/countdown/countdown.wxml" />
+<import src="../../template/list/list.wxml" />
+<view class="f_col g_main_box {{isfore ? 'foreshow' : ''}}">
+  <view class="thm_ban f_col" wx:if="{{seckillInfo.detailPic || elActivityVo.httpsPic}}">
+    <image mode="widthFix" src="{{seckillInfo.detailPic || elActivityVo.httpsPic}}"></image>
+    <view wx:if='{{seckillInfo.remark}}'>{{seckillInfo.remark}}</view>
+    <view class="f_row act_count_box f_r_cnt g_line_bot" wx:if='{{!isfore}}'>
+      <view class="f_row act_c_show" wx:if="{{!isCountDownEnd}}">
+        <text>仅剩</text>
+        <template is="countdown" data="{{countHtml}}"></template>
+        <text>结束</text>
+      </view>
+    </view>
+    <view class="f_row act_count_box f_r_cnt g_line_bot" wx:if='{{isfore}}'>
+      <view class="f_row act_c_show" wx:if="{{!isCountDownEnd}}">
+        <text>还有</text>
+        <template is="countdown" data="{{countHtml}}"></template>
+        <text>开始</text>
+      </view>
+      <view class="f_row act_c_show" wx:else>
+        <text>活动已结束！</text>
+      </view>
+    </view>
+  </view>
+  <template is="list" data="{{isfore, activityType, listType, goodsList, startTime, isCountDownEnd}}"></template>
+</view>
+<template is="copyright"></template>
+<view class='share_box' bindtap='toShare'>
+  <image src='/static/ico/share_icon.png'></image>
+</view>
+<!-- 去分享 -->
+<view class="mask showmask" bindtap='close' wx:if='{{isShow && shareImg}}'>
+  <view class="f_col f_r_cnt iknow_tip" catchtap='preventClose'>
+    <image src='{{shareImg}}' mode='widthFix' style='width:480rpx;margin-bottom:40rpx;border-radius:8rpx;' bindtap='previewImg'></image>
+    <view class='f_row'>
+      <view class='icon_box f_row f_jc_cnt'>
+        <button open-type='share' class='c_btn f_col f_r_cnt'>
+          <view class='icon_btn f_row f_r_cnt f_jc_cnt'>
+            <image src='/static/ico/share3.png' style='width:41rpx;height:34rpx;'></image>
+          </view>
+          <view>发给客户</view>
+        </button>
+      </view>
+      <view class='icon_box f_row f_jc_cnt'>
+        <view bindtap='saveImg' class='c_btn f_col f_r_cnt'>
+          <view class='icon_btn c_share1 f_row f_r_cnt f_jc_cnt'>
+            <image src='/static/ico/share2.png' style='width:26rpx;height:39rpx;'></image>
+          </view>
+          <view>保存图片</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

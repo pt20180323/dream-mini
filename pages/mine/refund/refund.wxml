@@ -1,0 +1,139 @@
+<view>
+  <view class='g_blank_20'></view>
+  <view class='refund_box'>
+    <view class='refund_title'>退款商品信息</view>
+    <view class='refund_shop f_row' wx:for='{{refundObj.ordersDetailList}}' wx:for-item="item" wx:for-index="idx" wx:key="list">
+      <view class='refund_img'>
+        <image src='{{item.goodsPic}}'></image>
+      </view>
+      <view class='refund_info f_col'>
+        <text class='r_s_name wrap_name'>{{item.goodsName}}</text>
+        <view class='r_s_param f_row f_jc_sb'>
+          <text class='' wx:if='{{item.modelType}}'>属性：{{item.modelType}}</text>
+          <text>X{{item.total}}</text>
+        </view>
+        <text class='r_s_mode' wx:if='{{item.modelCode}}'>货号：{{item.modelCode}}</text>
+      </view>
+    </view>
+    <!-- <view class='line_top'>
+      <text class='font_common refund_way'>退款金额</text>
+      <text class='font_common refund_way common_color s_price'>￥{{refundObj.totalRefund}}</text>
+      <text class='red' wx:if='{{refundObj.prepaid>0}}'>（{{(refundObj.prepaid>0 ? ('储值￥' + refundObj.prepaid) : '') + (refundObj.refundablePay>0 ? ('，微信￥' + refundObj.refundablePay) : '')}}）</text>
+      <text class='r_choose refund_way s_price' wx:if='{{refundObj.orderStatus >= 3 && refundObj.freight}}'>已发货不退运费(运费<text class='common_color'>{{refundObj.freight}}</text>元)</text>
+    </view> -->
+    <view wx:if='{{refundObj.integral}}'>
+      <text class='font_common refund_way'>退还积分</text>
+      <text class='font_common refund_way s_price r_choose'>{{refundObj.integral}}</text>
+    </view>
+    <view>
+      <text class='font_common refund_way'>退款返回</text>
+      <text class='font_common refund_way s_price r_choose'>{{payWay}}(原路返回)</text>
+    </view>
+  </view>
+  <view class='g_blank_20'></view>
+  <view class='refund_box f_row f_jc_sb' bindtap='openRefundMask'>
+    <view class='font_common refund_way'>退款方式</view>
+    <view class='f_row f_r_cnt'>
+      <text class='r_choose refund_way'>{{refund_content ? refund_content : '请选择'}}</text>
+      <text class='arr_i arr_r'></text>
+    </view>
+  </view>
+  <view class='g_blank_20'></view>
+  <view class='f_row f_jc_sb refund_box' bindtap='openMask'>
+    <text class='font_common refund_way'>退款原因</text>
+    <view class='f_row f_r_cnt'>
+      <text class='r_choose refund_way' wx:if='{{dealType === 1}}'>{{list1_content ? list1_content : '请选择'}}</text>
+      <text class='r_choose refund_way' wx:if='{{dealType === 2}}'>{{list2_content ? list2_content : '请选择'}}</text>
+      <text class='arr_i arr_r'></text>
+    </view>
+  </view>
+  <view class='g_blank_20'></view>
+  <form bindsubmit='bindsubmit'>
+    <view class='refund_box'>
+      <view class='f_row f_r_cnt'>
+        <text class='font_common refund_way'>预留手机</text>
+        <view class='s_price input_box'>
+          <input class='r_input' name='mobile' type='number' maxlength="11" placeholder="请输入联系手机号" value='{{refundObj.takePhone}}'/>
+        </view>
+      </view>
+      <view class='f_row t_area line_top'>
+        <text class='font_common refund_way'>退款说明</text>
+        <textarea class='r_textarea s_price' name='desc' maxlength="30" placeholder="我们的不足，告诉我们呗~(最多30字)" wx:if='{{showTextArea}}' bindblur='bindblur' value='{{textVal}}' cursor-spacing='10'/>
+      </view>
+      <view class='f_row up_warpper line_top'>
+        <text class='font_common refund_way'>上传凭证</text>
+        <view class='camera_box s_price' bindtap='uploadImg' wx:if="{{imgList.length < 3}}">
+          <image class='camera_img' src='/static/img/camera.png'></image>
+        </view>
+        <view class='upload_box up_img_margin' wx:for='{{imgList}}' wx:for-item="item" wx:for-index="idx" wx:key="list">
+          <image class='upload_img' src="{{item}}" bindtap='previewImg' data-url='{{item}}' data-imglist='{{imgList}}'></image>
+          <view class='e_del' bindtap='delImg' data-index='{{idx}}'></view>
+        </view>
+        <view class='upload_limit'>
+          <text>凭证最多三张</text>
+        </view>
+      </view>
+    </view>
+    <view class="f_row bot_fixed_box f_r_cnt g_line_top box_size">
+      <view>
+        <button formType="reset" class='cancel_btn' bindtap='cancelRefund'>取消</button>
+      </view>
+      <view>
+        <button formType="submit" class='submit_btn'>提交</button>
+      </view>
+    </view>
+  </form>
+  <!-- 退款方式弹出层 -->
+  <view class='mask' wx:if='{{maskRefund}}'>
+    <view class='mask_box'>
+      <view class='mask_title'>退款方式</view>
+      <radio-group class="radio-group f_col f_jc_sb" bindchange="radioChange">
+        <label class="f_row f_r_cnt f_jc_sb radio {{dealType === 1?'rd_sel':''}}">
+          <view class='f_col c_padding'>
+            <text class='font_common c_s_padding'>仅退款</text>
+            <text>未收到货(未签收)，或商家协商同意前提下</text>
+          </view>
+          <radio value="1" checked='{{dealType === 1}}' />
+        </label>
+        <block wx:if="{{refundObj.orderStatus && refundObj.orderStatus === 4}}">
+          <label class="f_row f_r_cnt f_jc_sb radio {{dealType === 2?'rd_sel':''}}">
+            <view class='f_col c_padding'>
+              <text class='font_common c_s_padding'>退款退货</text>
+              <text>已收到货(已签收)，需要退回货物</text>
+            </view>
+            <radio value="2" checked='{{dealType === 2}}' />
+          </label>
+        </block>
+      </radio-group>
+      <view class='mask_close'>
+        <button bindtap='closeMask'>关闭</button>
+      </view>
+    </view>
+  </view>
+  <!-- 退款原因弹出层 -->
+  <view class='mask' wx:if='{{maskFlag}}'>
+    <view class='mask_box'>
+      <view class='mask_title'>退款原因</view>
+      <view wx:if='{{dealType === 1}}'>
+        <radio-group class="radio-group f_col f_jc_sb" bindchange="changeResion">
+          <label class="f_row f_r_cnt f_jc_sb radio {{item.checked === true?'rd_sel':''}}" wx:for='{{list1}}' wx:key="list" wx:for-index="idx" wx:for-item='item'>
+            <text class='font_common refund_way'>{{item.content}}</text>
+            <radio value="{{item.key}}" checked='{{item.checked}}' />
+          </label>
+        </radio-group>
+      </view>
+
+      <view wx:if='{{dealType === 2}}'>
+        <radio-group class="radio-group f_col f_jc_sb" bindchange="changeResion">
+          <label class="f_row f_r_cnt f_jc_sb radio {{item.checked === true?'rd_sel':''}}" wx:for='{{list2}}' wx:key="list" wx:for-index="idx" wx:for-item='item'>
+            <text class='font_common refund_way'>{{item.content}}</text>
+            <radio value="{{item.key}}" checked='{{item.checked}}' />
+          </label>
+        </radio-group>
+      </view>
+      <view class='mask_close'>
+        <button bindtap='closeMask'>关闭</button>
+      </view>
+    </view>
+  </view>
+</view>

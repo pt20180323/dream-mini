@@ -1,0 +1,1 @@
+<web-view wx:if="{{coinSrc}}" src='{{coinSrc}}'></web-view>

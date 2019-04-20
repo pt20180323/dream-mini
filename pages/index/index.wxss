@@ -1,0 +1,62 @@
+@import "/pages/template/countdown/countdown.wxss";
+.g_nav_c.foreshow{
+  color:#2bc682 !important;
+}
+.g_nav_c.foreshow .g_n_txt:after{
+  background-color:#2bc682;
+}
+.act_item{
+  background:#FFF;
+}
+.act_hd{
+  height:100rpx;
+  padding-right:25rpx;
+}
+.act_ico{
+  width:140rpx;
+  height:46rpx;
+  line-height:46rpx;
+  position:relative;
+  text-align:center;
+  color:#FFF;
+  padding-right:18rpx;
+  margin-right:10rpx;
+}
+.act_ico:after{
+  content:'';
+  display:block;
+  position:absolute;
+  right:0;
+  top:0;
+  width:0; 
+  height:0;
+  border-width:24rpx 10rpx;
+  border-style:solid;
+  border-color:transparent #FFF #FFF transparent;
+}
+.act_img{
+  width:100%;
+  height: 100%;
+}
+.foreshow .bg_color{
+  background-color:#2bc682 !important;
+}
+.foreshow .txt_color{
+  color:#2bc682;
+}
+.act_count_box{
+  height:80rpx;
+  background:#FFF;
+  justify-content:center;
+  color:#000;
+  font-size:24rpx;
+  position:relative;
+}
+.act_c_show>text{
+  line-height:40rpx;
+  margin:0 10rpx;
+}
+.aidx_nav{
+  position: relative;
+  flex:1;
+}

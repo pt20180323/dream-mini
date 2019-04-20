@@ -1,0 +1,427 @@
+<import src="../../template/label/label.wxml" />
+<import src="../../template/pictxt/pictxt.wxml" />
+<view>
+  <poster id="poster" config="{{config}}" bind:success="onPosterSuccess" bind:fail="onPosterFail" hide-loading="{{true}}"></poster>
+  <view>
+    <cover-view class='video_ctxt {{isShowImg ? "":"curr_text"}} video_txt' wx:if='{{videoObj.goodsVideoTitle && isShow}}' bindtap='toVideo'>
+      <cover-view style='padding:5rpx 10rpx;'>{{videoObj.goodsVideoTitle}}</cover-view>
+    </cover-view>
+    <cover-view class='video_ctxt img_txt {{isShowImg ? "curr_text":""}}' wx:if='{{videoObj.goodsVideoTitle && isShow}}' bindtap='toImg'>
+      <cover-view style='padding:5rpx 10rpx;'>图片</cover-view>
+    </cover-view>
+    <swiper class="swp_box" bindchange='swiperChange' current='{{currIndex}}' circular>
+      <swiper-item wx:if='{{hasGoodsVideo}}'>
+        <video class='c_video' id="myVideo" src="{{videoObj.goodsFluentVideoUrl}}" controls show-center-play-btn='{{false}}' wx:if='{{pauseVideo}}' bindplay='continuePlay' show-fullscreen-btn='{{false}}'>
+          <cover-image class='exit_video' src="/static/img/exit.png" catchtap='goBack' />
+        </video>
+        <view class="controls f_row f_r_cnt f_jc_cnt" bindtap='toPlay' wx:if='{{!pauseVideo}}'>
+          <image class="video_img" src="{{videoObj.goodsCoverUrl}}" class='slide_img' />
+          <image class='pause_img' src="/static/img/play.png" />
+        </view>
+      </swiper-item>
+      <block wx:for="{{goodsDetail.pics}}" wx:key="key" wx:for-index="idx" wx:for-item="item">
+        <swiper-item>
+          <image src="{{item}}" class="slide_img" />
+        </swiper-item>
+      </block>
+    </swiper>
+    <view class='img_point' wx:if='{{isShowImg}}'>
+      <text>{{sidx}}</text>/
+      <text>{{goodsDetail.pics.length}}</text>
+    </view>
+  </view>
+  <!-- 图片end -->
+  <!-- 抢完标志start -->
+  <view class='block_over' wx:if='{{goodsDetail.stock === 0}}'>
+    <text class='line1'></text>
+    <view class='over'>
+      <text>已抢光</text>
+    </view>
+    <text class='line2'></text>
+    <text class='text_line'>sold out</text>
+    <text class='line3'></text>
+  </view>
+  <!-- 抢完标志end -->
+  <view class="f_row prd_pt f_jc_sb" wx:if="{{goodsDetail.activityType === 11 && !isCountDownEnd}}">
+    <view class="f_col f_jc_cnt prd_price" wx:if='{{goodsDetail.isDiscount == 1}}'>
+      <view class="f_row" wx:if="{{goodsPrice.maxMemberPriceDouble === goodsPrice.minMemberPriceDouble}}">
+        <view class='f_vip f_row f_r_cnt f_jc_cnt'>会员价</view>
+        <view class="prd_pc_num">￥{{goodsPrice.onlyMemberPrice[0]}}
+          <text class="num_dot" wx:if='{{goodsPrice.onlyMemberPrice[1]}}'>.{{goodsPrice.onlyMemberPrice[1]}}</text>
+        </view>
+      </view>
+      <view class="f_row" wx:else>
+        <view class='f_vip f_row f_r_cnt f_jc_cnt'>会员价</view>
+        <view class="prd_pc_num">￥{{goodsPrice.minMemberPrice[0]}}
+          <text class="num_dot" wx:if='{{goodsPrice.minMemberPrice[1]}}'>.{{goodsPrice.minMemberPrice[1]}}</text>
+        </view>
+        <view class="prd_pc_num">-{{goodsPrice.maxMemberPrice[0]}}
+          <text class="num_dot" wx:if='{{goodsPrice.maxMemberPrice[1]}}'>.{{goodsPrice.maxMemberPrice[1]}}</text>
+        </view>
+      </view>
+      <block wx:if="{{goodsPrice.minSalePriceDouble}}">
+        <view class='f_row color_fcc'>
+          <view class="prd_p_o prd_p_o1" wx:if="{{goodsPrice.minSalePriceDouble === goodsPrice.maxSalePriceDouble}}">活动价￥{{goodsPrice.maxSalePriceDouble}}</view>
+          <view class="prd_p_o prd_p_o1" wx:else>活动价￥{{goodsPrice.minSalePriceDouble}}-{{goodsPrice.maxSalePriceDouble}}</view>
+          <text class='ml_40 fs_24' wx:if='{{userType === 1}}' catchtap='showCommission' data-commission='show'>佣金￥{{goodsDetail.clerkCommDouble? goodsDetail.clerkCommDouble : 0}}</text>
+        </view>
+
+      </block>
+    </view>
+    <view class="f_col f_jc_cnt prd_price" wx:else>
+      <view class="f_row" wx:if="{{goodsPrice.maxSalePriceDouble === goodsPrice.minSalePriceDouble}}">
+        <view class="prd_pc_num">￥{{goodsPrice.onlySalePrice[0]}}
+          <text class="num_dot" wx:if='{{goodsPrice.onlySalePrice[1]}}'>.{{goodsPrice.onlySalePrice[1]}}</text>
+        </view>
+      </view>
+      <view class="f_row" wx:else>
+        <view class="prd_pc_num">￥{{goodsPrice.minSalePrice[0]}}
+          <text class="num_dot" wx:if='{{goodsPrice.minSalePrice[1]}}'>.{{goodsPrice.minSalePrice[1]}}</text>
+        </view>
+        <view class="prd_pc_num">-{{goodsPrice.maxSalePrice[0]}}
+          <text class="num_dot" wx:if='{{goodsPrice.maxSalePrice[1]}}'>.{{goodsPrice.maxSalePrice[1]}}</text>
+        </view>
+      </view>
+      <block wx:if="{{goodsPrice.maxMarketPriceDouble}}">
+        <view class='f_row color_fcc'>
+          <view class="prd_p_o" wx:if="{{goodsPrice.maxMarketPriceDouble === goodsPrice.minMarketPriceDouble}}">原价￥{{goodsPrice.onlyMarketPrice}}</view>
+          <view class="prd_p_o" wx:else>原价￥{{goodsPrice.minMarketPrice}}-{{goodsPrice.maxMarketPrice}}</view>
+          <text class='ml_40 fs_24' wx:if='{{userType === 1}}' catchtap='showCommission' data-commission='show'>佣金￥{{goodsDetail.clerkCommDouble? goodsDetail.clerkCommDouble : 0}}</text>
+        </view>
+
+      </block>
+    </view>
+    <view class="prd_time f_col">
+      <text wx:if="{{goodsDetail.activityStatus === 0}}">距离活动开始还有</text>
+      <text wx:elif="{{goodsDetail.activityStatus === 1}}">距离活动结束仅剩</text>
+      <view class="f_row">
+        <rich-text class="f_col" wx:if="{{!isCountDownEnd}}" nodes="{{countHtml}}"></rich-text>
+      </view>
+    </view>
+  </view>
+  <block wx:else>
+    <view class="f_col prd_price g_line_bot" wx:if="{{goodsDetail.isDiscount == 1 || goodsDetail.minMemberPrice>0}}">
+      <!-- 付费会员展示界面 -->
+      <block  wx:if="{{goodsDetail.memberLevel>1}}">
+        <view class="f_row">
+          <view class='f_vip f_row f_r_cnt f_jc_cnt'>会员价</view>
+          <view class='prd_pc_num txt_color'>
+            ￥{{(goodsDetail.minMemberPriceDouble === goodsDetail.maxMemberPriceDouble) ? goodsDetail.maxMemberPriceDouble : (goodsDetail.minMemberPriceDouble + '-' + goodsDetail.maxMemberPriceDouble)}}
+          </view> 
+        </view>
+        <view class='f_row c_yellow'>
+            <view class="f_col prd_price" style='float:left'>
+              <view class="prd_p_o c_yellow" wx:if="{{goodsDetail.minSalePriceDouble===goodsDetail.maxSalePriceDouble}}">原价￥{{goodsDetail.maxSalePriceDouble}}</view>
+              <view class="prd_p_o c_yellow" wx:else>原价￥{{goodsDetail.minSalePriceDouble + '-' + goodsDetail.maxSalePriceDouble}}</view>
+            </view>
+            <text class='f_col prd_price' style='float:left;color:#ff8a00' wx:if='{{userType === 1}}' catchtap='showCommission' data-commission='show'>佣金￥{{goodsDetail.clerkCommDouble? goodsDetail.clerkCommDouble : 0}}</text>
+        </view>
+      </block>
+      <!-- 非付费会员展示界面 -->
+      <block  wx:if="{{goodsDetail.memberLevel <=1}}">
+          <view class='prd_pc_num txt_color'>         
+            ￥{{(goodsDetail.minSalePriceDouble === goodsDetail.maxSalePriceDouble) ? goodsDetail.maxSalePriceDouble : (goodsDetail.minSalePriceDouble + '-' + goodsDetail.maxSalePriceDouble)}}
+          </view>
+          <view class="f_row f_jc_cnt f_jc_sb" style="padding-top:16rpx;">
+            <view>
+              <view class='f_vip f_row f_r_cnt f_jc_cnt' style='float:left;padding-right:20rpx;'>会员价</view>
+              <view class='f_col'  style='float:left;color:#ff8a00;padding-right:20rpx;'>         
+                ￥{{(goodsDetail.minMemberPriceDouble === goodsDetail.maxMemberPriceDouble) ? goodsDetail.maxMemberPriceDouble : (goodsDetail.minMemberPriceDouble + '-' + goodsDetail.maxMemberPriceDouble)}}
+              </view>
+              <text class='f_col prd_price' style='float:left;color:#ff8a00' wx:if='{{userType === 1}}' catchtap='showCommission' data-commission='show'>佣金￥{{goodsDetail.clerkCommDouble? goodsDetail.clerkCommDouble : 0}}</text> 
+            </view>
+            <view  bindtap='toChat' data-pic='{{goodsDetail.pic}}' data-goods-id='{{goodsId}}' data-goods-name='{{goodsDetail.goodsName}}' data-price='{{goodsDetail.activityId ? goodsDetail.activityPriceDouble : goodsDetail.maxSalePriceDouble}}' wx:if='{{goodsDetail.memberLevel <=1}}'>
+            <text class='txt_color'>你还不是VIP会员，去申请</text>
+            <text class='arr_i arr_r' style='float:right;margin-top:21rpx;'></text>
+        </view>         
+          </view>
+        <!-- 引导用户联系销售顾问界面 -->   
+      </block>
+      
+    </view>
+    <view class="f_col prd_price g_line_bot" wx:else>
+      <view class="prd_pc_num txt_color" wx:if='{{goodsDetail.activityId}}'>￥{{goodsDetail.activityPriceDouble}}</view>
+      <view class="prd_pc_num txt_color" wx:else>￥{{(goodsDetail.minSalePriceDouble === goodsDetail.maxSalePriceDouble) ? goodsDetail.maxSalePriceDouble : (goodsDetail.minSalePriceDouble + '-' + goodsDetail.maxSalePriceDouble)}}</view>
+      <block wx:if="{{goodsDetail.maxMarketPriceDouble}}">
+        <view class='f_row c_gray'>
+          <view class="prd_p_o" wx:if="{{goodsDetail.minMarketPriceDouble===goodsDetail.maxMarketPriceDouble}}">原价￥{{goodsDetail.maxMarketPriceDouble}}</view>
+          <view class="prd_p_o" wx:else>原价￥{{goodsDetail.minMarketPriceDouble + '-' + goodsDetail.maxMarketPriceDouble}}</view>
+          <text class='ml_40 fs_24' wx:if='{{userType === 1}}' catchtap='showCommission' data-commission='show'>佣金￥{{goodsDetail.clerkCommDouble? goodsDetail.clerkCommDouble : 0}}</text>
+        </view>
+      </block>
+      <block wx:if="{{!goodsDetail.maxMarketPriceDouble}}"><view class='f_row c_gray'>
+         <view class="prd_p_o">原价￥{{goodsDetail.maxSalePriceDouble}}</view>
+         <text class='ml_40 fs_24' wx:if='{{userType === 1}}' catchtap='showCommission' data-commission='show'>佣金￥{{goodsDetail.clerkCommDouble? goodsDetail.clerkCommDouble : 0}}</text></view>
+      </block>
+    </view>
+  </block>
+  <view class="prd_plus f_col">
+    <text class="lm_buy_i bg_color" wx:if="{{goodsDetail.activityType === 11}}">{{limitOffersTag && limitOffersTag !== '' ? limitOffersTag : '限时特价'}}</text>
+    <view class="f_row prd_pl_t f_jc_sb">
+      <text class="prd_name">{{goodsDetail.goodsName}}</text>
+      <view class="share_btn f_col">
+        <image src="/static/ico/share.png"></image>
+        <button bindtap='toShare'></button>
+      </view>
+    </view>
+    <view class="f_row prd_pl_b">
+      <text>
+        <block wx:if="{{freight !== ''}}">{{freight ? '运费：' + freight + '元' : '包邮'}}</block>
+      </text>
+      <text class='ml_80'>已售：{{goodsDetail.salesVolume}}件</text>
+    </view>
+  </view>
+  <view class="g_blank_20"></view>
+  <view class="f_col sp_tip">
+    <view class="f_row f_r_cnt f_jc_sb sp_t_line" wx:if="{{reduceTxt.length}}">
+      <view class="f_row f_r_cnt">
+        <text class="sp_t_ico txt_color">满减</text>
+        <text>{{reduceTxt}}</text>
+      </view>
+    </view>
+    <view  wx:if='{{goodsDetail.isDiscount == 1 || goodsDetail.minMemberPrice>0}}'>
+      <view wx:if='{{goodsDetail.memberFlag > 1}}' class="f_row f_r_cnt f_jc_sb sp_t_line">
+          <text class='txt_color'>你还不是会员，去申请</text>
+          <text class='arr_i arr_r'></text>
+        </view>
+    </view>
+    <view class="f_row f_r_cnt f_jc_sb sp_t_line" wx:if="{{yhTxt.length}}">
+      <view class="f_row">
+        <text class="sp_t_ico txt_color">优惠</text>
+        <text>{{yhTxt}}</text>
+      </view>
+    </view>
+    <!--<template is="label"></template>-->
+    <!-- 地址选择 -->
+    <navigator url='../../mine/address/select/select?goodsId={{goodsId}}&addId={{AddressAddId}}' class="f_row f_r_cnt f_jc_sb sp_t_line">
+      <view class='f_row f_r_cnt'>
+        <text class='left_label'>配送至</text>
+        <view class='f_col'>
+          <text>{{DefAddress}}</text>
+          <view wx:if="{{IsWarning}}" class='f_row f_r_cnt textWarning'><view class='textIcon'>!</view><text class='content'>请完善乡镇信息！</text></view>
+        </view>
+      </view>
+      <view class="arr_i arr_r">
+      </view>
+    </navigator>
+    <!-- 服务 -->
+    <view class="f_row f_r_cnt f_jc_sb sp_t_line" wx:if="{{isSupportNoReasonReturn}}">
+      <view class='f_row f_r_cnt'>
+        <text class='left_label'>服务</text>
+        <text>支持7天无理由退货(拆封后不支持)</text>
+      </view>
+    </view>
+    <!-- 促销 -->
+    <view class="f_row f_r_cnt f_jc_sb sp_t_line" bindtap='Promotion' wx:if="{{skuGiftList && skuGiftList.length}}">
+      <view class='f_row f_r_cnt'>
+        <text class='left_label'>促销</text>
+        <text class='nowarp flex1'>{{skuGiftList[0].name}}(赠完即止)</text>
+      </view>
+      <view class="arr_i arr_r">
+      </view>
+    </view>
+    <view class="f_row f_r_cnt f_jc_sb sp_t_line" bindtap="gotoOffer" wx:if='{{!environment}}' data-utype="3">
+      <label>选择</label>
+      <view class="prop_attr arr_i arr_r">
+        <text wx:for='{{optionList}}' wx:for-index="idx" wx:key="list" wx:for-item="item" style='padding-right:10rpx'>{{item.attributeName}}</text>
+      </view>
+    </view>
+  </view>
+  <view class="g_blank_20"></view>
+  <template is="pictxt" data="{{pictxt,hasDetailVideo,videoObj,detailPlay}}"></template>
+  <view class="g_blank_100 {{isIpx ? 'is_iphoneX' : ''}}"></view>
+  <!-- 导航 -->
+  
+  <view class="bot_box {{isIpx?'fix-iphonex-button':''}}" wx:if='{{showCar && !IsPromotion}}'>
+    <!-- 没有默认地址弹窗 -->
+    <view class='f_row f_r_cnt f_jc_cnt warning' wx:if="{{perfectaddr}}">
+      <view class="i_sp">!</view>抱歉, 请 <navigator class='perfeClass' url='../../mine/address/select/select'>完善地址</navigator>信息后再来购买~
+    </view>
+    <!-- 没有四级地址 -->
+    <view class='f_row f_r_cnt f_jc_cnt warning' wx:if="{{!perfectaddr && warningData && !warningData.result && warningData.message}}">
+      <view class="i_sp">!</view>{{warningData.message}}
+    </view>
+    <view class='left_box'>
+      <view class="back_idx" bindtap='toChat' data-pic='{{goodsDetail.pic}}' data-goods-id='{{goodsId}}' data-goods-name='{{goodsDetail.goodsName}}' data-price='{{goodsDetail.activityId ? goodsDetail.activityPriceDouble : goodsDetail.maxSalePriceDouble}}'>
+        <image src="/static/ico/chat.png" class='back_idx_img'></image>
+        <view class='chat_txt back_idx_text'>顾问</view>
+        <view class="sc_num" wx:if="{{empObj.count}}">{{empObj.count}}</view>
+      </view>
+      <view class="back_idx" bindtap='toPage' data-type='1'>
+        <image src="/static/menu/index.png" class='back_idx_img'></image>
+        <view class='back_idx_text'>首页</view>
+      </view>
+      <view bindtap='toPage' class="back_idx" data-type='2'>
+        <image src="/static/menu/shopcart.png" class='back_idx_img'></image>
+        <view class='back_idx_text'>购物车</view>
+        <view class="sc_num" wx:if="{{sc_num}}">{{sc_num}}</view>
+      </view>
+    </view>
+    <view class="bot_btn_s">
+      <view class="bb_btn" bindtap='gotoOffer' data-utype="1" wx:if="{{goodsDetail.stock !== 0 && !environment}}">
+        <view class="o_key_add {{(warningData && !warningData.result) || IsWarning || perfectaddr?'btn_gray': 'bg_yel'}}">加入购物车</view>
+      </view>
+      <view class="bb_btn" bindtap='gotoOffer' data-utype="2" wx:if="{{goodsDetail.stock !== 0 && !environment}}">
+        <view class="o_key_add {{(warningData && !warningData.result) || IsWarning || perfectaddr?'btn_gray':'bg_color'}}">立即购买</view>
+      </view>
+      <view wx:if="{{goodsDetail.stock === 0 && !environment}}" class="bg_color btn_gray o_key_add">抢光了</view>
+      <view wx:if="{{environment}}" class="bg_color o_key_add" bindtap='toShare'>分享</view>
+    </view>
+  </view>
+</view>
+<!-- 促销弹窗 -->
+<view class='mask' wx:if="{{IsPromotion}}">
+  <view class='m_bot_box'>
+    <view class="pp_close box_size" bindtap="NoPromotion">
+      <image src="/static/ico/close.png" class='pp_close_img'></image>
+    </view>
+    <view class='zengpinMain'>
+      <block wx:for="{{skuGiftList}}" wx:key="{{index}}">
+        <navigator class="f_row zengpin" url='../skuGiftdetails/skuGiftdetails?skuId={{item.skuId}}'>
+          <view class='f_row f_r_cnt'>
+            <text class='left_label'>赠品</text>
+            <text class='flex1'>{{item.name}}(赠完即止)</text>
+          </view>
+        </navigator>
+      </block>
+    </view>
+  </view>
+</view>
+<!-- 立即购买加入购物车弹窗 -->
+<view class="mask" wx:if="{{slideUp}}" bindtap='closeSlide' catchtouchmove='stopScroll'>
+  <view class="m_bot_box f_col" catchtap='stopScroll'>
+    <view class="pp_prod_s g_line_bot f_row">
+      <image src="{{showSku.picUrl || goodsDetail.pic}}" class='pp_prod_img'></image>
+      <view class="f_col pp_prod_r f_jc_sb">
+        <view class="pp_pd_name break_all">{{goodsDetail.goodsName}}</view>
+        <view class="pp_pd_no" wx:if='{{showSku.shelfNo}}'>商品货号：{{showSku.shelfNo}}</view>
+        <!-- 有属性-->
+        <view wx:if="{{showSku.activityPriceDouble || showSku.salePriceDouble}}" class="txt_color pp_pd_price">
+          <!-- 付费会员sku属性价格显示 -->
+          <block wx:if="{{goodsDetail.memberLevel>1 && goodsDetail.memberPrice>0}}">
+            <view class="f_row">
+              <view class='f_vip f_row f_r_cnt f_jc_cnt'>会员价</view>
+              <view>￥{{showSku.memberPrice/100 || showSku.salePriceDouble}}</view>
+            </view>
+          </block>
+          <block wx:else>
+            <view>￥{{showSku.activityPriceDouble || showSku.salePriceDouble}}</view>
+          </block>
+        </view>
+        <!-- 无属性-->
+        <view class="txt_color pp_pd_price" wx:else>
+          <block wx:if="{{goodsDetail.memberLevel>1 && goodsDetail.memberPrice>0}}">
+            <view class="txt_color pp_pd_price">
+              <view class="f_row">
+                <view class='f_vip f_row f_r_cnt f_jc_cnt'>会员价</view>
+                <view>￥{{(goodsDetail.minMemberPriceDouble === goodsDetail.maxMemberPriceDouble) ? goodsDetail.maxMemberPriceDouble : (goodsDetail.minMemberPriceDouble + '-' + goodsDetail.maxMemberPriceDouble)}}</view>
+              </view>
+            </view>
+          </block>
+          <block  wx:else>
+            <view>￥{{goodsDetail.activityPriceDouble || goodsDetail.minSalePriceDouble}}</view>
+          </block>
+        </view>
+      </view>
+    </view>
+    <view class="f_col pp_prod_list">
+      <block wx:for="{{optionList}}" wx:for-index="idx" wx:key="list" wx:for-item="item">
+        <view>{{item.attributeName}}</view>
+        <view class="pd_list f_row">
+          <block wx:for="{{item.attributeOptionList}}" wx:key="sky" wx:for-index="sidx" wx:for-item="sitem">
+            <view class='pd_item pd_gray' wx:if='{{sitem.stock}}'>{{sitem.optionValue}}</view>
+            <view class="pd_item {{item.cur === sidx ? 'pd_i_cur bg_color' : ''}}" data-list="{{idx}}" data-sidx="{{sidx}}" bindtap="selectAttr" wx:else>{{sitem.optionValue}}</view>
+          </block>
+        </view>
+      </block>
+      <view class="f_row pp_num_s f_jc_sb">
+        <view class="f_row f_r_cnt">
+          <view class="rm_n_lab">数量</view>
+          <view class="rm_num">（库存{{showSku.skuId ? showSku.stock : goodsDetail.stock}}件）</view>
+        </view>
+        <view class="f_col f_r_cnt">
+          <view class="num_btns">
+            <button class="num_plus_btn n_p_reduce" bindtap="togNum" data-type="0">-</button>
+            <input type="number" class="num_p_ipt" bindblur="iptBlur" bindinput="numChange" value="{{shopNum}}"></input>
+            <button class="num_plus_btn n_p_add" bindtap="togNum" data-type="1">+</button>
+          </view>
+          <view class="txt_color n_lmt_tip" wx:if='{{limitNum}}'>每人限购{{limitNum}}件</view>
+        </view>
+      </view>
+    </view>
+    <view class="f_row">
+      <form bindsubmit="gotoOrder" class="form_i" report-submit="true" wx:if="{{utype === 1 || utype === 2}}">
+        <button class="pp_attr_btn" form-type="submit">
+          <cover-view class='bg_color'>确定</cover-view>
+        </button>
+      </form>
+      <form bindsubmit="gotoOrder" data-car="1" class="form_i" report-submit="true" wx:if="{{utype === 3}}">
+        <button class="pp_attr_btn" form-type="submit">
+          <cover-view class="{{(warningData && !warningData.result) || IsWarning || perfectaddr?'btn_gray': 'bg_yel'}}">加入购物车</cover-view>
+        </button>
+      </form>
+      <form bindsubmit="gotoOrder" data-order="1" class="form_i" report-submit="true" wx:if="{{utype === 3}}">
+        <button class="pp_attr_btn" form-type="submit">
+          <cover-view class="{{(warningData && !warningData.result) || IsWarning || perfectaddr?'btn_gray': 'bg_color'}}">立即购买</cover-view>
+        </button>
+      </form>
+    </view>
+    <view class="pp_close box_size" bindtap="closeSlide">
+      <image src="/static/ico/close.png" class='pp_close_img'></image>
+    </view>
+  </view>
+</view>
+<!-- 分享弹窗 -->
+<cover-view class="mask" wx:if="{{shareSlideUp}}" bindtap='toCancel' catchtouchmove='stopScroll'>
+  <cover-view class="m_bot_box" catchtap='stopScroll'>
+    <cover-view class='share_box'>
+      <button class='share_common' open-type='share' wx:if='{{!environment}}'>
+        <cover-image src='/static/ico/wx.png' class='share_img'></cover-image>
+        <cover-view class='share_text'>微信好友</cover-view>
+      </button>
+      <button class='share_common' open-type='share' wx:if='{{environment}}'>
+        <cover-image src='/static/ico/qywx.png' class='share_img'></cover-image>
+        <cover-view class='share_text'>企业微信好友</cover-view>
+      </button>
+      <button class='share_common' bindtap='toPoster'>
+        <cover-image src='/static/ico/poster.png' class='share_img'></cover-image>
+        <cover-view class='share_text'>生成海报</cover-view>
+      </button>
+    </cover-view>
+    <cover-view class="share_cancel" bindtap='toCancel'>取消</cover-view>
+  </cover-view>
+</cover-view>
+<!-- 海报弹窗 -->
+<cover-view class="mask poster_mask" wx:if="{{posterSlideUp}}" bindtap='cancelPoster' catchtouchmove='stopScroll'>
+  <cover-view wx:if='{{posterPath}}' class='poster_box'>
+    <cover-image src='{{posterPath}}' class='poster_img' catchtap='stopScroll'></cover-image>
+    <cover-view class='poster_btn_box'>
+      <cover-view class='share_poster' catchtap='saveImg'>
+        <cover-image src='/static/ico/save.png' class='posterImg'></cover-image>
+        <cover-view class='save_txt'>保存图片</cover-view>
+      </cover-view>
+    </cover-view>
+  </cover-view>
+</cover-view>
+<!-- 佣金弹窗 -->
+<cover-view class='mask' wx:if="{{comBtn}}" bindtap='showCommission' data-commission='hide' catchtouchmove='stopScroll'>
+  <cover-view class='mask_box' catchtap='stopScroll'>
+    <cover-view>
+      <cover-view class='mask_tit padding_l'>属性</cover-view>
+      <cover-view class='mask_tit text_r padding_r'>佣金</cover-view>
+    </cover-view>
+    <cover-view class='mask_content'>
+      <cover-view class='mask_desc' wx:for='{{brokerage}}' wx:for-index="idx" wx:key="list" wx:for-item="item">
+        <cover-view class='mask_name'>{{item.skuAttrName}}</cover-view>
+        <cover-view class='mask_name text_r'>￥{{item.skuClerkCommDouble ? item.skuClerkCommDouble : 0}}</cover-view>
+      </cover-view>
+    </cover-view>
+    <cover-view class='btn_box'>
+      <cover-view class='mask_btn' catchtap='showCommission' data-commission='hide'>知道了</cover-view>
+    </cover-view>
+  </cover-view>
+</cover-view>
+<view class="noProduct" wx:if="{{slideUp}}">
+  <view class="onProductIcon">商品已下架</view>
+  <navigator>返回首页</navigator>
+</view>

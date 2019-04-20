@@ -1,0 +1,121 @@
+{
+  "pages": [
+    "pages/home/home",
+    "pages/home2/home2",
+    "pages/limitbuy/limitbuy",
+    "pages/limitcard/limitcard",
+    "pages/reduce/reduce",
+    "pages/payment/payment",
+    "pages/component/pwd/pwd",
+    "pages/mine/coin/coin",
+    "pages/mine/coinpay/coinpay",
+    "pages/preview/preview",
+    "pages/shopcart/shopcart",
+    "pages/mine/refund/regoods/regoods",
+    "pages/mine/refund/record/record",
+    "pages/mine/refund/refund",
+    "pages/index/index",
+    "pages/empty/empty",
+    "pages/public/public",
+    "pages/firstActived/firstActived",
+    "pages/authorize/authorize",
+    "pages/commonshop/orderInfor/orderInfor",
+    "pages/commonshop/productDetail/productDetail",
+    "pages/commonshop/search/search",
+    "pages/commonshop/shopList/shopList",
+    "pages/secondshop/orderInfor/orderInfor",
+    "pages/secondshop/productDetail/productDetail",
+    "pages/secondshop/index/index",
+    "pages/secondshop/certificate/certificate",
+    "pages/secondshop/newAddr/newAddr",
+    "pages/foreshow/foreshow",
+    "pages/teamshop/index/index",
+    "pages/teamshop/productDetail/productDetail",
+    "pages/teamshop/teamDetail/teamDetail",
+    "pages/teamshop/orderInfor/orderInfor",
+    "pages/teamshop/orderDet/orderDet",
+    "pages/teamshop/myOrder/myOrder",
+    "pages/mine/mine",
+    "pages/mine/address/index",
+    "pages/mine/coupon/index",
+    "pages/mine/address/select/select",
+    "pages/mine/address/new/new",
+    "pages/mine/coupon/useCoupon/useCoupon",
+    "pages/mine/coupon/store/store",
+    "pages/mine/coupon/couponDet/couponDet",
+    "pages/mine/coupon/detail/detail",
+    "pages/mine/coupon/unDetail/unDetail",
+    "pages/mine/ableCoupon/ableCoupon",
+    "pages/mine/orderList/orderList",
+    "pages/mine/orderDetail/orderDetail",
+    "pages/mine/newAddr/newAddr",
+    "pages/mine/certificate/certificate",
+    "pages/chat/chat",
+    "pages/account/account",
+    "pages/account/coupon/coupon",
+    "pages/account/favorable/cfavorable/cfavorable",
+    "pages/account/favorable/favorable",
+    "pages/activity/activity",
+    "pages/activity/shopList/shopList",
+    "pages/activity/coupon/coupon",
+    "pages/account/shareCoupon/shareCoupon",
+    "pages/verificationResult/verificationResult",
+    "pages/goodsRecommend/goodsRecommend",
+    "pages/commonshop/skuGiftdetails/skuGiftdetails",
+    "pages/expressDelivery/expressDelivery",
+    "pages/account/groupList/groupList",
+    "pages/account/customList/customList",
+    "pages/AfterSale/SaleDetails",
+    "pages/AfterSale/expressInfo/expressInfo",
+    "pages/AfterSale/serviceSale/serviceSale",
+    "pages/AfterSale/handleDetails/handleDetails"
+  ],
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于小程序位置接口的效果展示"
+    }
+  },
+  "navigateToMiniProgramAppIdList": [
+    "wx9b8e2d759407e527"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#e00",
+    "navigationBarTitleText": "",
+    "onReachBottomDistance": 10,
+    "navigationBarTextStyle": "white"
+  },
+  "tabBar": {
+    "color": "#666",
+    "selectedColor": "#ff0036",
+    "backgroundColor": "#f9f9f9",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/home/home",
+        "text": "首页",
+        "iconPath": "/static/menu/index.png",
+        "selectedIconPath": "/static/menu/index_c.png"
+      },
+      {
+        "pagePath": "pages/commonshop/shopList/shopList",
+        "text": "商品列表",
+        "iconPath": "/static/menu/list.png",
+        "selectedIconPath": "/static/menu/list_c.png"
+      },
+      {
+        "pagePath": "pages/shopcart/shopcart",
+        "text": "购物车",
+        "iconPath": "/static/menu/shopcart.png",
+        "selectedIconPath": "/static/menu/shopcart_c.png"
+      },
+      {
+        "pagePath": "pages/mine/mine",
+        "text": "我的",
+        "iconPath": "/static/menu/mine.png",
+        "selectedIconPath": "/static/menu/mine_c.png"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json"
+}

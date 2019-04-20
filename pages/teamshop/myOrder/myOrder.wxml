@@ -1,0 +1,232 @@
+<view class="o_nav f_row">
+  <view data-type="1" bindtap="changeTab" class="o_nav_i {{navTab === 1 ? 'o_nav_c' : ''}}">抱团中</view>
+  <view data-type="2" bindtap="changeTab" class="o_nav_i {{navTab === 4 || navTab === 5 ? 'o_nav_c' : ''}}">抱团成功<view class='order_num f_row f_jc_cnt f_r_cnt' wx:if='{{teamOrder.orderNum}}'>{{teamOrder.orderNum}}</view></view>
+  <view data-type="3" bindtap="changeTab" class="o_nav_i {{navTab === 3 ? 'o_nav_c' : ''}}">抱团失败</view>
+</view>
+<scroll-view class="list-g-box" scroll-y="true" scroll-x="false" bindscrolltolower="onScrollLower">
+<view hidden="{{navTab !== 1}}" class="f_col o_list">
+  <view class='c_order_nums f_row f_r_cnt f_jc_cnt'>共 {{totalNums || 0}} 个订单</view>
+  <view class="o_l_item f_col" wx:for="{{list}}" wx:key="keylist" wx:for-index="idx" wx:for-item="item">
+    <view class="o_leader_ico" wx:if="{{item.leader}}">
+      <text>团长</text>
+    </view>
+    <view class="o_leader_ico" wx:else>
+      <text>参团</text>
+    </view>
+    <view class="f_row f_jc_sb f_r_cnt g_line_bot ol_i_head">
+      <text>订单编号：{{item.orderNo}}</text>
+    </view>
+    <view class="f_row ol_i_box g_line_bot" catchtap="toDetail" data-product-id="{{item.orderNo}}" wx:for="{{item.teamshopOrderDetailVoList}}" wx:key="keylist2" wx:for-index="idx2" wx:for-item="item2">
+      <image src="{{item2.goodsPic}}"></image>
+      <view class="f_col f_jc_sb">
+        <view class="f_col">
+          <text class="o_p_tit break_all">{{item2.goodsName}}</text>
+          <text class="o_p_pro" wx:if="{{item2.skuName}}">属性：{{item2.skuName}}</text>
+        </view>
+        <view class="o_p_price">共{{item2.total}}件，实付款：<text>¥{{item.actualPaymentDouble}}</text></view>
+      </view>
+    </view>
+    <view class="f_row f_jc_sb f_r_cnt ol_i_bot">
+      <text class="c_ff0036">
+        <block wx:if="{{item.status === 0}}">未支付</block>
+        <block wx:if="{{item.status === 5}}">已取消</block>
+        <block wx:if="{{item.status === 10}}">超时取消</block>
+        <block wx:if="{{item.status === 2}}">还差{{item.huddleLackNumber}}人</block>
+      </text>
+      <view class="f_row">
+        <form bindsubmit="setFormId" data-orderNo="{{item.orderNo}}" report-submit="true">
+          <button class="ol_btn" form-type="submit" wx:if="{{item.status === 0}}">取消订单</button>
+        </form>
+        <navigator wx:if="{{item.status === 2}}" hover-class="none" url="/pages/teamshop/teamDetail/teamDetail?teamId={{item.teamId}}" class="ol_btn">
+          邀请好友
+          <form bindsubmit="setFormId" report-submit="true">
+            <button class="form_id_mask" form-type="submit"></button>
+          </form>
+        </navigator>
+        <navigator wx:if="{{item.status === 0 && !environment}}" hover-class="none" url="/pages/payment/payment?orderNo={{item.orderNo}}" class="ol_btn g_red_btn">
+          去付款
+          <form bindsubmit="setFormId" report-submit="true">
+            <button class="form_id_mask" form-type="submit"></button>
+          </form>
+        </navigator>
+      </view>
+    </view>
+  </view>
+  <view class="f_col empty_box" wx:if="{{isEmpty}}">
+    <image src="/static/img/empty.png"></image>
+    <text>这里啥都没有·····</text>
+  </view>
+</view>
+<view hidden="{{navTab !== 4 && navTab !== 5}}" class="f_col o_list">
+  <!--拼团成功-->
+  <view class='c_order_nums f_row f_r_cnt f_jc_cnt'>共 {{teamOrder.amount}} 个订单</view>
+  <!-- 待收货 ---未完成-->
+  <view wx:if='{{teamOrder.orderNum > 0}}'>
+     <view class="f_row f_jc_sb f_r_cnt g_line_bot ol_i_status" bindtap='showOrder' data-idx='4'>
+        <text>待收货 ( {{teamOrder.orderNum}} )</text>
+        <text class="arr_i {{unfinishedOrder ? 'arr_b' : 'arr_r'}}"></text>
+    </view>
+    <view class="o_l_item f_col" wx:for="{{list}}" wx:key="keylist" wx:for-index="idx" wx:for-item="item" wx:if='{{unfinishedOrder}}'>
+      <view class="o_leader_ico" wx:if="{{item.leader}}">
+        <text>团长</text>
+      </view>
+      <view class="o_leader_ico" wx:else>
+        <text>参团</text>
+      </view>
+      <view class="f_row f_jc_sb f_r_cnt ol_i_head">
+        <text>订单编号：{{item.orderNo}}</text>
+        <text class="c_ff0036">
+          <block wx:if="{{item.delivery === 1}}">
+            <block>快递配送</block>
+          </block>
+          <block wx:if="{{item.delivery === 2}}">
+            <block>门店自提</block>
+          </block>
+          <block wx:if="{{item.delivery === 3}}">
+            <block>商家配送</block>
+          </block>
+        </text>
+      </view>
+      <view wx:for="{{item.teamshopOrderDetailVoList}}" wx:key="keylist2" wx:for-index="idx2" wx:for-item="item2" class="f_row ol_i_box g_line_bot" catchtap="toDetail" data-product-id="{{item.orderNo}}">
+        <image src="{{item2.goodsPic}}"></image>
+        <view class="f_col f_jc_sb">
+          <view class="f_col">
+            <text class="o_p_tit break_all">{{item2.goodsName}}</text>
+            <text class="o_p_pro" wx:if="{{item2.skuName}}">属性：{{item2.skuName}}</text>
+          </view>
+          <view class="o_p_price">共{{item2.total}}件，实付款：<text>¥{{item.actualPaymentDouble}}</text></view>
+        </view>
+      </view>
+      <view class="f_row f_jc_sb f_r_cnt ol_i_bot">
+        <text>
+          <!-- <block wx:if="{{item.delivery === 1}}">
+            <block>快递配送</block>
+            <block wx:if="{{item.status === 2}}">待发货</block>
+            <block wx:elif="{{item.status === 3}}">已发货</block>
+            <block wx:elif="{{item.status === 4}}">已完成</block>
+          </block>
+          <block wx:if="{{item.delivery === 2}}">
+            <block>门店自提</block>
+          </block>
+          <block wx:if="{{item.delivery === 3}}">
+            <block>商家配送</block>
+          </block> -->
+        </text>
+        <view class="f_row">
+          <view class="ol_btn g_red_btn" wx:if='{{(item.status === 3) && (item.delivery === 1 || item.delivery === 3)}}' data-order-no='{{item.orderNo}}' bindtap='confirmReceipt'>确认收货</view>
+          <view class="ol_btn g_red_btn" wx:if='{{(item.status === 2) && (item.delivery === 1 || item.delivery === 3)}}' bindtap='remindGood'>提醒发货</view>
+          <block wx:if='{{item.delivery === 2}}'>
+            <navigator url="/pages/mine/certificate/certificate?orderNo={{item.orderNo}}&detailNo={{item.teamshopOrderDetailVoList[0].detailNo}}" hover-class="none" class="ol_btn">提货凭证</navigator>
+          </block>
+          <navigator hover-class="none" url="/pages/teamshop/teamDetail/teamDetail?teamId={{item.teamId}}" class="ol_btn">抱团详情</navigator>
+        </view>
+      </view>
+    </view>
+  </view>
+  <!-- 已完成订单 -->
+  <view wx:if='{{teamOrder.succeed > 0}}'>
+     <view class="f_row f_jc_sb f_r_cnt g_line_bot ol_i_status" bindtap='showOrder' data-idx='5'>
+        <text>已完成 ( {{teamOrder.succeed}} )</text>
+        <text class="arr_i {{finishedOrder ? 'arr_b' : 'arr_r'}}"></text>
+    </view>
+    <view class="o_l_item f_col" wx:for="{{list}}" wx:key="keylist" wx:for-index="idx" wx:for-item="item" wx:if='{{finishedOrder}}'>
+      <view class="o_leader_ico" wx:if="{{item.leader}}">
+        <text>团长</text>
+      </view>
+      <view class="o_leader_ico" wx:else>
+        <text>参团</text>
+      </view>
+      <view class="f_row f_jc_sb f_r_cnt ol_i_head">
+        <text>订单编号：{{item.orderNo}}</text>
+        <text class="c_ff0036">
+          <block wx:if="{{item.delivery === 1}}">
+            <block>快递配送</block>
+            <!-- <block wx:if="{{item.status === 2}}">待发货</block>
+            <block wx:elif="{{item.status === 3}}">已发货</block>
+            <block wx:elif="{{item.status === 4}}">已完成</block> -->
+          </block>
+          <block wx:if="{{item.delivery === 2}}">
+            <block>门店自提</block>
+          </block>
+          <block wx:if="{{item.delivery === 3}}">
+            <block>商家配送</block>
+          </block>
+        </text>
+      </view>
+      <view wx:for="{{item.teamshopOrderDetailVoList}}" wx:key="keylist2" wx:for-index="idx2" wx:for-item="item2" class="f_row ol_i_box g_line_bot" catchtap="toDetail" data-product-id="{{item.orderNo}}">
+        <image src="{{item2.goodsPic}}"></image>
+        <view class="f_col f_jc_sb">
+          <view class="f_col">
+            <text class="o_p_tit break_all">{{item2.goodsName}}</text>
+            <text class="o_p_pro" wx:if="{{item2.skuName}}">属性：{{item2.skuName}}</text>
+          </view>
+          <view class="o_p_price">共{{item2.total}}件，实付款：<text>¥{{item.actualPaymentDouble}}</text></view>
+        </view>
+      </view>
+      <view class="f_row f_jc_sb f_r_cnt ol_i_bot">
+        <text>
+          <block wx:if="{{item.delivery === 1}}">
+            <block>快递配送</block>
+          </block>
+          <block wx:if="{{item.delivery === 2}}">
+            <block>门店自提</block>
+          </block>
+          <block wx:if="{{item.delivery === 3}}">
+            <block>商家配送</block>
+          </block>
+        </text>
+        <view class="f_row">
+          <navigator hover-class="none" url="/pages/teamshop/teamDetail/teamDetail?teamId={{item.teamId}}" class="ol_btn">抱团详情</navigator>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="f_col empty_box" wx:if="{{isEmpty && !teamOrder.amount}}">
+    <image src="/static/img/empty.png"></image>
+    <text>这里啥都没有·····</text>
+  </view>
+</view>
+<view hidden="{{navTab !== 3}}" class="f_col o_list">
+  <!--拼团失败-->
+  <view class='c_order_nums f_row f_r_cnt f_jc_cnt'>共 {{totalNums || 0}} 个订单</view>  
+    <view class="o_l_item f_col" wx:for="{{list}}" wx:key="keylist" wx:for-index="idx" wx:for-item="item">
+    <view class="o_leader_ico" wx:if="{{item.leader}}">
+      <text>团长</text>
+    </view>
+    <view class="o_leader_ico" wx:else>
+      <text>参团</text>
+    </view>
+    <view class="f_row f_jc_sb f_r_cnt g_line_bot ol_i_head">
+      <text>订单编号：{{item.orderNo}}</text>
+    </view>
+    <view class="f_row ol_i_box g_line_bot" catchtap="toDetail" data-product-id="{{item.orderNo}}" wx:for="{{item.teamshopOrderDetailVoList}}" wx:key="keylist2" wx:for-index="idx2" wx:for-item="item2">
+      <image src="{{item2.goodsPic}}"></image>
+      <view class="f_col f_jc_sb">
+        <view class="f_col">
+          <text class="o_p_tit break_all">{{item2.goodsName}}</text>
+          <text class="o_p_pro" wx:if="{{item2.skuName}}">属性：{{item2.skuName}}</text>
+        </view>
+        <view class="o_p_price">共{{item2.total}}件，实付款：<text>¥{{item.actualPaymentDouble}}</text></view>
+      </view>
+    </view>
+    <view class="f_row f_jc_sb f_r_cnt ol_i_bot">
+      <text wx:if="{{item.status === 6 || item.status === 9}}">原因：人数不足</text>
+      <view class="f_row">
+        <text class="c_ff0036">
+          <block wx:if="{{item.status === 0}}">未付款</block>
+          <block wx:elif="{{item.status === 1 || item.status === 5}}">已取消</block>
+          <block wx:elif="{{item.status === 6}}">等待商家同意退款</block>
+          <block wx:elif="{{item.status === 7}}">等待买家退货</block>
+          <block wx:elif="{{item.status === 8}}">等待商家收货</block>
+          <block wx:elif="{{item.status === 9}}">退款成功</block>
+          <block wx:elif="{{item.status === 10}}">超时取消</block>   
+        </text>
+      </view>
+    </view>
+  </view>
+  <view class="f_col empty_box" wx:if="{{isEmpty}}">
+    <image src="/static/img/empty.png"></image>
+    <text>这里啥都没有·····</text>
+  </view>
+</view>
+</scroll-view>

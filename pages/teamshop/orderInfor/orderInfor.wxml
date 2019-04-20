@@ -1,0 +1,231 @@
+<import src="../../template/integral/integral.wxml" />
+<view>
+  <view class="delivery_box g_line_top f_col">
+    <view class="f_row f_r_cnt f_jc_sb deli_item">
+        <label class="deli_tit">配送方式</label>
+        <view class="deli_cont f_row">
+          <text data-addrid="{{userAddr.addId}}" data-type="1" bindtap="sendTab" class="deli_type box_size {{sendType === 1 ? ' d_t_cur bd_color bg_color' : ''}}" wx:if='{{userDistr}}'>快递配送</text>
+          <text data-addrid="{{userAddr.addId}}" data-type="3" bindtap="sendTab" class="deli_type box_size {{sendType === 3 ? ' d_t_cur bd_color bg_color' : ''}}" wx:if='{{shopDistr}}'>商家配送</text>
+          <text data-type="2" bindtap="sendTab" class="deli_type box_size {{sendType === 2 ? ' d_t_cur bd_color bg_color' : ''}}" wx:if="{{storeDistr}}">门店自提</text>
+        </view>
+      </view>
+      <view>
+        <view class="f_row f_r_cnt f_jc_sb g_line_top deli_item" wx:if='{{sendType !== 2}}'>
+          <label class="deli_tit {{userAddr.addId ? 'detl_addr' : ''}}">收货地址</label>
+          <view class='f_row f_r_cnt'>
+            <view class="address_info f_col">
+              <navigator url="/pages/mine/address/select/select?addId={{userAddr.addId}}&deliveryType={{sendType}}&goodsId={{goodsId || ''}}" hover-class="none" class="f_col f_box" wx:if="{{userAddr.addId}}">
+                <view class="f_row f_jc_sb addr_name">
+                  <text>{{userAddr.tackName}}</text>
+                  <text>{{userAddr.tackPhone}}</text>
+                </view>
+                <view class='addr_addr'>
+                {{(userAddr.province || '') + (userAddr.city || '') + (userAddr.circle || '') + (userAddr.cusRegion1 || '') + (userAddr.cusRegion2 || '') + (userAddr.address || '')}}
+                </view>
+              </navigator>
+              <navigator wx:else url="/pages/mine/address/new/new?deliveryType={{sendType}}&goodsId={{goodsId || ''}}" hover-class="none" class="f_row os_i_des o_addr_none c_black">
+                <text>新增收货地址</text>
+              </navigator>
+            </view>
+            <text class='arr_i arr_r'></text>
+          </view>
+        </view>
+        <view wx:if='{{sendType === 2}}'>
+          <view class="f_row f_r_cnt f_jc_sb g_line_top deli_item" bindtap="toggleStore" data-type="open">
+            <label class="deli_tit">提货门店</label>
+            <text wx:if="{{businessModel === 1}}" style="{{storeAddrInfo.storeName ? 'color:#000' : ''}}">{{storeAddrInfo.storeName}}</text>
+            <text wx:else class="deli_cont f_col arr_i arr_r" style="{{busiModelStore.name ? 'color:#000' : ''}}">{{busiModelStore.name || '请选择'}}</text>
+          </view>
+          <view class="f_row f_r_cnt f_jc_sb g_line_top deli_item">
+            <label class="deli_tit">提货时间</label>
+            <view class="deli_cont f_col">
+              <text wx:if="{{isTimeOver}}">该商品已经过期！</text>
+              <picker wx:else class="arr_i arr_r" mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" bindcancel="multiCancel" value="{{multiIndex}}" range="{{multiArray}}" data-time="store" style="{{multiArray[0][multiIndex[0]] && multiArray[1][multiIndex[1]] ? 'color:#000' : ''}}">
+          {{((multiArray[0][multiIndex[0]] || '') + (multiArray[1][multiIndex[1]] || '')) || '请选择'}}
+        </picker>
+            </view>
+          </view>
+        </view>
+        <view class="f_row f_r_cnt f_jc_sb g_line_top deli_item" wx:if='{{sendType === 3 && shopDeliveryVo.deliverTimeIntersection}}'> 
+          <label class="deli_tit">收货时间</label>
+          <view class="deli_cont f_col">
+            <text wx:if="{{isTimeOver}}">该商品已经过期！</text>
+            <picker wx:else class="arr_i arr_r" mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" bindcancel="multiCancel" value="{{multiShopIndex}}" range="{{multiShopArray}}" data-time="shop" style="{{((multiShopArray[0][multiShopIndex[0]] || '') + (multiShopArray[1][multiShopIndex[1]] || '') + (multiShopArray[2][multiShopIndex[2]] || '')) ? 'color:#000' : ''}}">
+              {{((multiShopArray[0][multiShopIndex[0]] || '') + (multiShopArray[1][multiShopIndex[1]] || '') + (multiShopArray[2][multiShopIndex[2]] || '')) || '请选择'}}
+            </picker>
+          </view>
+        </view>
+        <view class="f_row f_r_cnt f_jc_sb g_line_top deli_item" wx:if="{{(sendType===1 && elExpressDeliveryVo.requiredUserName) || (sendType===2 && storeDeliveryVo.requiredUserName) || (sendType===3 && shopDeliveryVo.requiredUserName)}}">
+          <label class="deli_tit">买家姓名</label>
+          <view class="deli_cont f_col">
+            <input type="text" class="c_black" placeholder="请输入买家姓名" value="{{buyerName}}" bindinput="buyerNameIpt" />
+          </view>
+        </view>
+        <view class="f_row f_r_cnt f_jc_sb g_line_top deli_item" wx:if="{{(sendType===1 && elExpressDeliveryVo.requiredPhone) || (sendType===2 && storeDeliveryVo.requiredPhone) || (sendType===3 && shopDeliveryVo.requiredPhone)}}">
+          <label class="deli_tit">手机号码</label>
+          <view class="deli_cont f_col">
+            <input type="text" class="c_black" placeholder="请输入手机号码" value="{{buyerPhone}}" bindinput="buyerPhoneIpt" />
+          </view>
+        </view>
+      </view>
+  </view>
+  <view class='bg_bar'></view>
+  <view class="g_blank_20"></view>
+</view>
+<view class="f_col o_prd_box">
+  <view class="o_busi f_row f_r_cnt">
+    <image src="/static/ico/store.png"></image>
+    <text>{{shopInfo.storeName}}</text>
+  </view>
+</view>
+<view class="o_prd_list f_col">
+    <view class="f_col list_i_box">
+      <view class="o_prd_item f_jc_sb f_row {{((orderGoodsInfo.storeDeliverTimeExpire && sendType === 2) || (orderGoodsInfo.shopDeliverTimeExpire && sendType ===3)) ? 'item_gray' : ''}}">
+        <image class="o_prd_img" src="{{orderGoodsInfo.coverUrl}}"></image>
+        <view class="f_col op_des_box">
+          <view class="f_row f_jc_sb o_prd_des">
+            <text class="c_black o_prd_tit">{{orderGoodsInfo.goodsName}}</text>
+            <view class="f_col o_prd_price">
+              <text class="c_black">￥{{orderGoodsInfo.price}} </text>
+              <text class="c_gray old_price" wx:if="{{orderGoodsInfo.originalPrice}}">￥{{orderGoodsInfo.originalPrice}}</text>
+            </view>
+          </view>
+          <view class="f_row f_jc_sb f_r_cnt c_gray">
+            <view class="f_col o_prd_attr">
+              <text class="ellip" wx:if='{{orderGoodsInfo.attrStr}}'>属性：{{orderGoodsInfo.attrStr}}</text>
+              <text wx:if='{{orderGoodsInfo.shelfNo}}'>货号：{{orderGoodsInfo.shelfNo}}</text>
+            </view>
+            <text class="o_prd_num">X{{request.number}}</text>
+          </view>
+          <view class='mid-padding'>
+            <text class='second common_icon'>抱团</text>
+            <text class='second common_icon' wx:if='{{orderGoodsInfo.isDiscount}}'>{{orderGoodsInfo.discountLevel}}享{{orderGoodsInfo.discountValue}}折</text>
+          </view>
+          <view class="fs_24 c_gray" wx:if="{{((orderGoodsInfo.storeDeliverTimeExpire && sendType === 2) || (orderGoodsInfo.shopDeliverTimeExpire && sendType ===3)) ? 'item_gray' : ''}}">该商品配送时间或到店时间已过期！</view>
+        </view>
+      </view>
+      <block wx:if="{{sendType === 3}}">
+        <view class="f_row f_jc_sb f_r_cnt g_line_top ext_pop_i" wx:if="{{!shopDeliveryVo.deliverTimeIntersection && !orderGoodsInfo.shopDeliverTimeExpire}}">
+          <label class="c_black">收货时间</label>
+          <view class="arr_i arr_r c_black" wx:if="{{false}}">请选择</view>
+          <picker class="arr_i arr_r c_black" mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" bindcancel="multiCancel" value="{{orderGoodsInfo.shopDeliverMonthDay.mtIndex}}" range="{{orderGoodsInfo.shopDeliverMonthDay.mdList}}"
+            data-time="shop"  style="{{((orderGoodsInfo.shopDeliverMonthDay.mdList[0][orderGoodsInfo.shopDeliverMonthDay.mtIndex[0]] || '') + (orderGoodsInfo.shopDeliverMonthDay.mdList[1][orderGoodsInfo.shopDeliverMonthDay.mtIndex[1]] || '') + (orderGoodsInfo.shopDeliverMonthDay.mdList[2][orderGoodsInfo.shopDeliverMonthDay.mtIndex[2]] || '')) ? 'color:#000' : ''}}">
+            {{((orderGoodsInfo.shopDeliverMonthDay.mdList[0][orderGoodsInfo.shopDeliverMonthDay.mtIndex[0]] || '') + (orderGoodsInfo.shopDeliverMonthDay.mdList[1][orderGoodsInfo.shopDeliverMonthDay.mtIndex[1]] || '') + (orderGoodsInfo.shopDeliverMonthDay.mdList[2][orderGoodsInfo.shopDeliverMonthDay.mtIndex[2]] || '')) ||
+            '请选择'}}
+          </picker>
+        </view>
+        <view wx:if="{{orderGoodsInfo.checkResult === 2}}" class="item_mask f_row f_r_cnt f_jc_cnt">商品支持的商家配送范围与您的地址不匹配</view>
+      </block>
+      <block wx:if="{{sendType === 2}}">
+        <view class="f_row f_jc_sb f_r_cnt g_line_top ext_pop_i" wx:if="{{!storeDeliveryVo.storeTimeIntersection && !orderGoodsInfo.storeDeliverTimeExpire}}">
+          <label class="c_black">提货时间</label>
+          <view class="arr_i arr_r c_black" wx:if="{{false}}">请选择</view>
+          <picker class="arr_i arr_r c_black" mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" bindcancel="multiCancel" value="{{orderGoodsInfo.storeDeliverMonthDay.mtIndex}}" range="{{orderGoodsInfo.storeDeliverMonthDay.mdList}}"
+            data-time="store" style="{{((orderGoodsInfo.storeDeliverMonthDay.mdList[0][orderGoodsInfo.storeDeliverMonthDay.mtIndex[0]] || '') + (orderGoodsInfo.storeDeliverMonthDay.mdList[1][orderGoodsInfo.storeDeliverMonthDay.mtIndex[1]] || '')) ? 'color:#000' : ''}}">
+            {{((orderGoodsInfo.storeDeliverMonthDay.mdList[0][orderGoodsInfo.storeDeliverMonthDay.mtIndex[0]] || '') + (orderGoodsInfo.storeDeliverMonthDay.mdList[1][orderGoodsInfo.storeDeliverMonthDay.mtIndex[1]] || '')) || '请选择'}}
+          </picker>
+        </view>
+        <view class="f_row f_jc_sb f_r_cnt g_line_top ext_pop_i" bindtap="toggleStore" data-idx="{{idx}}" data-type="open" wx:if="{{!storeDeliveryVo.storeIntersection}}">
+          <label class="c_black">提货门店</label>
+          <view class="arr_i arr_r c_black" style="{{orderGoodsInfo.busiModelStore.name ? 'color:#000' : ''}}">{{orderGoodsInfo.busiModelStore.name || '请选择'}}</view>
+        </view>
+      </block>
+    </view>
+    <!--end-->
+  </view>
+  <!-- 快递配送支持积分 商家配送支持积分 门店自提支持积分-->
+ <view class="f_row ord_act_item g_line_bot f_r_cnt f_jc_sb" bindtap='useIntegral' data-type='open' wx:if='{{isIntegral && integral.integral}}'>
+    <label class="c_black">积分抵扣</label>
+    <view class="f_row f_r_cnt">
+      <text class="cpn_num txt_color">{{integral.integral === 'no' ? '不使用积分' : '-￥'+ (calcAmount.exchangeFeeDouble || '')}}</text>
+      <text class='arr_i arr_r'></text>
+    </view>
+ </view>
+ <view class="f_row card_s_box g_line_bot f_r_cnt f_jc_sb"  wx:if='{{calcAmount.discountFeeDouble}}'>
+    <label class="c_black">会员抵扣</label>
+    <view class='f_row f_r_cnt'>
+      <text class="txt_color">-￥{{calcAmount.discountFeeDouble}}</text>
+    </view>
+ </view>
+ <navigator wx:if="{{orderInfo.isCashCoupon}}" url="/pages/mine/ableCoupon/ableCoupon?type=12">
+    <view class="f_row card_s_box g_line_bot f_r_cnt f_jc_sb">
+      <label class="c_black">优惠券</label>
+      <view class='f_row f_r_cnt'>
+        <text class="txt_color" wx:if='{{cashCouponFee>0}}'>-¥{{cashCouponFee}}</text>
+        <text wx:else>选择可用优惠券</text>
+        <text class='arr_i arr_r'></text>
+      </view>
+    </view>
+  </navigator>
+<view class="f_col o_pay_box g_line_bot">
+    <view class="f_row o_pay_item f_jc_sb c_black">
+      <label>总价：</label>
+      <text>¥{{orderInfo.totalAmount}}</text>
+    </view>
+    <view class="f_row o_pay_item f_jc_sb c_black" wx:if="{{!isGotStore}}">
+      <label>运费：</label>
+      <text>{{elFreightVo.freightDouble ? ('¥' + elFreightVo.freightDouble) : '包邮'}}</text>
+    </view>
+    <view class="f_row o_pay_item f_jc_sb c_black" wx:if='{{fulReduce.elFulReduceMoneyVos.length && htmlY1}}'>
+      <label>满{{htmlM}}减{{htmlY1}}元:</label>
+      <text>-￥{{htmlJ}}</text>
+    </view>
+    <view class="f_row o_pay_item f_jc_sb c_black" wx:if='{{fulReduce.elFulReduceMoneyVos.length && htmlZ1}}'>
+      <label>满{{htmlM}}享{{htmlZ1}}折:</label>
+      <text>-￥{{htmlJ}}</text>
+    </view>
+    <view class="f_row o_pay_item f_jc_sb c_black" wx:if='{{fulReduce.elFulReduceMoneyVos.length && htmlY2}}'>
+      <label>满{{htmlS}}件减{{htmlY2}}元:</label>
+      <text>-￥{{htmlJ}}</text>
+    </view>
+    <view class="f_row o_pay_item f_jc_sb c_black" wx:if='{{fulReduce.elFulReduceMoneyVos.length && htmlZ2}}'>
+      <label>满{{htmlS}}件享{{htmlZ2}}折:</label>
+      <text>-￥{{htmlJ}}</text>
+    </view>
+    <view class="f_row o_pay_item f_jc_sb c_black"wx:if='{{calcAmount.fulReduceFeeDouble + calcAmount.discountFeeDouble + calcAmount.exchangeFeeDouble + calcAmount.cashCouponFeeDouble + calcAmount.setMealDiscountFeeDouble}}'>
+      <label>总抵扣:</label>
+      <text>-¥{{calcAmount.fulReduceFeeDouble + calcAmount.discountFeeDouble + calcAmount.exchangeFeeDouble + calcAmount.cashCouponFeeDouble + calcAmount.setMealDiscountFeeDouble}}</text>
+    </view>
+  </view>
+  <view class="f_col b_msg_box" wx:if='{{isShowTextArea}}'>
+    <label class="c_black">买家留言</label>
+    <textarea class="txt_area box_size" placeholder="选填" value='{{lmsg}}' bindinput="buyerMsgIpt" />
+  </view>
+  <view class="g_blank_110"></view>
+  <cover-view class="f_row o_pay_bot" wx:if='{{isShowTextArea}}'>
+    <cover-view class="f_bold f_row f_r_cnt box_size o_pay_total">
+      <cover-view class="c_black">合计实付：</cover-view>
+      <cover-view class="c_ff4949 fs_36">￥{{calcAmount.orderAmountDouble}}</cover-view>
+    </cover-view>
+    <cover-view class="pay_btn bg_color" bindtap='submitHandle'>立即支付</cover-view>
+  </cover-view>
+<view class="pop_prop_box {{storeSlideUp ? 'm_slideUp' : ''}}">
+  <view class="mask" bindtap="toggleStore"></view>
+  <view class="m_bot_box f_col">
+    <view class="f_row g_line_bot rel_store_tit">
+      <text class="rel_s_txt">选择门店</text>
+      <view class="pp_close box_size" bindtap="toggleStore">
+        <image src="/static/ico/close.png"></image>
+      </view>
+    </view>
+    <view class="f_col rel_st_list">
+      <view class="f_col r_sub_lisit" wx:for="{{cityStores}}" wx:key="cst" wx:for-index="idx" wx:for-item="item">
+        <view class="f_row f_jc_sb f_r_cnt g_line_bot r_sub_head" bindtap="togSubList" data-plist="{{cityStores}}" data-pitem="{{item}}" data-pidx="{{idx}}">
+          <label>{{item.city}}</label>
+          <text class="arr_i {{item.open ? 'arr_b' : 'arr_r'}}">共{{item.elStoreVoList.length}}家门店</text>
+        </view>
+        <view wx:if="{{item.open}}" class="rel_st_item g_line_bot f_col f_jc_sb" bindtap="selectStore" data-item="{{sitem}}" wx:for="{{item.elStoreVoList}}" wx:key="ist" wx:for-index="sidx" wx:for-item="sitem">
+          <view class="f_row f_jc_sb f_r_cnt">
+            <text class="c_black">{{sitem.name}}</text>
+            <text wx:if='{{sitem.distanceDouble}}'>距您：({{sitem.distanceDouble}}公里)</text>
+          </view>
+          <view class="f_row rel_si_s f_r_cnt">
+            <text class="icon-address"></text>
+            <text>{{(sitem.provinceName || '') + (sitem.cityName || '') + (sitem.circleName || '') + (sitem.address || '')}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+<template is="integral" data="{{integraSlideUp, integral,isUseIntegral,fansIntegral,calcAmount}}"></template>

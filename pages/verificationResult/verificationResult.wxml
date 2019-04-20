@@ -1,0 +1,128 @@
+<view class="container">
+  <view class="order" wx:if='{{type == "order"}}'>
+    <view class="list_box">
+      <view class="title f_row f_r_cnt">
+        <image class="icon" src="/static/img/gouxuan_active.png"></image>
+        <view class="">核销商品成功</view>
+      </view>
+      <view class="item_box">
+        <view class="item" wx:if="{{order.code}}">
+          <view class="item_left">凭证号</view>
+          <view class="item_right">{{order.code}}</view>
+        </view>
+        <view class="item" wx:if="{{order.createTime}}">
+          <view class="item_left">验证时间</view>
+          <view class="item_right">{{order.createTime}}</view>
+        </view>
+        <view class="item" wx:if="{{order.stateCode}}">
+          <view class="item_left">验证结果</view>
+          <view class="item_right">{{order.stateCode == '00' ? '成功' : '失败'}}</view>
+        </view>
+        <view class="item" wx:if="{{order.totalNum}}">
+          <view class="item_left">凭证总数</view>
+          <view class="item_right">{{order.totalNum}}</view>
+        </view>
+        <view class="item" wx:if="{{order.usedNum}}">
+          <view class="item_left">已验数量</view>
+          <view class="item_right">{{order.usedNum}}</view>
+        </view>
+        <view class="item" wx:if="{{order.lastNum}}">
+          <view class="item_left">可验数量</view>
+          <view class="item_right">{{order.lastNum}}</view>
+        </view>
+        <view class="item" wx:if="{{order.ticketInfoVo.orderNo}}">
+          <view class="item_left">订单号</view>
+          <view class="item_right">{{order.ticketInfoVo.orderNo}}</view>
+        </view>
+        <view class="item" wx:if="{{order.ticketInfoVo.statusStr}}">
+          <view class="item_left">订单状态</view>
+          <view class="item_right">{{order.ticketInfoVo.statusStr}}</view>
+        </view>
+        <view class="item" wx:if="{{order.ticketInfoVo.payWay}}">
+          <view class="item_left">支付方式</view>
+          <view class="item_right">{{order.ticketInfoVo.payWay}}</view>
+        </view>
+        <view class="item" wx:if="{{order.ticketInfoVo.delivery}}">
+          <view class="item_left">配送方式</view>
+          <view class="item_right">{{order.ticketInfoVo.delivery}}</view>
+        </view>
+        <view class="item" wx:if="{{order.ticketInfoVo.orderAmount}}">
+          <view class="item_left">订单总价</view>
+          <view class="item_right">{{order.ticketInfoVo.orderAmount}}</view>
+        </view>
+        <view class="item" wx:if="{{order.ticketInfoVo.yhFee}}">
+          <view class="item_left">优惠抵扣</view>
+          <view class="item_right">{{order.ticketInfoVo.yhFee}}</view>
+        </view>
+        <view class="item" wx:if="{{order.ticketInfoVo.sfFee}}">
+          <view class="item_left">订单实付</view>
+          <view class="item_right">{{order.ticketInfoVo.sfFee}}</view>
+        </view>
+        <view class="item" wx:if="{{order.ticketInfoVo.unPay}}">
+          <view class="item_left">还需支付</view>
+          <view class="item_right">{{order.ticketInfoVo.unPay}}</view>
+        </view>
+        <view class="item" wx:if="{{order.ticketInfoVo.userStoreTime}}">
+          <view class="item_left">到店时间</view>
+          <view class="item_right">{{order.ticketInfoVo.userStoreTime}}</view>
+        </view>
+        <view class="item" wx:if="{{order.ticketInfoVo.storeName}}">
+          <view class="item_left">到店门店</view>
+          <view class="item_right">{{order.ticketInfoVo.storeName}}</view>
+        </view>
+        <view class="box_item" wx:for='{{order.ticketInfoVo.orderDetailVos}}' wx:if='{{order.ticketInfoVo.orderDetailVos.length}}' wx:key='*this'>
+          <view class="item" wx:if="{{item.goodsName}}">
+            <view class="item_left">订单商品</view>
+            <view class="item_right">{{item.goodsName}}</view>
+          </view>
+          <view class="item" wx:if="{{item.total}}">
+            <view class="item_left">商品数量</view>
+            <view class="item_right">{{item.total}}</view>
+          </view>
+          <view class="item" wx:if='{{item.modelType}}'>
+            <view class="item_left">商品属性</view>
+            <view class="item_right">{{item.modelType}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="coupon" wx:if='{{type == "coupon"}}'>
+    <view class="list_box">
+      <view class="title f_row f_r_cnt">
+        <image class="icon" src="/static/img/gouxuan_active.png"></image>
+        <view class="">核销卡券成功</view>
+      </view>
+      <view class="item_box">
+        <view class="item" wx:if="{{coupon.codeData}}">
+          <view class="item_left">卡券号</view>
+          <view class="item_right">{{coupon.codeData ? coupon.codeData : ''}}</view>
+        </view>
+        <view class="item" wx:if="{{coupon.verifyDate}}">
+          <view class="item_left">核销时间</view>
+          <view class="item_right">{{coupon.verifyDate ? coupon.verifyDate : ''}}</view>
+        </view>
+        <view class="item" wx:if="{{coupon.verifyResult}}">
+          <view class="item_left">核销结果</view>
+          <view class="item_right">{{coupon.verifyResult ? coupon.verifyResult : ''}}</view>
+        </view>
+        <view class="item" wx:if="{{coupon.verifyStoreName}}">
+          <view class="item_left">核销门店</view>
+          <view class="item_right">{{coupon.verifyStoreName ? coupon.verifyStoreName : ''}}</view>
+        </view>
+        <view class="item" wx:if="{{coupon.verifyEmpName}}">
+          <view class="item_left">核销员工</view>
+          <view class="item_right">{{coupon.verifyEmpName ? coupon.verifyEmpName : ''}}</view>
+        </view>
+        <view class="item" wx:if="{{coupon.cardName}}">
+          <view class="item_left">卡券名称</view>
+          <view class="item_right">{{coupon.cardName ? coupon.cardName : ''}}</view>
+        </view>
+        <view class="item" wx:if="{{coupon.verfyEndDate}}">
+          <view class="item_left">有效期</view>
+          <view class="item_right">{{coupon.verfyEndDate ? coupon.verfyEndDate : ''}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

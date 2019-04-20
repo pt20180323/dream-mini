@@ -1,0 +1,173 @@
+<import src="../template/copyright/copyright.wxml" />
+<view class="header f_row">
+  <view class='f_r_cnt f_info f_row'>
+    <image src="{{user.wxPhoto || '/static/ico/header.png'}}"></image>
+    <view class='f_name f_col'>
+      <text>{{user.wxName}}</text>
+    </view>
+  </view>
+  <view class="f_r_cnt f_vip f_row" wx:if='{{user.memberFlag && user.memberLevel === 2}}'>
+    <image src='/static/ico/vip.png'></image>
+    <view class='f_col f_text' style='padding-left:4rpx;'>
+      <text>{{user.memberLevelName}}</text>
+    </view>
+  </view>
+  <view class='f-mask'  wx:if='{{user.memberFlag && user.memberLevel === 2}}'></view>
+  <!--<view class='f_r_cnt f_vip f_row' bindtap='toCard'>
+    <image src='/static/ico/vip.png'></image>
+    <view class='f_row f_text1' wx:if='{{memberFlag}}'>
+      <text>会员权益</text>
+      <text class='arr_i arr_r'></text>
+    </view>
+    <view class='f_col f_text' wx:elif='{{!openId}}'>
+      <text>会员权益</text>
+      <text>敬请期待...</text>
+    </view>
+    <view class='f_row f_text1' wx:else>
+      <view class='f_col'>
+        <text>会员权益</text>
+        <text class='color_y'>点击开通</text>
+      </view>
+      <text class='arr_i arr_r'></text>
+    </view>
+    <view class='f_row f_text1' wx:if='{{isMember}}'>
+      <view class='f_col'>
+        <text>会员权益</text>
+        <text class='color_y'>点击激活</text>
+      </view>
+      <text class='arr_i arr_r'></text>
+    </view>
+  </view>
+  <view class='f-mask {{memberFlag ? "f-mask1":""}}'></view>-->
+</view>
+<view class="m_box f_col">
+  <navigator url="/pages/mine/orderList/orderList?type=-1" hover-class="none" class="nav_i f_row f_r_cnt f_jc_sb">
+    <text class="n_lab">我的订单</text>
+    <view class="f_row f_r_cnt">
+      <text class="nl_des">全部订单</text>
+      <text class="arr_i arr_r"></text>
+    </view>
+    <!-- <text class="arr_i arr_r">全部订单</text> -->
+  </navigator>
+  <view class="f_row on_box">
+    <navigator url="/pages/mine/orderList/orderList?type=0" hover-class="none" class="o_n_item f_col f_r_cnt">
+      <view class="oi_box">
+        <image src="/static/ico/wait_pay.png"></image>
+        <text wx:if='{{totalNum.unpay}}'>{{totalNum.unpay}}</text>
+      </view>
+      <text class='txt_nav'>待付款</text>
+    </navigator>
+    <navigator url="/pages/mine/orderList/orderList?type=2" hover-class="none" class="o_n_item f_col f_r_cnt">
+      <view class="oi_box">
+        <image src="/static/ico/wait_send.png"></image>
+        <text wx:if='{{totalNum.undeliver}}'>{{totalNum.undeliver}}</text>
+      </view>
+      <text class='txt_nav'>待发货</text>
+    </navigator>
+    <navigator url="/pages/mine/orderList/orderList?type=3" hover-class="none" class="o_n_item f_col f_r_cnt">
+      <view class="oi_box">
+        <image src="/static/ico/wait_get.png"></image>
+        <text wx:if='{{totalNum.confirm}}'>{{totalNum.confirm}}</text>
+      </view>
+      <text class='txt_nav'>待收货</text>
+    </navigator>
+    <navigator url="/pages/mine/orderList/orderList?type=4" hover-class="none" class="o_n_item f_col f_r_cnt">
+      <view class="oi_box">
+        <image src="/static/ico/pay_finish.png"></image>
+        <text wx:if='{{totalNum.finish}}'>{{totalNum.finish}}</text>
+      </view>
+      <text class='txt_nav'>已完成</text>
+    </navigator>
+    <navigator url="/pages/mine/orderList/orderList?type=6" hover-class="none" class="o_n_item f_col f_r_cnt">
+      <view class="oi_box">
+        <image src="/static/ico/pay_back.png"></image>
+        <text wx:if='{{totalNum.refund}}'>{{totalNum.refund}}</text>
+      </view>
+      <text class='txt_nav'>退款</text>
+    </navigator>
+  </view>
+</view>
+<view class="g_blank_20"></view>
+<!--<view class="f_col m_list_nav">
+  <view class="nav_i f_row f_r_cnt f_jc_sb">
+    <text class="n_lab">活动订单</text>
+  </view>
+  <navigator url="/pages/teamshop/myOrder/myOrder?type={{teamOrder.type}}" hover-class="none" class="nav_i s_nav_l f_row f_r_cnt f_jc_sb">
+    <view class="f_row f_r_cnt">
+      <image src="/static/ico/team.png" class='m-team'></image>
+      <text class="n_lab m-text">抱团购</text>
+    </view>
+    <view class="f_row f_r_cnt">
+      <text class="nl_des" wx:if='{{teamOrder.type == 4}}'>您有<text class='txt_color'>{{teamOrder.orderNum}}</text>个待收货订单</text>
+      <text class="nl_des" wx:else>您有<text class='txt_color'>{{teamOrder.orderNum}}</text>个抱团中订单</text>
+      <text class="arr_i arr_r"></text>
+    </view>
+  </navigator>
+</view>
+<view class="g_blank_20"></view>-->
+<view class="f_col m_list_nav">
+  <!--<navigator url="/pages/mine/coin/coin" hover-class="none" class="nav_i g_line_bot s_nav_l f_row f_r_cnt f_jc_sb" wx:if="{{currency.prepaidDouble || currency.prepaidDouble === 0}}">
+    <view class="f_row f_r_cnt">
+      <image src="/static/ico/coin.png" class='m-coin'></image>
+      <text class="n_lab m-text">我的储值</text>
+    </view>
+    <view class="f_row f_r_cnt">
+      <text class="nl_des txt_color">￥{{currency.prepaidDouble}}</text>
+      <text class="arr_i arr_r"></text>
+    </view>
+  </navigator>
+  <navigator url="/pages/mine/coin/coin?integral=true" hover-class="none" class="nav_i g_line_bot s_nav_l f_row f_r_cnt f_jc_sb" wx:if="{{currency.integral || currency.integral === 0}}">
+    <view class="f_row f_r_cnt">
+      <image src="/static/ico/integral.png" class='m-coin'></image>
+      <text class="n_lab m-text">我的积分</text>
+    </view>
+    <view class="f_row f_r_cnt">
+      <text class="nl_des txt_color">{{currency.integral}}</text>
+      <text class="arr_i arr_r"></text>
+    </view>
+  </navigator>-->
+  <navigator url="/pages/mine/coupon/index?use=1" hover-class="none" class="nav_i g_line_bot s_nav_l f_row f_r_cnt f_jc_sb">
+    <view class="f_row f_r_cnt">
+      <image src="/static/ico/m_card.png" class='m-card'></image>
+      <text class="n_lab m-text">我的卡包</text>
+    </view>
+    <view class="f_row f_r_cnt">
+      <text class="nl_des"><text class='txt_color'>{{vocherTotal}}</text>张可用</text>
+      <text class="arr_i arr_r"></text>
+    </view>
+  </navigator>
+  <navigator url="/pages/chat/chat?name={{user.empName}}" hover-class="none" class="nav_i s_nav_l f_row f_r_cnt f_jc_sb">
+    <view class="f_row f_r_cnt">
+      <image src="/static/ico/contact.png" class='m-team'></image>
+      <text class="n_lab m-text">我的顾问</text>
+    </view>
+    <view class="f_row f_r_cnt">
+      <text class="nl_des">你的专属顾问</text>
+      <text class="arr_i arr_r"></text>
+    </view>
+  </navigator>
+</view>
+<view class="g_blank_20"></view>
+<view class="f_col m_list_nav" wx:if='{{isQy}}'>
+  <view class="nav_i f_row f_r_cnt f_jc_sb">
+    <text class="n_lab">导购营销工具</text>
+  </view>
+  <navigator url="/pages/account/shareCoupon/shareCoupon?wnjCoupon=true" hover-class="none" class="nav_i s_nav_l f_row f_r_cnt f_jc_sb">
+    <view class="f_row f_r_cnt">
+      <image src="/static/ico/m_card.png" class='m-card'></image>
+      <text class="n_lab m-text">发优惠券</text>
+    </view>
+    <text class="arr_i arr_r"></text>
+  </navigator>
+</view>
+<view class='m-bottom'>
+  <view class='f_row'>
+    <image src='/static/ico/phone.png' class='m-link'></image>
+    <text class='c_9'>{{shopInfo.phone}}</text>
+  </view>
+  <view class='f_row'>
+    <image src='/static/ico/address.png' class='m-link'></image>
+    <text class='c_9'>{{shopInfo.address}}</text>
+  </view>
+</view>
+<template is="copyright"></template>

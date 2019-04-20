@@ -1,0 +1,62 @@
+.expresBox{
+  min-height:100vh;
+  overflow:hidden;
+  background:#f6f6f6;
+  box-sizing:border-box;
+  padding-top:1rpx;
+}
+.exprTxt{
+  background:#fff;
+  overflow:hidden;
+  line-height:34rpx;
+  padding:10px 0 0 40rpx;
+}
+.orderIn{
+  overflow:hidden;
+  background:#fff;
+  position:relative;
+  padding:40rpx 0 40rpx 40rpx;
+}
+.orderIn::before{
+  content:'';
+  position:absolute;
+  left:44rpx;
+  top:54rpx;
+  bottom:40rpx;
+  width:1rpx;
+  background:#ccc;
+}
+.order-itme{
+  overflow:hidden;
+  padding-left:40rpx;
+  position:relative;
+  margin-top:24rpx;
+}
+.order-itme::before{
+  position:absolute;
+  content:'';
+  left:0;
+  top:14rpx;
+  width:10rpx;
+  height:10rpx;
+  border-radius:10rpx;
+  background:#ccc;
+}
+.orderData{
+  height:34rpx;
+  line-height:34rpx;
+  color:#333;
+  font-size:24rpx;
+}
+.orderTxt{
+  overflow:hidden;
+  color:#666;
+  font-size:22rpx;
+  line-height:28rpx;
+}
+.orderIn .order-itme:first-child{
+  margin:0;
+}
+.orderIn .order-itme:first-child .orderTxt{
+  color:#e41436;
+}

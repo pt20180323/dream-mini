@@ -1,0 +1,248 @@
+<import src="../../template/loading/loading.wxml" />
+<view bindtap='clickPage'>
+  <view class="o_nav f_row" wx:if='{{listType !== 5}}'>
+    <view class="o_nav_i_1 line-right" catchtap="clickChangePic">
+      <image wx:if='{{listType === 1}}' class='icon_pic' src='/static/ico/icon_big.png'></image>
+      <image wx:if='{{listType === 2}}' class='icon_pic' src='/static/ico/icon_pic_middle.png'></image>
+      <image wx:if='{{listType === 3}}' class='icon_pic' src='/static/ico/icon_pic_small1.png'></image>
+      <image wx:if='{{listType === 4}}' class='icon_pic' src='/static/ico/icon_pic_small2.png'></image>
+      <image wx:if='{{listType === 5}}' class='icon_pic' src='/static/ico/grade_1.png'></image>
+      <image class='icon_pic_small' src='/static/ico/icon_bottom.png'></image>
+    </view>
+    <scroll-view class='o_nav_i_2' scroll-x='true'>
+      <view data-type="{{idx}}" data-id="{{item.id}}" data-flag="{{item.flag}}" bindtap="changeTab" class=" o_nav_view" wx:for='{{sortList}}' wx:for-index="idx" wx:key="list" wx:for-item="item">
+        <text class="{{navTab === idx ? 'o_nav_c' : ''}}">{{item.categoryName}}</text>
+        <image class='icon_pic_r' src='{{flag ? "/static/ico/icon_top_r.png" : "/static/ico/icon_top_g.png"}}' wx:if='{{floatBar ===1 && navTab === idx}}'></image>
+        <image class='icon_pic_r_rotate' src='{{flag ? "/static/ico/icon_top_g.png" : "/static/ico/icon_top_r.png"}}' wx:if='{{floatBar === 1 && navTab === idx}}'></image>
+      </view>
+    </scroll-view>
+    <view class="o_nav_i_3 line-left" bindtap="clickSearch">
+      <image class='icon_search' src='/static/ico/icon_search.png'></image>
+    </view>
+  </view>
+  <!-- 切换图片类型下拉列表 -->
+  <view class="pic_slider {{picFlag? 'pic_show' : 'pic_hidden'}}">
+    <view class='pic_type' wx:for='{{picTypeList}}' wx:for-index="idx" wx:key="list" wx:for-item="item" bindtap='toggerPicType' data-show-type='{{item.showType}}'>
+      <view wx:if='{{item.showType === 1}}'>
+        <image class='icon_pic_list' src='/static/ico/icon_big.png'></image>
+        <text>大图</text>
+      </view>
+      <view wx:elif='{{item.showType === 2}}'>
+        <image class='icon_pic_list' src='/static/ico/icon_pic_middle.png'></image>
+        <text>中图</text>
+      </view>
+      <view wx:elif='{{item.showType === 3}}'>
+        <image class='icon_pic_list' src='/static/ico/icon_pic_small1.png'></image>
+        <text>小图1</text>
+      </view>
+      <view wx:elif='{{item.showType === 4}}'>
+        <image class='icon_pic_list' src='/static/ico/icon_pic_small2.png'></image>
+        <text>小图2</text>
+      </view>
+      <view wx:elif='{{item.showType === 5}}'>
+        <image class='icon_pic_list' src='/static/ico/grade_1.png'></image>
+        <text>分类1</text>
+      </view>
+    </view>
+  </view>
+  <view class='c_box'>
+    <!-- listType: 4  小图2的形式 -->
+    <view class='content com_margin' wx:if='{{listType === 4}}'>
+      <scroll-view class='scroll_left' scroll-y="true" style='height:{{windowHeight}}px'>
+        <view class="grade_one {{defaultCategory === '0' ? 'grade txt_common' : ''}}">
+          <text class='txt_wh' bindtap="changeGrade" data-idx='0' data-level='0'>全部分类</text>
+        </view>
+        <view class="grade_one {{defaultCategory === item.id ? 'grade grade_bg' : ''}}" wx:for='{{categoryList}}' wx:for-index="idx" wx:key="list" wx:for-item="item">
+          <text class="txt_wh {{defaultCategory === item.id ? 'txt_common' : ''}}" bindtap="changeGrade" data-index='{{idx}}' data-idx='{{item.id}}' data-level='{{item.categoryLevel}}' data-hassub='{{item.hassub}}'>{{item.categoryName}}</text>
+          <view class="grade_two {{item.open ? 'grade_show' : 'grade_hidden'}}" wx:for='{{categoryList[idx].sub}}' wx:for-index="idx2" wx:key="list2" wx:for-item="item2">
+            <text class="txt_wh {{defaultCategory2 === item2.id ? 'txt_common' : ''}}" bindtap="changeGrade" data-index='{{idx}}' data-indexsub='{{idx2}}' data-idx='{{item2.id}}' data-level='{{item2.categoryLevel}}' data-hassub='{{item2.hassub}}'>{{item2.categoryName}}</text>
+            <view class="grade_three {{item2.open ? 'grade_show' : 'grade_hidden'}}" wx:for='{{categoryList[idx].sub[idx2].sub}}' wx:for-index="idx3" wx:key="list3" wx:for-item="item3">
+              <text class="txt_wh {{defaultCategory3 === item3.id ? 'txt_common' : ''}}" bindtap="changeGrade" data-idx='{{item3.id}}' data-level='{{item3.categoryLevel}}' data-hassub='{{item3.hassub}}'>{{item3.categoryName}}</text>
+            </view>
+          </view>
+        </view>
+      </scroll-view>
+      <scroll-view class='scroll_right' wx:if='{{!isshowEmpty}}'>
+        <view class='pic_list' wx:for='{{goodsList}}' bindtap="toDetail" wx:for-index="idx" wx:key="list" wx:for-item="item" data-aid="{{item.activityId}}" data-gid="{{item.id}}" data-sid="{{item.shopId}}" data-stid="{{item.storeId}}" data-type="{{item.activityType}}">
+          <view class='pic_wrapper'>
+            <image style='width:200rpx;height:200rpx;' src='{{item.pic}}' mode='widthFix'></image>
+            <view class='commission_small' wx:if='{{userType === 1}}'>佣金￥{{item.clerkCommDouble ? item.clerkCommDouble : 0}}</view>
+            <view wx:if='{{item.isRecommend === 1}}' class='recommend'></view>
+            <view wx:if='{{item.isRecommend === 1}}' class='recommend_txt'>推荐</view>
+          </view>
+          <view class='pic_content'>
+            <text class='pic_content_name wrap_shopname'>{{item.brandId ? '【' + item.brandName + '】' + item.goodsName : item.goodsName}}</text>
+            <view class='pic_con_last'>
+              <view class='f_row f_r_cnt'>
+                <view class='pic_con_sec'>
+                  <text wx:if='{{item.minMemberPrice > 0}}'>¥{{item.minMemberPrice/100}}</text>
+                  <text wx:else>¥{{item.activityId ? item.activityPriceDouble : item.minSalePriceDouble}}</text>
+                </view>
+                 <view class='f_vip f_row f_jc_cnt f_r_cnt' wx:if='{{item.minMemberPrice > 0}}'>会员价</view>
+              </view>
+              <view>
+                <text wx:if='{{item.isDiscount == 0}}'>
+               <text class="pic_con_thrid" wx:if='{{(item.activityId && item.minSalePriceDouble) || (!item.activityId && item.minMarketPriceDouble)}}'>¥{{item.activityId ? item.minSalePriceDouble : item.minMarketPriceDouble}}</text>
+                </text>
+                <text wx:else>
+               <text class="pic_con_four" wx:if='{{item.minSalePriceDouble}}'>¥{{item.minSalePriceDouble}}</text>
+                </text>
+                <view class='tagList f_row'>
+                  <text class='second common_icon' wx:if='{{item.activityType === 7}}'>秒杀</text>
+                  <text class='second common_icon' wx:if='{{item.activityType === 11}}'>特价</text>
+                  <text class='second common_icon' wx:if='{{item.activityType === 12}}'>抱团</text>
+                  <text class='second common_icon' wx:if='{{item.activityType === 8}}'>预售</text>
+                  <text class='reduce common_icon' wx:if='{{item.isFulReduce === 1}}'>满减</text>
+                  <view class='cash common_icon' wx:if='{{item.isCash === 1 }}'>券
+                    <view class='cash_common_point cash_right1'></view>
+                    <view class='cash_common_point cash_right2'></view>
+                    <view class='cash_common_point cash_right3'></view>
+                    <view class='cash_common_point cash_left1'></view>
+                    <view class='cash_common_point cash_left2'></view>
+                    <view class='cash_common_point cash_left3'></view>
+                  </view>
+                  <text class='second common_icon' wx:if='{{item.isIntegral === 1}}'>积分</text>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+    <!-- listType: 1  大图的形式 -->
+    <view wx:if='{{listType === 1}}' class='com_margin'>
+      <view wx:for="{{goodsList}}" bindtap="toDetail" data-aid="{{item.activityId}}" data-gid="{{item.id}}" data-sid="{{item.shopId}}" data-stid="{{item.storeId}}" data-type="{{item.activityType}}" wx:for-index="idx" wx:key="list" wx:for-item="item" class='large_item_list'>
+        <view class='pic_wrapper'>
+          <image src="{{item.coverUrl || item.pic}}" mode='widthFix'></image>
+          <view class='commission' wx:if='{{userType === 1}}'>佣金￥{{item.clerkCommDouble ? item.clerkCommDouble : 0}}</view>
+          <view wx:if='{{item.isRecommend === 1}}' class='recommend'></view>
+          <view wx:if='{{item.isRecommend === 1}}' class='recommend_txt'>推荐</view>
+        </view>
+        <view class='item_desc'>
+          <text class='wrap_shopname'>{{item.brandId ? '【' + item.brandName + '】' + item.goodsName : item.goodsName}}</text>
+        </view>
+         <view class='f_vip f_row f_jc_cnt f_r_cnt f_vip1' wx:if='{{item.minMemberPrice > 0}}'>会员价</view>
+        <view class="item_price f_row">
+          <view class="f_row f_r_fe" wx:if='{{item.minMemberPrice > 0}}'>
+            <text class="pic_con_sec pic_item_price">¥{{item.minMemberPrice/100}}</text>
+             <text class="pic_con_thrid" wx:if='{{item.minSalePriceDouble}}'>¥{{item.minSalePriceDouble}}</text>
+          </view>
+          <view class="f_row f_r_fe" wx:else>
+            <text class="pic_con_sec pic_item_price">¥{{item.activityId ? item.activityPriceDouble : item.minSalePriceDouble}}</text>
+            <text class="pic_con_four" wx:if='{{(item.activityId && item.minSalePriceDouble) || (!item.activityId && item.minMarketPriceDouble)}}'>¥{{item.activityId ? item.minSalePriceDouble : item.minMarketPriceDouble}}</text>
+          </view>
+          <view class='f_row'>
+            <text class='second common_icon' wx:if='{{item.activityType === 7}}'>秒杀</text>
+            <text class='second common_icon' wx:if='{{item.activityType === 11}}'>特价</text>
+            <text class='second common_icon' wx:if='{{item.activityType === 12}}'>抱团</text>
+            <text class='second common_icon' wx:if='{{item.activityType === 8}}'>预售</text>
+            <text class='reduce common_icon' wx:if='{{item.isFulReduce ===1 }}'>满减</text>
+            <view class='cash common_icon' wx:if='{{item.isCash === 1 }}'>券
+              <view class='cash_common_point cash_right1'></view>
+              <view class='cash_common_point cash_right2'></view>
+              <view class='cash_common_point cash_right3'></view>
+              <view class='cash_common_point cash_left1'></view>
+              <view class='cash_common_point cash_left2'></view>
+              <view class='cash_common_point cash_left3'></view>
+            </view>
+            <text class='second common_icon' wx:if='{{item.isIntegral === 1}}'>积分</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    <!-- listType:2 中图的形式 -->
+    <view wx:if="{{listType === 2}}" class="{{isEmpty ? '': 'middle_item_list'}}" class='com_margin middle_box f_row f_jc_sb'>
+        <view wx:for="{{goodsList}}" bindtap="toDetail" data-aid="{{item.activityId}}" data-gid="{{item.id}}" data-sid="{{item.shopId}}" data-stid="{{item.storeId}}" data-type="{{item.activityType}}" wx:for-index="idx" wx:key="list" wx:for-item="item" class='middle_list'>
+            <view class='middle_pic pic_wrapper'>
+              <image src="{{item.pic}}" mode='widthFix'></image>
+              <view class='commission_small' wx:if='{{userType === 1}}'>佣金￥{{item.clerkCommDouble ? item.clerkCommDouble : 0}}</view>
+              <view wx:if='{{item.isRecommend === 1}}' class='recommend'></view>
+              <view wx:if='{{item.isRecommend === 1}}' class='recommend_txt'>推荐</view>
+            </view>
+            <view class='item_desc'>
+              <text class='wrap_shopname'>{{item.brandId ? '【' + item.brandName + '】' + item.goodsName : item.goodsName}}</text>
+            </view>
+            <view class='f_vip f_row f_jc_cnt f_r_cnt f_vip1' wx:if='{{item.minMemberPrice > 0}}'>会员价</view>
+            <view class="f_row f_r_fe f_vip1" wx:if='{{item.minMemberPrice > 0}}'>
+              <text class="pic_con_sec pic_item_price">¥{{item.minMemberPrice/100}}</text>
+              <text class="pic_con_thrid" wx:if='{{item.minSalePriceDouble}}'>¥{{item.minSalePriceDouble}}</text>
+            </view>
+            <view class="f_row f_r_fe" wx:else>
+              <view class="item_price f_row" wx:if='{{item.isDiscount == 0}}'>
+                <text class="pic_con_sec pic_item_price">¥{{item.activityId ? item.activityPriceDouble : item.minSalePriceDouble}}</text>
+                <text class="pic_con_thrid" wx:if='{{(item.activityId && item.minSalePriceDouble) || (!item.activityId && item.minMarketPriceDouble)}}'>¥{{item.activityId ? item.minSalePriceDouble : item.minMarketPriceDouble}}</text>
+              </view>
+              <view class="item_price f_row" wx:else>
+                <text class="pic_con_sec pic_item_price">¥{{item.memberPriceDouble}}</text>
+                <text class="pic_con_four" wx:if='{{item.minSalePriceDouble}}'>¥{{item.minSalePriceDouble}}</text>
+              </view>
+            </view>
+            <view class='mid-padding f_row'>
+              <text class='second common_icon' wx:if='{{item.activityType === 7}}'>秒杀</text>
+              <text class='second common_icon' wx:if='{{item.activityType === 11}}'>特价</text>
+              <text class='second common_icon' wx:if='{{item.activityType === 12}}'>抱团</text>
+              <text class='second common_icon' wx:if='{{item.activityType === 8}}'>预售</text>
+              <text class='reduce common_icon' wx:if='{{item.isFulReduce === 1 }}'>满减</text>
+              <view class='cash common_icon' wx:if='{{item.isCash ===1 }}'>券
+                <view class='cash_common_point cash_right1'></view>
+                <view class='cash_common_point cash_right2'></view>
+                <view class='cash_common_point cash_right3'></view>
+                <view class='cash_common_point cash_left1'></view>
+                <view class='cash_common_point cash_left2'></view>
+                <view class='cash_common_point cash_left3'></view>
+              </view>
+              <text class='second common_icon' wx:if='{{item.isIntegral === 1}}'>积分</text>
+            </view>
+        </view>
+    </view>
+    <!-- listType:3 小图1的形式 -->
+    <view wx:if="{{listType === 3}}" class='com_margin'>
+      <view class='pic_list1' wx:for='{{goodsList}}' bindtap="toDetail" wx:for-index="idx" wx:key="list" wx:for-item="item" data-aid="{{item.activityId}}" data-gid="{{item.id}}" data-sid="{{item.shopId}}" data-stid="{{item.storeId}}" data-type="{{item.activityType}}">
+        <view class='pic_wrapper'>
+          <image style='width:200rpx;height:200rpx;' src='{{item.pic}}' mode='widthFix'></image>
+          <view class='commission_small' wx:if='{{userType === 1}}'>佣金￥{{item.clerkCommDouble ? item.clerkCommDouble : 0}}</view>
+          <view wx:if='{{item.isRecommend === 1}}' class='recommend'></view>
+          <view wx:if='{{item.isRecommend === 1}}' class='recommend_txt'>推荐</view>
+        </view>
+        <view class='pic_content1'>
+          <text class='pic_content_name wrap_shopname'>{{item.brandId ? '【' + item.brandName + '】' + item.goodsName : item.goodsName}}</text>
+          <view class='pic_con_last'>
+            <view class='f_row f_r_cnt'>
+              <view class='pic_con_sec'>
+                <text wx:if='{{item.minMemberPrice > 0}}'>¥{{item.minMemberPrice/100}}</text>
+                <text wx:else>¥{{item.activityId ? item.activityPriceDouble : item.minSalePriceDouble}}</text>
+              </view>
+              <view class='f_vip f_row f_jc_cnt f_r_cnt' wx:if='{{item.minMemberPrice > 0}}'>会员价</view>
+            </view>
+            <view>
+              <text wx:if='{{item.isDiscount == 0}}'>
+               <text class="pic_con_thrid" wx:if='{{(item.activityId && item.minSalePriceDouble) || (!item.activityId && item.minMarketPriceDouble)}}'>¥{{item.activityId ? item.minSalePriceDouble : item.minMarketPriceDouble}}</text>
+              </text>
+              <text wx:else>
+               <text class="pic_con_four" wx:if='{{item.minSalePriceDouble}}'>¥{{item.minSalePriceDouble}}</text>
+              </text>
+              <view class='tagList f_row'>
+                <text class='second common_icon' wx:if='{{item.activityType === 7}}'>秒杀</text>
+                <text class='second common_icon' wx:if='{{item.activityType === 11}}'>特价</text>
+                <text class='second common_icon' wx:if='{{item.activityType === 12}}'>抱团</text>
+                <text class='second common_icon' wx:if='{{item.activityType === 8}}'>预售</text>
+                <text class='reduce common_icon' wx:if='{{item.isFulReduce === 1 }}'>满减</text>
+                <view class='cash common_icon' wx:if='{{item.isCash === 1 }}'>券
+                  <view class='cash_common_point cash_right1'></view>
+                  <view class='cash_common_point cash_right2'></view>
+                  <view class='cash_common_point cash_right3'></view>
+                  <view class='cash_common_point cash_left1'></view>
+                  <view class='cash_common_point cash_left2'></view>
+                  <view class='cash_common_point cash_left3'></view>
+                </view>
+                <text class='second common_icon' wx:if='{{item.isIntegral === 1}}'>积分</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <template is="loading" data="{{loading, isshowEmpty,isLastPage,imgSrc,noMsg}}"></template>
+  </view>
+  <image class='goTop' src='/static/img/top.png' wx:if='{{scrollTop > 1000}}' catchtap='goTop'></image>
+</view>

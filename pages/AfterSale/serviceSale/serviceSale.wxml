@@ -1,0 +1,63 @@
+<!-- 顶部状态图片 -->
+<view class='Sale_title title_bg f_row f_r_cnt'>
+  <text>{{aftersale.afsServiceStepName ? aftersale.afsServiceStepName : '系统处理中'}}</text>
+</view>
+<!-- 操作区域 -->
+<view class='f_col handle Sale_handle'>
+  <text class='c_333 size_28'>{{aftersale.afsServiceStepName ? aftersale.afsServiceStepName : '正在处理'}}</text>
+  <view class='item_en f_row Sale_btns'>
+    <button class='Sale_btn g_mr_20' bindtap='cancelApp' wx:if="{{aftersale.disabled==0 && aftersale.status !=60 &&aftersale.isCancel == 1 && aftersale.status < 31}}">取消申请</button>
+    <button class='Sale_btn' wx:if="{{aftersale.disabled==0 && aftersale.status !=60 &&aftersale.isUpdateDelivery ==1 && aftersale.pickwareType == 40}}" bindtap='goExpressInfo'>填写快递信息</button>
+  </view>
+</view>
+<!-- 售后进度 -->
+<view class='f_col handle Sale_handle g_mt_20'>
+  <text class='size_28'>售后进度</text>
+  <view class='f_row g_mt_30' wx:for='{{aftersale.serviceTrackInfoVos}}' wx:key='aftersale.serviceTrackInfoVos' wx:for-index="index" wx:for-item='item' wx:if="{{index < num}}">
+    <view class='status_yuan g_mt_10 frist'>
+    </view>
+    <view class='f_col g_ml_20' >
+      <text class='c_333 size_28'>{{item.title}}</text>
+      <text class='c_gray size_28 g_mt_10'>{{item.context}}</text>
+      <text class='c_gray size_24 g_mt_20'>{{item.createDate}}</text>
+    </view>
+  </view>
+  <view class='g_mt_30 f_row f_jc_cnt' wx:if="{{aftersale.serviceTrackInfoVos.length > 2}}" bindtap='switchList'>
+    <text>{{txt}}</text>
+    <view class='arr_i arr_b'></view>
+  </view>
+</view>
+<!-- 售后进度 -->
+<view class='f_col handle g_mt_20 g_mb_30'>
+  <view class='f_row g_mt_20'>
+    <image class='main_img' src='{{aftersale.goodsPic}}'/>
+    <view class='f_col flex1 f_jc_sb'>
+      <text class='c_333 weight5 wrap_name size_28'>{{aftersale.goodsName}}</text>
+      <view class='f_row f_jc_sb c_333 weight5 f_r_cnt'>
+        <text class='fs_32'>￥{{aftersale.price/100}}</text>
+        <text>X {{aftersale.total}}</text>
+      </view>
+    </view>
+  </view>
+  <!-- 数量 -->
+  <view class='f_row f_r_cnt f_jc_sb handle_list'>
+    <text>退款原因</text>
+    <text class='c_333 size_28'>{{aftersale.questionDesc}}</text>
+  </view>
+  <view class='f_row f_r_cnt f_jc_sb handle_list'>
+    <text>订单号码</text>
+    <text class='c_333 size_28'>{{aftersale.orderNo}}</text>
+  </view>
+  <view class='f_row f_r_cnt f_jc_sb handle_list'>
+    <text>服务单号</text>
+    <text class='c_333 size_28'>{{aftersale.serviceId}}</text>
+  </view>
+  <view class='f_row f_r_cnt f_jc_sb handle_list'>
+    <text>退款数量</text>
+    <text class='c_333 size_28'>{{aftersale.skuNum}}</text>
+  </view>
+  <!--<view class='f_row f_r_cnt f_jc_sb handle_list noBorder'>
+    <text>退款金额</text>
+    <text class='c_333 size_28'>￥100.00</text>
+  </view>-->
+</view>

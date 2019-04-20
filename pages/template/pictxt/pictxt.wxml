@@ -1,0 +1,23 @@
+<template name="pictxt">
+  <view class="prd_g_box" wx:if='{{hasDetailVideo}}'>
+    <view class="prd_des_top f_row f_r_cnt">
+      <text class="txt_color af_color">视频详情</text>
+    </view>
+    <!-- 详情视频 start -->
+    <view wx:if='{{detailPlay}}'>
+      <video class='c_video' id="myDetailVideo" src="{{videoObj.detailFluentVideoUrl}}" controls show-fullscreen-btn='{{false}}'>
+      </video>
+    </view>
+    <view wx:if='{{!detailPlay}}' class='c_video'>
+      <image class="video_img" src="{{videoObj.detailCoverUrl}}" />
+      <image class='pause_img' src="/static/img/play.png" bindtap='detailPlay' />
+    </view>
+  </view>
+  <!-- 详情视频end -->
+  <view class="prd_des_top f_row f_r_cnt">
+    <text class="txt_color af_color">图文详情</text>
+  </view>
+  <view class="prd_desc_box break_all">
+    <rich-text class='box_rich_text' nodes="{{pictxt}}"></rich-text>
+  </view>
+</template>

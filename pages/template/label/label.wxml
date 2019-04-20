@@ -1,0 +1,16 @@
+<template name="label">
+  <view class="f_row f_jc_sb f_r_cnt sp_qt_box">
+    <view class="f_row sp_qt_item f_r_cnt">
+      <text class="sp_qt_i box_sizing">正</text>
+      <text>假一赔十</text>
+    </view>
+    <view class="f_row sp_qt_item f_r_cnt">
+      <text class="sp_qt_i box_sizing">七</text>
+      <text>七天退换</text>
+    </view>
+    <view class="f_row sp_qt_item f_r_cnt">
+      <text class="sp_qt_i box_sizing">免</text>
+      <text>到店免邮</text>
+    </view>
+  </view>
+</template>

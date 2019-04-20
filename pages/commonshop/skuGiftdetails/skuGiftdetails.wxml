@@ -1,0 +1,22 @@
+<import src="../../template/pictxt/pictxt.wxml" />
+<view>
+  <view>
+    <swiper class="swp_box" bindchange='swiperChange' current='{{currIndex}}' circular>
+      <block wx:for="{{goods.picVo}}" wx:key="index">
+        <swiper-item>
+          <image src="{{item.picUrl}}" class="slide_img" />
+        </swiper-item>
+      </block>
+    </swiper>
+    <view class='img_point' wx:if='{{goods.picVo.length}}'>
+      <text>{{sidx}}</text>/<text>{{goods.picVo.length}}</text>
+    </view>
+  </view>
+  <view class="prd_plus f_col">
+    <view class="f_row prd_pl_t f_jc_sb">
+      <text class="prd_name">{{goods.goods.goodsName}}</text>
+    </view>
+  </view>
+  <view class="g_blank_20"></view>
+  <template is="pictxt" data="{{pictxt,hasDetailVideo,videoObj,detailPlay}}"></template>
+</view>

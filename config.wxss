@@ -1,0 +1,25 @@
+/*自定义换肤颜色*/
+.txt_color{
+  color:#f03 !important;
+}
+.bg_color{
+  background-color:#f03 !important;
+}
+.bd_color,.bf_bd_color,.af_bd_color{
+  border-color:#f03 !important;
+}
+.bf_color:before{
+  background-color:#f03;
+}
+.af_color:after{
+  background-color:#f03;
+}
+.g_nav_c{
+  color:#f03 !important;
+}
+.g_nav_c .g_n_txt:after{
+  background-color:#f03;
+}
+.chat_txt{
+  color: #f03;
+}

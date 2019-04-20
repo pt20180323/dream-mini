@@ -1,0 +1,319 @@
+.refund_box {
+  background: #fff;
+  padding: 0 25rpx;
+}
+
+.refund_title {
+  height: 80rpx;
+  padding-left: 7rpx;
+  line-height: 80rpx;
+  font-size: 30rpx;
+  color: #333;
+  border-bottom: 1rpx solid #eee;
+  box-sizing: border-box;
+}
+
+.refund_shop {
+  padding: 20rpx 0;
+  box-sizing: border-box;
+  flex: 1;
+}
+
+.refund_info {
+  flex: 1;
+}
+
+.line_top {
+  border-top: 1rpx solid #eee;
+}
+
+image {
+  display: block;
+}
+
+.refund_img {
+  margin-right: 24rpx;
+}
+
+.refund_img>image {
+  width: 184rpx;
+  height: 184rpx;
+  border-radius: 8rpx;
+}
+
+.r_s_name {
+  font-size: 28rpx;
+  color: #333;
+  margin-top: 8rpx;
+  margin-bottom: 10rpx;
+}
+
+.r_s_param, .r_s_mode {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.r_s_param {
+  padding-bottom: 8rpx;
+}
+
+.wrap_name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.font_common {
+  font-size: 28rpx;
+  color: #333;
+}
+
+.refund_way {
+  height: 80rpx;
+  padding-left: 7rpx;
+  line-height: 80rpx;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+.c_padding {
+  padding: 8rpx 0 8rpx 20rpx;
+}
+
+.c_s_padding {
+  padding-bottom: 6rpx;
+}
+
+.r_reply {
+  padding-bottom: 20rpx;
+  border-bottom: 1rpx solid #ccc;
+}
+
+.radio-group {
+  height: 100%;
+}
+
+.r_w_box {
+  padding-bottom: 20rpx;
+}
+
+.r_choose {
+  font-size: 28rpx;
+  color: #666;
+}
+
+.common_color {
+  color: #ff0036;
+}
+
+.s_price {
+  margin-left: 20rpx;
+}
+
+.input_box {
+  flex: 1;
+}
+
+.r_input {
+  height: 56rpx;
+  padding-left: 16rpx;
+}
+
+.t_area {
+  padding:0 0 30rpx 0;
+}
+
+.r_textarea {
+  height: 105rpx;
+  padding: 25rpx 0 0 16rpx;
+  position: relative;
+}
+
+.up_warpper {
+  flex: 1;
+  position: relative;
+  padding-bottom: 26rpx;
+}
+
+.camera_box {
+  position: relative;
+  width: 120rpx;
+  height: 120rpx;
+  background: #f2f2f2;
+  border: 1rpx dashed #ccc;
+  border-radius: 8rpx;
+  box-sizing: border-box;
+  margin-right: 0;
+  margin-top: 28rpx;
+}
+
+.camera_img {
+  position: absolute;
+  width: 55rpx;
+  height: 45rpx;
+  left: 50%;
+  top: 50%;
+  margin-left: -27.5rpx;
+  margin-top: -22.5rpx;
+}
+
+.upload_img {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 8rpx;
+}
+
+.up_img_margin {
+  margin-left: 17rpx;
+  margin-top: 28rpx;
+}
+
+.upload_limit {
+  position: relative;
+  font-size: 24rpx;
+  color: #666;
+  margin-left: 10rpx;
+}
+
+.upload_limit>text {
+  width: 150rpx;
+  position: absolute;
+  bottom: 0;
+}
+
+.bot_fixed_box {
+  height: 100rpx;
+  background: #fff;
+  padding: 0 25rpx;
+  justify-content: flex-end;
+  position: relative;
+}
+
+.cancel_btn {
+  font-size: 28rpx;
+  width: 152rpx;
+  height: 64rpx;
+  background: #fff;
+  border-radius: 8rpx;
+  border: 1rpx solid #ccc;
+  line-height: 64rpx;
+  color: #999;
+}
+
+.submit_btn {
+  font-size: 28rpx;
+  width: 144rpx;
+  height: 64rpx;
+  background: #ff0036;
+  border-radius: 8rpx;
+  color: #fff;
+  line-height: 64rpx;
+  margin-left: 24rpx;
+}
+
+.mask {
+  width: 100%;
+  height: 100%;
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  background: rgba(0, 0, 0, 0.5);
+  transition: all 0.3s ease-in-out;
+  z-index: 10;
+}
+
+.mask_box {
+  background: #fff;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0 25rpx;
+}
+
+.mask_title {
+  height: 80rpx;
+  line-height: 80rpx;
+  font-size: 30rpx;
+  color: #333;
+  text-align: center;
+  border-bottom: 1rpx solid #ccc;
+}
+
+.mask_close {
+  height: 100rpx;
+  border-top: 1rpx solid #ccc;
+}
+
+.mask_close button {
+  position: relative;
+  top: 50%;
+  margin-top: -32rpx;
+  width: 200rpx;
+  height: 64rpx;
+  background: #fff;
+  border-radius: 8rpx;
+  border: 1rpx solid #ccc;
+  line-height: 64rpx;
+}
+
+.upload_box {
+  position: relative;
+}
+
+.e_del {
+  position: absolute;
+  width: 30rpx;
+  height: 30rpx;
+  right: -15rpx;
+  top: -15rpx;
+  background: #ff0036;
+  border-radius: 15rpx;
+}
+
+.e_del::after {
+  position: absolute;
+  content: '';
+  width: 18rpx;
+  height: 3rpx;
+  background: #fff;
+  top: 50%;
+  left: 50%;
+  margin: -1.5rpx 0 0 -9rpx;
+}
+
+.radio radio {
+  display: none;
+}
+
+.radio {
+  position: relative;
+}
+
+.radio:after, .radio:before {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  box-sizing: border-box;
+  top: 50%;
+  transform: translate3d(0, -50%, 0);
+}
+
+.radio:before {
+  width: 48rpx;
+  height: 48rpx;
+  border-radius: 50%;
+  border: 2rpx solid #ccc;
+  background: #fff;
+  right: 0;
+}
+
+.radio.rd_sel:after {
+  background: #ff0036;
+  width: 26rpx;
+  height: 26rpx;
+  border-radius: 50%;
+  right: 11rpx;
+}

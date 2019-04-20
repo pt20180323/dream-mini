@@ -1,0 +1,94 @@
+@import "/pages/template/countdown/countdown.wxss";
+@import "/pages/template/list/list.wxss";
+page {
+  position: relative;
+  min-height: 100%;
+}
+.g_main_box{
+  background:#f2f2f2;
+  margin-bottom: 96rpx;
+}
+
+.thm_ban>image,.list_p_img image{
+  width:100%;
+}
+.act_count_box{
+  height:80rpx;
+  background:#FFF;
+  justify-content:center;
+  color:#000;
+  font-size:24rpx;
+  position:relative;
+}
+.act_c_show>text{
+  line-height:40rpx;
+  margin:0 10rpx;
+}
+.share_box{
+  width: 90rpx;
+  height: 90rpx;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  right: 30rpx;
+  bottom: 50rpx;
+  z-index: 100;
+}
+.share_box>image{
+  width: 90rpx;
+  height: 90rpx;
+}
+.mask {
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  height: 0;
+  position: fixed;
+  background: rgba(0, 0, 0, 0.6);
+  transition: opacity 0.3s ease-in-out;
+  z-index: 9999;
+  opacity: 0;
+}
+
+.showmask {
+  height: 100%;
+  opacity: 1;
+}
+
+.iknow_tip {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+  width: 560rpx;
+}
+
+.icon_box {
+  width: 240rpx;
+}
+
+.c_btn {
+  color: #fff;
+  font-size: 30rpx;
+}
+
+.icon_btn {
+  width: 80rpx;
+  height: 80rpx;
+  background-color: #ff9400;
+  border-radius: 40rpx;
+  margin-bottom: 15rpx;
+}
+
+.c_share1 {
+  background: #2093fc;
+}
+
+.c_share2 {
+  background: #08ce5b;
+}
+
+button, button:hover {
+  background: transparent;
+  line-height: 1.25;
+}

@@ -1,0 +1,46 @@
+.mask{
+  position:absolute;
+  top:0;
+  left:0;
+  bottom:0;
+  right:0;
+  background-color:rgba(0,0,0,0.5);
+  justify-content:center;
+}
+.act_box{
+  width:680rpx;
+  height:320rpx;
+  background:#FFF;
+  border-radius:10rpx;
+  justify-content:center;
+}
+.suc{
+  width:96rpx;
+  height:96rpx;
+  border-radius:50%;
+  background:#09bb07;
+  position:relative;
+  justify-content:center;
+  margin-bottom:8rpx;
+}
+.suc:after{
+  content:'';
+  display:inline-block;
+  width:48rpx;
+  height:30rpx;
+  box-sizing:border-box;
+  border:8rpx solid #FFF;
+  border-width:0 0 8rpx 8rpx;
+  position:relative;
+  transform:rotate(-45deg);
+  margin-top:-8rpx;
+}
+.tip{
+  color:#000;
+  font-size:30rpx;
+  padding:8rpx 0;
+}
+.into>text{
+  color:#2093fc;
+  padding:0 4rpx;
+}

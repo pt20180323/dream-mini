@@ -1,0 +1,135 @@
+
+page {
+  position: relative;
+  background: #f9f9f9;
+  min-height: 100%;
+}
+.searchNav{
+  position: relative;
+  width: 100%;
+  height: 100rpx;
+  background: #fff;
+  border-top: 1rpx solid #f5f5f5;
+  border-bottom: 2rpx solid #f5f5f5;
+  padding: 23rpx 23rpx 20rpx 36rpx;
+  box-sizing: border-box;
+}
+.search_con{
+  position: absolute;
+  width: 200rpx;
+  background: #fff;
+  border-left: 1rpx solid #f5f5f5;
+  border-right: 1rpx solid #f5f5f5;
+  z-index: 10;
+}
+.con_line{
+  height: 70rpx;
+  border-bottom: 1rpx solid #f5f5f5;
+  line-height: 70rpx;
+  padding-left: 30rpx;
+}
+.search_con image{
+  position: relative;
+  top: 12rpx;
+  width: 52rpx;
+  height: 41rpx;
+  margin-right: 15rpx;
+}
+.section{
+  position: relative;
+  width: 690rpx;
+  height: 55rpx;
+  border: 1rpx solid #f5f5f5;
+  border-radius: 10rpx;
+}
+.section>input{
+  padding-left: 220rpx;
+}
+.search_title{
+  width: 150rpx;
+  height: 55rpx;
+  line-height: 55rpx;
+  text-align: center;
+  font-size: 28rpx;
+  color: #666666;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.search_title>image{
+  position: relative;
+  width: 25rpx;
+  height: 12rpx;
+  bottom: 5rpx;
+}
+.close{
+  width: 50rpx;
+  height: 45rpx;
+  position: absolute;
+  top: 5rpx;
+  right: 10rpx;
+  z-index: 10;
+}
+.search{
+  width: 50rpx;
+  height: 45rpx;
+  position: absolute;
+  left: 150rpx;
+  top: 5rpx;
+  border-left: 1rpx solid #f5f5f5;
+  padding-left:10rpx;
+}
+.pic_hidden{
+  visibility: hidden;
+}
+.pic_show{
+  visibility: visible;
+}
+.category{
+  width: 100%;
+  background: #fff;
+  margin-top: 1rpx;
+}
+.grade_one,.grade_all{
+  position: relative;
+  min-height: 100rpx;
+  border-bottom: 1rpx solid #f5f5f5;
+  line-height: 100rpx;
+  padding-left: 50rpx;
+}
+.openImg{
+  position: absolute;
+  width: 22rpx;
+  height: 22rpx;
+  top: 40rpx;
+  left: 20rpx;
+}
+.grade_two{
+  position: relative;
+  min-height: 100rpx;
+  border-top: 1rpx solid #f5f5f5;
+  line-height: 100rpx;
+  padding-left: 50rpx;
+}
+.grade_three{
+  min-height: 100rpx;
+  border-top: 1rpx solid #f5f5f5;
+  line-height: 100rpx;
+  padding-left: 50rpx;
+}
+.txt_wh{
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  color: #000;
+  font-size: 28rpx;
+}
+.grade_show {
+  display: block;
+}
+.grade_hidden{
+  display: none;
+}
+.txt_common{
+  color: #ff0036;
+}

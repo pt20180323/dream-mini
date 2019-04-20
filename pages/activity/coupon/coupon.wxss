@@ -1,0 +1,279 @@
+.count_box{
+  padding: 10rpx 0;
+}
+.coupon_box {
+  background: #fff;
+}
+.coupon_item {
+  position: relative;
+  height: 196rpx;
+  background: #fff7f7;
+  border-radius: 14rpx;
+  display: flex;
+  flex-direction: row;
+  border: 2rpx solid #ffe4e9;
+  margin: 25rpx 25rpx 30rpx 25rpx;
+}
+
+.coupon_content {
+  padding-top: 16rpx;
+}
+
+.c_header {
+  height: 53rpx;
+  justify-content: space-between;
+  padding: 0 10rpx;
+  margin: 0 20rpx;
+  position: relative;
+}
+
+.c_info {
+  z-index: 10;
+  border-radius: 0 0 6rpx 6rpx;
+  position: relative;
+}
+
+.c_left {
+  color: #ff9400;
+  font-size: 40rpx;
+  height: 170rpx;
+  width: 200rpx;
+  padding-left: 20rpx;
+}
+
+.f_80 {
+  font-size: 80rpx;
+}
+
+.f_32 {
+  font-size: 32rpx;
+}
+
+.c_right {
+  color: #999;
+  font-size: 24rpx;
+  width: 380rpx;
+}
+
+.fs_56 {
+  font-size: 56rpx;
+}
+
+.c_999 {
+  color: #999;
+}
+
+.coupon_cir {
+  width: 664rpx;
+  height: 6rpx;
+}
+
+.head_box {
+  height: 64rpx;
+  background: #fff4df;
+  color: #ff9400;
+  font-size: 24rpx;
+  margin: 12rpx 25rpx;
+  position: relative;
+  border-radius: 8rpx;
+}
+
+.checkbox {
+  width: 88rpx;
+  height: 56rpx;
+  background-color: #ff9400;
+  border-radius: 28px;
+  font-size: 24rpx;
+  color: #fff;
+  position: absolute;
+  bottom: 50rpx;
+  right: 30rpx;
+}
+
+.ac_list {
+  width: 132rpx;
+  height: 40rpx;
+  background-color: #ff9400;
+  border-radius: 24rpx;
+  border: solid 2rpx #ff9400;
+  font-size: 22rpx;
+  color: #fff;
+  position: absolute;
+  right: 20rpx;
+  top: 50%;
+  margin-top: -20rpx;
+}
+
+.known_icon {
+  width: 32rpx;
+  height: 32rpx;
+  margin: 0 10rpx 0 20rpx;
+}
+
+.mask {
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  height: 0;
+  position: fixed;
+  background: rgba(0, 0, 0, 0.6);
+  transition: opacity 0.3s ease-in-out;
+  z-index: 9999;
+  opacity: 0;
+}
+
+.showmask {
+  height: 100%;
+  opacity: 1;
+}
+
+.iknow_tip {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+  width: 560rpx;
+}
+
+.icon_box {
+  color: #fff;
+  font-size: 30rpx;
+  width: 200rpx;
+}
+
+.icon_btn {
+  width: 80rpx;
+  height: 80rpx;
+  background-color: #ff9400;
+  border-radius: 40rpx;
+  margin-bottom: 15rpx;
+}
+
+.c_share1 {
+  background: #2093fc;
+}
+
+.c_share2 {
+  background: #08ce5b;
+}
+
+.c_share3 {
+  background: #f74866;
+}
+
+.c_tips {
+  font-size: 24rpx;
+  color: #ef4047;
+}
+
+button, button:hover {
+  background: transparent;
+  line-height: 1.25;
+}
+
+.left_cir, .right_cir {
+  width: 36rpx;
+  height: 18rpx;
+  position: absolute;
+  top: 45rpx;
+  background: #fff;
+  border: 2rpx solid #eee;
+  border-bottom: none;
+  border-radius: 36rpx 36rpx 0 0;
+}
+
+.left_cir {
+  left: -14rpx;
+  transform: rotate(90deg);
+}
+
+.right_cir {
+  right: -14rpx;
+  transform: rotate(-90deg);
+}
+
+.g_mt_15 {
+  margin-top: 15rpx;
+}
+.bg{
+  background:#f2f2f2;
+  border: 2rpx solid #eee;
+}
+
+.left_box{
+  position: relative;
+  padding: 0 24rpx;
+  border-right: dashed 2rpx #ffe4e9;
+  width: 180rpx;
+}
+.left_box2{
+  border-right: dashed 2rpx #ddd;
+}
+.left_box:before{
+  content: '';
+  display: block;
+  position: absolute;
+  width: 20rpx;
+  height: 10rpx;
+  border: 2rpx solid #ffe4e9;
+  border-top: none;
+  background: #fff;
+  border-radius: 0 0 20rpx 20rpx;
+  top: -2rpx;
+  right: -12rpx;
+}
+.left_box:after{
+  content: '';
+  display: block;
+  position: absolute;
+  width: 20rpx;
+  height: 10rpx;
+  border: 2rpx solid #ffe4e9;
+  border-bottom: none;
+  border-radius: 20rpx 20rpx 0 0;
+  bottom: -2rpx;
+  right: -12rpx;
+  background: #fff;
+}
+.right_box{
+  flex: 1;
+  padding: 0 22rpx 0 26rpx;
+  position: relative;
+}
+.btn{
+  width: 132rpx;
+  height: 56rpx;
+  background: #fe2f54;
+  border-radius: 30rpx;
+  color: #fff;
+  font-size: 24rpx;
+  flex-shrink: 0;
+}
+.c_date{
+  font-size: 24rpx;
+  color: #666;
+  max-width: 260rpx;
+}
+.c_name{
+  font-size: 28rpx;
+  color: #333;
+  margin-bottom: 20rpx;
+  max-width: 260rpx;
+}
+.fs_56{
+  font-size: 56rpx;
+}
+.fe2f54{
+  color: #fe2f54;
+}
+.f999{
+  color: #999;
+}
+.weight{
+  font-weight: 600;
+}
+.ellipsis{
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow:ellipsis;
+}

@@ -1,0 +1,75 @@
+.mask_commission{
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  bottom:0;
+  left:0;
+  right: 0; 
+  background: rgba(0, 0, 0, .5);
+  padding: 0 87rpx;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.mask_box{
+  width: 100%;
+  background: #fff;
+  border-radius: 12rpx;
+  overflow: auto;
+}
+.mask_tit{
+  height: 90rpx;
+  justify-content: space-between;
+  background: #f2f2f2;
+  line-height: 90rpx;
+  padding: 0 60rpx;
+  color: #333;
+  border-radius: 12rpx;
+}
+.mask_content{
+  max-height: 600rpx;
+  overflow: auto;
+}
+.mask_desc{
+  min-height:50rpx;
+  justify-content: space-between;
+  line-height:50rpx;
+  padding: 20rpx 50rpx;
+}
+.mask_btn{
+  width: 200rpx;
+  height: 66rpx;
+  border: 2rpx solid #ff0036;
+  box-sizing: border-box;
+  border-radius: 30rpx;
+  line-height: 66rpx;
+  text-align: center;
+  background: #fff;
+  color: #ff3636;
+  font-size: 26rpx;
+  margin: 0 auto;
+}
+.btn_box{
+  padding-bottom: 30rpx;
+}
+.commission{
+  position: absolute;
+  z-index: 1;
+  background: #ffebef;
+  color: #ff0036;
+  padding: 10rpx 20rpx;
+  box-sizing: border-box;
+  border-radius: 39rpx;
+  top: 674rpx;
+  left: 10rpx;
+}
+.commission_more{
+  padding-left: 15rpx;
+  width: 30rpx;
+  height: 30rpx;
+}
+.commission_more>image{
+  width: 30rpx;
+  height: 30rpx;
+}

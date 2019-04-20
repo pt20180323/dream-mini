@@ -1,0 +1,85 @@
+page{
+  background:#f2f2f2;
+}
+.couponDetTop{
+  background:#fff;
+  text-align:center;
+  overflow:hidden;
+}
+.couponDetName{
+  height:70rpx;
+  line-height:70rpx;
+  color:#000;
+  font-size:36rpx;
+}
+.couponDetTips{
+  height:36rpx;
+  line-height:36rpx;
+  font-size:24rpx;
+  color:#666;
+}
+.couponDetImg{
+  overflow:hidden;
+  margin:28rpx auto 0;
+  width:350rpx;
+  height:350rpx;
+  position:relative;
+}
+.couponDetImg image{
+  width:350rpx;
+  height:350rpx;
+}
+.card_mask{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.8);
+  justify-content:center;
+  font-size:48rpx;
+  color:#FFF;
+}
+.get_card{
+  width:212rpx;
+  height:60rpx;
+  border-radius:30rpx;
+  text-align:center;
+  line-height:60rpx;
+  font-size:30rpx;
+  background:#ff4949;
+}
+.payTips{
+  font-size:30rpx;
+  color:#999;
+  line-height:86rpx;
+}
+.couponDetTxt{
+  background:#fff;
+  overflow:hidden;
+  margin-top:10rpx;
+  padding:22rpx;
+  line-height:50rpx;
+  font-size:28rpx;
+  color:#666;
+}
+.couLeftTxt{
+  display:inline-block;
+  color:#000;
+}
+.storeName{
+  color:#000;
+  line-height:46rpx;
+  margin-top:5rpx;
+}
+.storeAdd{
+  line-height:40rpx;
+  padding-bottom:8rpx;
+}
+.lt_line_box{
+  width:100%;
+}
+.gift{
+  width:40rpx;
+  height:40rpx;
+}

@@ -1,0 +1,164 @@
+page{
+  background:#f2f2f2;
+}
+.list-g-box{
+  position:absolute;
+  top:100rpx;
+  bottom:0;
+  left:0;
+  right:0;
+}
+.order_num{
+  width: 32rpx;
+  height: 32rpx;
+  position: absolute;
+  content: '';
+  border-radius: 32rpx;
+  background: #ff0036;
+  color: #fff;
+  font-size: 20rpx;
+  top: 20rpx;
+  right:40rpx;
+}
+.o_nav_i{
+  display:flex;
+  flex-direction:row;
+  flex:1;
+  height:100rpx;
+  justify-content:center;
+  align-items:center;
+  position:relative;
+  color:#000;
+  background:#FFF;
+}
+.o_nav_c{
+  color:#ff0036;
+}
+.o_nav_c:after{
+  content:'';
+  display:block;
+  position:absolute;
+  left:25rpx;
+  right:25rpx;
+  bottom:0;
+  height:5rpx;
+  background:#ff0036;
+}
+.c_order_nums{
+  font-size: 24rpx;
+  color: #999;
+  height: 50rpx;
+}
+.ol_i_status{
+  padding: 0 25rpx;
+  height: 80rpx;
+  position: relative;
+  background: #fff;
+  color: #333;
+}
+.o_l_item{
+  margin-bottom:20rpx;
+  padding:0 25rpx;
+  background:#FFF;
+  position:relative;
+}
+.o_leader_ico{
+  display:block;
+  position:absolute;
+  left:0;
+  top:80rpx;
+  z-index:3;
+  width:76rpx;
+  height:76rpx;
+}
+.o_leader_ico:before{
+  content:'';
+  display:block;
+  position:absolute;
+  left:0;
+  top:0;
+  width:0; 
+  height:0;
+  border-width:38rpx;
+  border-style:solid;
+  border-color:#ff0036 transparent transparent #ff0036;
+}
+.o_leader_ico text{
+  display:block;
+  width:100%;
+  line-height:24rpx;
+  text-align:center;
+  color:#FFF;
+  font-size:22rpx;
+  position:absolute;
+  top:15rpx;
+  left:-12rpx;
+  transform:rotate(-45deg);
+  z-index:2;
+}
+.ol_i_head{
+  position:relative;
+  height:80rpx;
+}
+.ol_i_box{
+  position:relative;
+  padding:30rpx 0;
+}
+.ol_i_box>image{
+  flex-shrink:0;
+  width:200rpx;
+  height:200rpx;
+  box-sizing:border-box;
+  border:1px solid #e3e3e3;
+  margin-right:30rpx;
+}
+.o_p_tit{
+  text-align:justify;
+  color:#000;
+  font-size:30rpx;
+}
+.o_p_pro{
+  font-size:24rpx;
+  color:#666;
+  margin-top:10rpx;
+}
+.o_p_price{
+  font-size:26rpx;
+  color:#666;  
+}
+.o_p_price>text{
+  color:#ff0036;
+}
+.ol_i_bot{
+  height:100rpx;
+}
+.ol_i_bot>text{
+  line-height:30rpx;
+}
+.ol_btn{
+  display:inline-block;
+  width:180rpx;
+  height:60rpx;
+  line-height:60rpx;
+  text-align:center;
+  border:1px solid #e3e3e3;
+  border-radius:10rpx;
+  margin-left:20rpx;
+  box-sizing:border-box;
+  color:#333;
+  position:relative;
+  font-size:28rpx;
+}
+.g_red_btn{
+  background:#ff0036;
+  border-color:#ff0036;
+  color:#FFF;
+}
+.form_id_mask{
+  position:absolute;
+  width:100%;
+  height:100%;
+  top:0;
+  left:0;
+  background:none;
+}

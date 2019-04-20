@@ -1,0 +1,615 @@
+<view class="f_col" wx:if="{{isloaded}}">
+  <view class="f_row f_r_cnt f_jc_cnt top">
+    <label class="i_sp">!</label>只能提交同一个供应商下相同配送方式的商品
+  </view>
+  <view class="f_col sc_g_box" wx:for="{{cartlist}}" wx:for-index="idx" wx:key="list" wx:for-item="item">
+    <!--系统配送-->
+    <view class="f_col sc_item" wx:if="{{item.virtualLinecar}}">
+      <block wx:for="{{item.virtualLinecar.linecarSupplierGroupList}}" wx:for-index="GroupI" wx:key="{{GroupI}}" wx:for-item="GroupItem">
+        <view class="f_row f_r_cnt f_jc_sb sc_i_top">
+          <view class="cpn_chk {{GroupItem.isAllSelected ? 'cpn_cur' : ''}}" data-str="virtualLinecar" data-groupI="{{GroupI}}" data-cartI="{{idx}}" bindtap="selectAll"></view>
+          <view class="f_row f_r_cnt f_jc_sb sc_top_t g_line_bot">
+            <text class="c_black">系统配送</text>
+            <view class="f_row f_r_cnt f_jc_cnt i_del_box" data-idx="{{idx}}" data-str="virtualLinecar" data-groupI="{{GroupI}}" bindtap="removeCart">
+              <text class="icon-del"></text>
+            </view>
+          </view>
+        </view>
+        <view class="f_row f_r_cnt g_line_bot store_s" wx:if="{{GroupItem.supplierName}}">
+          <text class="icon-store"></text>
+          <text>{{GroupItem.supplierName}}</text>
+        </view>
+        <view class="f_col sc_list">
+          <block wx:for='{{GroupItem.linecarResponseList}}' wx:for-index="sidx" wx:key="slist" wx:for-item="sitem">
+            <navigator open-type="navigate" url="/pages/reduce/reduce?activityId={{sitem.fulReduceInfoResponse.activityId}}" class="f_row f_jc_sb f_r_cnt bg_light_red reduce_line" wx:if="{{sitem.fulReduceInfoResponse && sitem.fulReduceInfoResponse.activityId && sitem.fulReduceInfoResponse.activityId !== GroupItem.linecarResponseList[sidx-1].fulReduceInfoResponse.activityId}}">
+              <view class="f_row f_jc_sb f_r_cnt">
+                <text class="rd_txt_i txt_color">满减</text>
+                <view class="reduce_txt">{{sitem.fulReduceInfoResponse.fullMark}}</view>
+              </view>
+              <text class="icon-arr"></text>
+            </navigator>
+            <view class="f_row f_r_cnt f_jc_sb sc_l_item {{sitem.fulReduceInfoResponse && sitem.fulReduceInfoResponse.activityId ? 'bg_light_red' : ''}}">
+              <view class="cpn_chk {{sitem.selected ? 'cpn_cur' : ''}}" bindtap="selectItem" data-str="virtualLinecar" data-groupi="{{GroupI}}" data-idx="{{idx}}" data-sidx="{{sidx}}"></view>
+              <view class="f_row sc_li_s">
+                <navigator class="img_nav" open-type="navigate" url="/pages/commonshop/productDetail/productDetail?goodsId={{sitem.goodsId}}&shopId={{sitem.shopId}}&storeId={{sitem.storeId}}">
+                  <image class="sc_p_img" src="{{sitem.goodsPic}}"></image>
+                </navigator>
+                <view class="f_col sc_l_des f_jc_sb">
+                  <view class="break_all sc_p_name">{{sitem.goodsName}}</view>
+                  <view class="f_row sc_p_box">
+                    <view class="sc_prop f_row f_r_cnt f_jc_sb" data-detail="{{sitem}}" data-shop="{{sitem.shopId}}" data-store="{{sitem.storeId}}" data-goods="{{sitem.goodsId}}" data-sku="{{sitem.skuId}}" wx:if="{{sitem.attrName}}" bindtap="getSkuTree">
+                      <view class="ellip">{{sitem.attrName}}</view>
+                      <view class="f_row f_r_cnt f_jc_cnt pp_i_box">
+                        <image src="/static/ico/arr_b.png"></image>
+                      </view>
+                    </view>
+                  </view>
+                  <!-- 赠品 -->
+                  <block wx:if="{{sitem.skuGiftSet && sitem.skuGiftSet.skuGiftList}}">
+                    <view class='f_row'>
+                      <text class='g_mt_10'>赠品:</text>
+                      <view class='f_col flex1 g_ml_10'>
+                        <block wx:for="{{sitem.skuGiftSet.skuGiftList}}" wx:for-item="gifItem" wx:for-index="gifIndex" wx:key="gifIndex">
+                          <text class='g_mt_10'>{{gifItem.name}} X{{gifItem.num}}</text>
+                        </block>
+                      </view>
+                    </view>
+                  </block>
+                  <!-- 商品价格 -->
+                  <view class="sc_l_bot f_row f_r_cnt f_jc_sb">
+                    <!-- 如果是会员 且  有会员价商品-->
+                    <block wx:if="{{isPaidMember && sitem.isShowGoodsMemberPrice && sitem.goodsMemberPriceResponse}}">
+                      <view class='f_row f_r_cnt'>
+                        <view class='f_vip f_row f_r_cnt f_jc_cnt'>会员价</view>
+                        <view class="c_ff4949">
+                          <label class="fs_24">￥</label>{{sitem.goodsMemberPriceResponse.amount/100}}
+                        </view>
+                        <text class='through'>￥{{sitem.priceDouble}}</text>
+                      </view>
+                    </block>
+                    <!-- 如果不是会员 且  有会员价商品-->
+                    <block wx:elif="{{!isPaidMember && sitem.isShowGoodsMemberPrice && sitem.goodsMemberPriceResponse}}">
+                      <view class='f_row f_r_cnt'>
+                        <view class="c_ff4949">
+                          <label class="fs_24">￥</label>{{sitem.priceDouble}}
+                        </view>
+                        <view class='f_vip f_row f_r_cnt f_jc_cnt'>会员价</view>
+                        <text class='through'>￥{{sitem.goodsMemberPriceResponse.amount/100}}</text>
+                      </view>
+                    </block>
+                    <!-- 如果 没有会员价商品 或 没有会员价商品信息 -->
+                    <block wx:if="{{!sitem.isShowGoodsMemberPrice || !sitem.goodsMemberPriceResponse}}">
+                      <view class='f_row f_r_cnt'>
+                        <view class="c_ff4949">
+                          <label class="fs_24">￥</label>{{sitem.priceDouble}}
+                        </view>
+                      </view>
+                    </block>
+                    <view class="f_row f_r_cnt f_jc_sb sc_num_box box_size">
+                      <button class="sc_n_p" bindtap="togNum" data-sku="{{sitem.skuId}}" data-goods="{{sitem.goodsId}}" data-cart="{{sitem.linecarId}}" data-str="virtualLinecar" data-item="{{idx}}" data-sitem="{{sidx}}" data-groupi="{{GroupI}}" data-type="0">-</button>
+                      <input type="number" bindblur="iptBlur" data-sku="{{sitem.skuId}}" data-goods="{{sitem.goodsId}}" data-cart="{{sitem.linecarId}}" data-str="virtualLinecar" data-item="{{idx}}" data-sitem="{{sidx}}" data-groupi="{{GroupI}}" bindinput="numChange" value="{{sitem.numbers}}" class="num_i"></input>
+                      <button class="sc_n_p" bindtap="togNum" data-sku="{{sitem.skuId}}" data-goods="{{sitem.goodsId}}" data-cart="{{sitem.linecarId}}" data-str="virtualLinecar" data-item="{{idx}}" data-sitem="{{sidx}}" data-groupi="{{GroupI}}" data-type="1">+</button>
+                    </view>
+                  </view>
+                  <!-- 如果有 会员价省多少钱 且 有会员价商品-->
+                  <view wx:if="{{sitem.memberPriceCutAmount && sitem.memberPriceNumbers}}">
+                    会员价省{{sitem.memberPriceCutAmount}}元：会员价商品{{sitem.memberPriceNumbers}}个
+                  </view>
+                </view>
+              </view>
+            </view>
+          </block>
+          <!--end-->
+          <view class="f_row f_r_cnt sc_bot g_line_top">
+            <view class="f_bold">合计：
+              <text class="sc_tot_price">￥{{GroupItem.amount/100}}</text>
+            </view>
+            <button data-settle="{{GroupItem.hasSettle}}" data-lidx="{{idx}}" bindtap="gotoOrder" class="goto_order {{GroupItem.hasSettle ? '' : 'goto_dis'}}">结算</button>
+          </view>
+        </view>
+      </block>
+    </view>
+    <!--商家配送-->
+    <view class="f_col sc_item" wx:if="{{item.shopLinecar}}">
+      <block wx:for="{{item.shopLinecar.linecarSupplierGroupList}}" wx:for-index="GroupI" wx:key="{{GroupI}}" wx:for-item="GroupItem">
+        <view class="f_row f_r_cnt f_jc_sb sc_i_top">
+          <view class="cpn_chk {{GroupItem.isAllSelected ? 'cpn_cur' : ''}}" data-str="shopLinecar" data-groupI="{{GroupI}}" data-cartI="{{idx}}" bindtap="selectAll"></view>
+          <view class="f_row f_r_cnt f_jc_sb sc_top_t g_line_bot">
+            <text class="c_black">商家配送</text>
+            <view class="f_row f_r_cnt f_jc_cnt i_del_box" data-idx="{{idx}}" data-str="shopLinecar" data-groupI="{{GroupI}}" bindtap="removeCart">
+              <text class="icon-del"></text>
+            </view>
+          </view>
+        </view>
+        <view class="f_row f_r_cnt g_line_bot store_s" wx:if="{{GroupItem.supplierName}}">
+          <text class="icon-store"></text>
+          <text>{{GroupItem.supplierName}}</text>
+        </view>
+        <view class="f_col sc_list">
+          <block wx:for='{{GroupItem.linecarResponseList}}' wx:for-index="sidx" wx:key="slist" wx:for-item="sitem">
+            <navigator open-type="navigate" url="/pages/reduce/reduce?activityId={{sitem.fulReduceInfoResponse.activityId}}" class="f_row f_jc_sb f_r_cnt bg_light_red reduce_line" wx:if="{{sitem.fulReduceInfoResponse && sitem.fulReduceInfoResponse.activityId && sitem.fulReduceInfoResponse.activityId !== GroupItem.linecarResponseList[sidx-1].fulReduceInfoResponse.activityId}}">
+              <view class="f_row f_jc_sb f_r_cnt">
+                <text class="rd_txt_i txt_color">满减</text>
+                <view class="reduce_txt">{{sitem.fulReduceInfoResponse.fullMark}}</view>
+              </view>
+              <text class="icon-arr"></text>
+            </navigator>
+            <view class="f_row f_r_cnt f_jc_sb sc_l_item {{sitem.fulReduceInfoResponse && sitem.fulReduceInfoResponse.activityId ? 'bg_light_red' : ''}}">
+              <view class="cpn_chk {{sitem.selected ? 'cpn_cur' : ''}}" bindtap="selectItem" data-str="shopLinecar" data-groupi="{{GroupI}}" data-idx="{{idx}}" data-sidx="{{sidx}}"></view>
+              <view class="f_row sc_li_s">
+                <navigator class="img_nav" open-type="navigate" url="/pages/commonshop/productDetail/productDetail?goodsId={{sitem.goodsId}}&shopId={{sitem.shopId}}&storeId={{sitem.storeId}}">
+                  <image class="sc_p_img" src="{{sitem.goodsPic}}"></image>
+                </navigator>
+                <view class="f_col sc_l_des f_jc_sb">
+                  <view class="break_all sc_p_name">{{sitem.goodsName}}</view>
+                  <view class="f_row sc_p_box">
+                    <view class="sc_prop f_row f_r_cnt f_jc_sb" data-detail="{{sitem}}" data-shop="{{sitem.shopId}}" data-store="{{sitem.storeId}}" data-goods="{{sitem.goodsId}}" data-sku="{{sitem.skuId}}" wx:if="{{sitem.attrName}}" bindtap="getSkuTree">
+                      <view class="ellip">{{sitem.attrName}}</view>
+                      <view class="f_row f_r_cnt f_jc_cnt pp_i_box">
+                        <image src="/static/ico/arr_b.png"></image>
+                      </view>
+                    </view>
+                  </view>
+                  <!-- 赠品 -->
+                  <block wx:if="{{sitem.skuGiftSet && sitem.skuGiftSet.skuGiftList}}">
+                    <view class='f_row'>
+                      <text class='g_mt_10'>赠品:</text>
+                      <view class='f_col flex1 g_ml_10'>
+                        <block wx:for="{{sitem.skuGiftSet.skuGiftList}}" wx:for-item="gifItem" wx:for-index="gifIndex" wx:key="gifIndex">
+                          <text class='g_mt_10'>{{gifItem.name}} X{{gifItem.num}}</text>
+                        </block>
+                      </view>
+                    </view>
+                  </block>
+                  <!-- 商品价格 -->
+                  <view class="sc_l_bot f_row f_r_cnt f_jc_sb">
+                    <!-- 如果是会员 且  有会员价商品-->
+                    <block wx:if="{{isPaidMember && sitem.isShowGoodsMemberPrice && sitem.goodsMemberPriceResponse}}">
+                      <view class='f_row f_r_cnt'>
+                        <view class='f_vip f_row f_r_cnt f_jc_cnt'>会员价</view>
+                        <view class="c_ff4949">
+                          <label class="fs_24">￥</label>{{sitem.goodsMemberPriceResponse.amount/100}}
+                        </view>
+                        <text class='through'>￥{{sitem.priceDouble}}</text>
+                      </view>
+                    </block>
+                    <!-- 如果不是会员 且  有会员价商品-->
+                    <block wx:elif="{{!isPaidMember && sitem.isShowGoodsMemberPrice && sitem.goodsMemberPriceResponse}}">
+                      <view class='f_row f_r_cnt'>
+                        <view class="c_ff4949">
+                          <label class="fs_24">￥</label>{{sitem.priceDouble}}
+                        </view>
+                        <view class='f_vip f_row f_r_cnt f_jc_cnt'>会员价</view>
+                        <text class='through'>￥{{sitem.goodsMemberPriceResponse.amount/100}}</text>
+                      </view>
+                    </block>
+                    <!-- 如果 没有会员价商品 或 没有会员价商品信息 -->
+                    <block wx:if="{{!sitem.isShowGoodsMemberPrice || !sitem.goodsMemberPriceResponse}}">
+                      <view class='f_row f_r_cnt'>
+                        <view class="c_ff4949">
+                          <label class="fs_24">￥</label>{{sitem.priceDouble}}
+                        </view>
+                      </view>
+                    </block>
+                    <view class="f_row f_r_cnt f_jc_sb sc_num_box box_size">
+                      <button class="sc_n_p" bindtap="togNum" data-sku="{{sitem.skuId}}" data-goods="{{sitem.goodsId}}" data-cart="{{sitem.linecarId}}" data-str="shopLinecar" data-item="{{idx}}" data-sitem="{{sidx}}" data-groupi="{{GroupI}}" data-type="0">-</button>
+                      <input type="number" bindblur="iptBlur" data-sku="{{sitem.skuId}}" data-goods="{{sitem.goodsId}}" data-cart="{{sitem.linecarId}}" data-str="shopLinecar" data-item="{{idx}}" data-sitem="{{sidx}}" data-groupi="{{GroupI}}" bindinput="numChange" value="{{sitem.numbers}}" class="num_i"></input>
+                      <button class="sc_n_p" bindtap="togNum" data-sku="{{sitem.skuId}}" data-goods="{{sitem.goodsId}}" data-cart="{{sitem.linecarId}}" data-str="shopLinecar" data-item="{{idx}}" data-sitem="{{sidx}}" data-groupi="{{GroupI}}" data-type="1">+</button>
+                    </view>
+                  </view>
+                  <!-- 如果有 会员价省多少钱 且 有会员价商品-->
+                  <view wx:if="{{sitem.memberPriceCutAmount && sitem.memberPriceNumbers}}">
+                    会员价省{{sitem.memberPriceCutAmount}}元：会员价商品{{sitem.memberPriceNumbers}}个
+                  </view>
+                </view>
+              </view>
+            </view>
+          </block>
+          <!--end-->
+          <view class="f_row f_r_cnt sc_bot g_line_top">
+            <view class="f_bold">合计：
+              <text class="sc_tot_price">￥{{GroupItem.amount/100}}</text>
+            </view>
+            <button data-settle="{{GroupItem.hasSettle}}" data-lidx="{{idx}}" bindtap="gotoOrder" class="goto_order {{GroupItem.hasSettle ? '' : 'goto_dis'}}">结算</button>
+          </view>
+        </view>
+      </block>
+    </view>
+    <!--快递配送-->
+    <view class="f_col sc_item" wx:if="{{item.expressLinecar}}">
+      <block wx:for="{{item.expressLinecar.linecarSupplierGroupList}}" wx:for-index="GroupI" wx:key="{{GroupI}}" wx:for-item="GroupItem">
+        <view class="f_row f_r_cnt f_jc_sb sc_i_top">
+          <view class="cpn_chk {{GroupItem.isAllSelected ? 'cpn_cur' : ''}}" data-str="expressLinecar" data-groupI="{{GroupI}}" data-cartI="{{idx}}" bindtap="selectAll"></view>
+          <view class="f_row f_r_cnt f_jc_sb sc_top_t g_line_bot">
+            <text class="c_black">快递配送</text>
+            <view class="f_row f_r_cnt f_jc_cnt i_del_box" data-idx="{{idx}}" data-str="expressLinecar" data-groupI="{{GroupI}}" bindtap="removeCart">
+              <text class="icon-del"></text>
+            </view>
+          </view>
+        </view>
+        <view class="f_row f_r_cnt g_line_bot store_s" wx:if="{{GroupItem.supplierName}}">
+          <text class="icon-store"></text>
+          <text>{{GroupItem.supplierName}}</text>
+        </view>
+        <view class="f_col sc_list">
+          <block wx:for='{{GroupItem.linecarResponseList}}' wx:for-index="sidx" wx:key="slist" wx:for-item="sitem">
+            <navigator open-type="navigate" url="/pages/reduce/reduce?activityId={{sitem.fulReduceInfoResponse.activityId}}" class="f_row f_jc_sb f_r_cnt bg_light_red reduce_line" wx:if="{{sitem.fulReduceInfoResponse && sitem.fulReduceInfoResponse.activityId && sitem.fulReduceInfoResponse.activityId !== GroupItem.linecarResponseList[sidx-1].fulReduceInfoResponse.activityId}}">
+              <view class="f_row f_jc_sb f_r_cnt">
+                <text class="rd_txt_i txt_color">满减</text>
+                <view class="reduce_txt">{{sitem.fulReduceInfoResponse.fullMark}}</view>
+              </view>
+              <text class="icon-arr"></text>
+            </navigator>
+            <view class="f_row f_r_cnt f_jc_sb sc_l_item {{sitem.fulReduceInfoResponse && sitem.fulReduceInfoResponse.activityId ? 'bg_light_red' : ''}}">
+              <view class="cpn_chk {{sitem.selected ? 'cpn_cur' : ''}}" bindtap="selectItem" data-str="expressLinecar" data-groupi="{{GroupI}}" data-idx="{{idx}}" data-sidx="{{sidx}}"></view>
+              <view class="f_row sc_li_s">
+                <navigator class="img_nav" open-type="navigate" url="/pages/commonshop/productDetail/productDetail?goodsId={{sitem.goodsId}}&shopId={{sitem.shopId}}&storeId={{sitem.storeId}}">
+                  <image class="sc_p_img" src="{{sitem.goodsPic}}"></image>
+                </navigator>
+                <view class="f_col sc_l_des f_jc_sb">
+                  <view class="break_all sc_p_name">{{sitem.goodsName}}</view>
+                  <view class="f_row sc_p_box">
+                    <view class="sc_prop f_row f_r_cnt f_jc_sb" data-detail="{{sitem}}" data-shop="{{sitem.shopId}}" data-store="{{sitem.storeId}}" data-goods="{{sitem.goodsId}}" data-sku="{{sitem.skuId}}" wx:if="{{sitem.attrName}}" bindtap="getSkuTree">
+                      <view class="ellip">{{sitem.attrName}}</view>
+                      <view class="f_row f_r_cnt f_jc_cnt pp_i_box">
+                        <image src="/static/ico/arr_b.png"></image>
+                      </view>
+                    </view>
+                  </view>
+                  <!-- 赠品 -->
+                  <block wx:if="{{sitem.skuGiftSet && sitem.skuGiftSet.skuGiftList}}">
+                    <view class='f_row'>
+                      <text class='g_mt_10'>赠品:</text>
+                      <view class='f_col flex1 g_ml_10'>
+                        <block wx:for="{{sitem.skuGiftSet.skuGiftList}}" wx:for-item="gifItem" wx:for-index="gifIndex" wx:key="gifIndex">
+                          <text class='g_mt_10'>{{gifItem.name}} X{{gifItem.num}}</text>
+                        </block>
+                      </view>
+                    </view>
+                  </block>
+                  <!-- 商品价格 -->
+                  <view class="sc_l_bot f_row f_r_cnt f_jc_sb">
+                    <!-- 如果是会员 且  有会员价商品-->
+                    <block wx:if="{{isPaidMember && sitem.isShowGoodsMemberPrice && sitem.goodsMemberPriceResponse}}">
+                      <view class='f_row f_r_cnt'>
+                        <view class='f_vip f_row f_r_cnt f_jc_cnt'>会员价</view>
+                        <view class="c_ff4949">
+                          <label class="fs_24">￥</label>{{sitem.goodsMemberPriceResponse.amount/100}}
+                        </view>
+                        <text class='through'>￥{{sitem.priceDouble}}</text>
+                      </view>
+                    </block>
+                    <!-- 如果不是会员 且  有会员价商品-->
+                    <block wx:elif="{{!isPaidMember && sitem.isShowGoodsMemberPrice && sitem.goodsMemberPriceResponse}}">
+                      <view class='f_row f_r_cnt'>
+                        <view class="c_ff4949">
+                          <label class="fs_24">￥</label>{{sitem.priceDouble}}
+                        </view>
+                        <view class='f_vip f_row f_r_cnt f_jc_cnt'>会员价</view>
+                        <text class='through'>￥{{sitem.goodsMemberPriceResponse.amount/100}}</text>
+                      </view>
+                    </block>
+                    <!-- 如果 没有会员价商品 或 没有会员价商品信息 -->
+                    <block wx:if="{{!sitem.isShowGoodsMemberPrice || !sitem.goodsMemberPriceResponse}}">
+                      <view class='f_row f_r_cnt'>
+                        <view class="c_ff4949">
+                          <label class="fs_24">￥</label>{{sitem.priceDouble}}
+                        </view>
+                      </view>
+                    </block>
+                    <view class="f_row f_r_cnt f_jc_sb sc_num_box box_size">
+                      <button class="sc_n_p" bindtap="togNum" data-sku="{{sitem.skuId}}" data-goods="{{sitem.goodsId}}" data-cart="{{sitem.linecarId}}" data-str="expressLinecar" data-item="{{idx}}" data-sitem="{{sidx}}" data-groupi="{{GroupI}}" data-type="0">-</button>
+                      <input type="number" bindblur="iptBlur" data-sku="{{sitem.skuId}}" data-goods="{{sitem.goodsId}}" data-cart="{{sitem.linecarId}}" data-str="expressLinecar" data-item="{{idx}}" data-sitem="{{sidx}}" data-groupi="{{GroupI}}" bindinput="numChange" value="{{sitem.numbers}}" class="num_i"></input>
+                      <button class="sc_n_p" bindtap="togNum" data-sku="{{sitem.skuId}}" data-goods="{{sitem.goodsId}}" data-cart="{{sitem.linecarId}}" data-str="expressLinecar" data-item="{{idx}}" data-sitem="{{sidx}}" data-groupi="{{GroupI}}" data-type="1">+</button>
+                    </view>
+                  </view>
+                  <!-- 如果有 会员价省多少钱 且 有会员价商品-->
+                  <view wx:if="{{sitem.memberPriceCutAmount && sitem.memberPriceNumbers}}">
+                    会员价省{{sitem.memberPriceCutAmount}}元：会员价商品{{sitem.memberPriceNumbers}}个
+                  </view>
+                </view>
+              </view>
+            </view>
+          </block>
+          <!--end-->
+          <view class="f_row f_r_cnt sc_bot g_line_top">
+            <view class="f_bold">合计：
+              <text class="sc_tot_price">￥{{GroupItem.amount/100}}</text>
+            </view>
+            <button data-settle="{{GroupItem.hasSettle}}" data-lidx="{{idx}}" bindtap="gotoOrder" class="goto_order {{GroupItem.hasSettle ? '' : 'goto_dis'}}">结算</button>
+          </view>
+        </view>
+      </block>
+    </view>
+    <!--到店自提-->
+    <view class="f_col sc_item" wx:if="{{item.storeLinecar}}">
+      <block wx:for="{{item.storeLinecar.linecarSupplierGroupList}}" wx:for-index="GroupI" wx:key="{{GroupI}}" wx:for-item="GroupItem">
+        <view class="f_row f_r_cnt f_jc_sb sc_i_top">
+          <view class="cpn_chk {{GroupItem.isAllSelected ? 'cpn_cur' : ''}}" data-str="storeLinecar" data-groupI="{{GroupI}}" data-cartI="{{idx}}" bindtap="selectAll"></view>
+          <view class="f_row f_r_cnt f_jc_sb sc_top_t g_line_bot">
+            <text class="c_black">到店自提</text>
+            <view class="f_row f_r_cnt f_jc_cnt i_del_box" data-idx="{{idx}}" data-str="storeLinecar" data-groupI="{{GroupI}}" bindtap="removeCart">
+              <text class="icon-del"></text>
+            </view>
+          </view>
+        </view>
+        <view class="f_row f_r_cnt g_line_bot store_s" wx:if="{{GroupItem.supplierName}}">
+          <text class="icon-store"></text>
+          <text>{{GroupItem.supplierName}}</text>
+        </view>
+        <view class="f_col sc_list">
+          <block wx:for='{{GroupItem.linecarResponseList}}' wx:for-index="sidx" wx:key="slist" wx:for-item="sitem">
+            <navigator open-type="navigate" url="/pages/reduce/reduce?activityId={{sitem.fulReduceInfoResponse.activityId}}" class="f_row f_jc_sb f_r_cnt bg_light_red reduce_line" wx:if="{{sitem.fulReduceInfoResponse && sitem.fulReduceInfoResponse.activityId && sitem.fulReduceInfoResponse.activityId !== GroupItem.linecarResponseList[sidx-1].fulReduceInfoResponse.activityId}}">
+              <view class="f_row f_jc_sb f_r_cnt">
+                <text class="rd_txt_i txt_color">满减</text>
+                <view class="reduce_txt">{{sitem.fulReduceInfoResponse.fullMark}}</view>
+              </view>
+              <text class="icon-arr"></text>
+            </navigator>
+            <view class="f_row f_r_cnt f_jc_sb sc_l_item {{sitem.fulReduceInfoResponse && sitem.fulReduceInfoResponse.activityId ? 'bg_light_red' : ''}}">
+              <view class="cpn_chk {{sitem.selected ? 'cpn_cur' : ''}}" bindtap="selectItem" data-str="storeLinecar" data-groupi="{{GroupI}}" data-idx="{{idx}}" data-sidx="{{sidx}}"></view>
+              <view class="f_row sc_li_s">
+                <navigator class="img_nav" open-type="navigate" url="/pages/commonshop/productDetail/productDetail?goodsId={{sitem.goodsId}}&shopId={{sitem.shopId}}&storeId={{sitem.storeId}}">
+                  <image class="sc_p_img" src="{{sitem.goodsPic}}"></image>
+                </navigator>
+                <view class="f_col sc_l_des f_jc_sb">
+                  <view class="break_all sc_p_name">{{sitem.goodsName}}</view>
+                  <view class="f_row sc_p_box">
+                    <view class="sc_prop f_row f_r_cnt f_jc_sb" data-detail="{{sitem}}" data-shop="{{sitem.shopId}}" data-store="{{sitem.storeId}}" data-goods="{{sitem.goodsId}}" data-sku="{{sitem.skuId}}" wx:if="{{sitem.attrName}}" bindtap="getSkuTree">
+                      <view class="ellip">{{sitem.attrName}}</view>
+                      <view class="f_row f_r_cnt f_jc_cnt pp_i_box">
+                        <image src="/static/ico/arr_b.png"></image>
+                      </view>
+                    </view>
+                  </view>
+                  <!-- 赠品 -->
+                  <block wx:if="{{sitem.skuGiftSet && sitem.skuGiftSet.skuGiftList}}">
+                    <view class='f_row'>
+                      <text class='g_mt_10'>赠品:</text>
+                      <view class='f_col flex1 g_ml_10'>
+                        <block wx:for="{{sitem.skuGiftSet.skuGiftList}}" wx:for-item="gifItem" wx:for-index="gifIndex" wx:key="gifIndex">
+                          <text class='g_mt_10'>{{gifItem.name}} X{{gifItem.num}}</text>
+                        </block>
+                      </view>
+                    </view>
+                  </block>
+                  <!-- 商品价格 -->
+                  <view class="sc_l_bot f_row f_r_cnt f_jc_sb">
+                    <!-- 如果是会员 且  有会员价商品-->
+                    <block wx:if="{{isPaidMember && sitem.isShowGoodsMemberPrice && sitem.goodsMemberPriceResponse}}">
+                      <view class='f_row f_r_cnt'>
+                        <view class='f_vip f_row f_r_cnt f_jc_cnt'>会员价</view>
+                        <view class="c_ff4949">
+                          <label class="fs_24">￥</label>{{sitem.goodsMemberPriceResponse.amount/100}}
+                        </view>
+                        <text class='through'>￥{{sitem.priceDouble}}</text>
+                      </view>
+                    </block>
+                    <!-- 如果不是会员 且  有会员价商品-->
+                    <block wx:elif="{{!isPaidMember && sitem.isShowGoodsMemberPrice && sitem.goodsMemberPriceResponse}}">
+                      <view class='f_row f_r_cnt'>
+                        <view class="c_ff4949">
+                          <label class="fs_24">￥</label>{{sitem.priceDouble}}
+                        </view>
+                        <view class='f_vip f_row f_r_cnt f_jc_cnt'>会员价</view>
+                        <text class='through'>￥{{sitem.goodsMemberPriceResponse.amount/100}}</text>
+                      </view>
+                    </block>
+                    <!-- 如果 没有会员价商品 或 没有会员价商品信息 -->
+                    <block wx:if="{{!sitem.isShowGoodsMemberPrice || !sitem.goodsMemberPriceResponse}}">
+                      <view class='f_row f_r_cnt'>
+                        <view class="c_ff4949">
+                          <label class="fs_24">￥</label>{{sitem.priceDouble}}
+                        </view>
+                      </view>
+                    </block>
+                    <view class="f_row f_r_cnt f_jc_sb sc_num_box box_size">
+                      <button class="sc_n_p" bindtap="togNum" data-sku="{{sitem.skuId}}" data-goods="{{sitem.goodsId}}" data-cart="{{sitem.linecarId}}" data-str="storeLinecar" data-item="{{idx}}" data-sitem="{{sidx}}" data-groupi="{{GroupI}}" data-type="0">-</button>
+                      <input type="number" bindblur="iptBlur" data-sku="{{sitem.skuId}}" data-goods="{{sitem.goodsId}}" data-cart="{{sitem.linecarId}}" data-str="storeLinecar" data-item="{{idx}}" data-sitem="{{sidx}}" data-groupi="{{GroupI}}" bindinput="numChange" value="{{sitem.numbers}}" class="num_i"></input>
+                      <button class="sc_n_p" bindtap="togNum" data-sku="{{sitem.skuId}}" data-goods="{{sitem.goodsId}}" data-cart="{{sitem.linecarId}}" data-str="storeLinecar" data-item="{{idx}}" data-sitem="{{sidx}}" data-groupi="{{GroupI}}" data-type="1">+</button>
+                    </view>
+                  </view>
+                  <!-- 如果有 会员价省多少钱 且 有会员价商品-->
+                  <view wx:if="{{sitem.memberPriceCutAmount && sitem.memberPriceNumbers}}">
+                    会员价省{{sitem.memberPriceCutAmount}}元：会员价商品{{sitem.memberPriceNumbers}}个
+                  </view>
+                </view>
+              </view>
+            </view>
+          </block>
+          <!--end-->
+          <view class="f_row f_r_cnt sc_bot g_line_top">
+            <view class="f_bold">合计：
+              <text class="sc_tot_price">￥{{GroupItem.amount/100}}</text>
+            </view>
+            <button data-settle="{{GroupItem.hasSettle}}" data-lidx="{{idx}}" bindtap="gotoOrder" class="goto_order {{GroupItem.hasSettle ? '' : 'goto_dis'}}">结算</button>
+          </view>
+        </view>
+      </block>
+    </view>
+    <!--无分类-->
+    <view class="f_col sc_item" wx:if="{{item.noneLinecar}}">
+      <block wx:for="{{item.noneLinecar.linecarSupplierGroupList}}" wx:for-index="GroupI" wx:key="{{GroupI}}" wx:for-item="GroupItem">
+        <view class="f_row f_r_cnt f_jc_sb sc_i_top">
+          <view class="cpn_chk {{GroupItem.isAllSelected ? 'cpn_cur' : ''}}" data-str="noneLinecar" data-groupI="{{GroupI}}" data-cartI="{{idx}}" bindtap="selectAll"></view>
+          <view class="f_row f_r_cnt f_jc_sb sc_top_t g_line_bot">
+            <text class="c_black">全选</text>
+            <view class="f_row f_r_cnt f_jc_cnt i_del_box" data-idx="{{idx}}" data-str="noneLinecar" data-groupI="{{GroupI}}" bindtap="removeCart">
+              <text class="icon-del"></text>
+            </view>
+          </view>
+        </view>
+        <view class="f_row f_r_cnt g_line_bot store_s" wx:if="{{GroupItem.supplierName}}">
+          <text class="icon-store"></text>
+          <text>{{GroupItem.supplierName}}</text>
+        </view>
+        <view class="f_col sc_list">
+          <block wx:for='{{GroupItem.linecarResponseList}}' wx:for-index="sidx" wx:key="slist" wx:for-item="sitem">
+            <navigator open-type="navigate" url="/pages/reduce/reduce?activityId={{sitem.fulReduceInfoResponse.activityId}}" class="f_row f_jc_sb f_r_cnt bg_light_red reduce_line" wx:if="{{sitem.fulReduceInfoResponse && sitem.fulReduceInfoResponse.activityId && sitem.fulReduceInfoResponse.activityId !== GroupItem.linecarResponseList[sidx-1].fulReduceInfoResponse.activityId}}">
+              <view class="f_row f_jc_sb f_r_cnt">
+                <text class="rd_txt_i txt_color">满减</text>
+                <view class="reduce_txt">{{sitem.fulReduceInfoResponse.fullMark}}</view>
+              </view>
+              <text class="icon-arr"></text>
+            </navigator>
+            <view class="f_row f_r_cnt f_jc_sb sc_l_item {{sitem.fulReduceInfoResponse && sitem.fulReduceInfoResponse.activityId ? 'bg_light_red' : ''}}">
+              <view class="cpn_chk {{sitem.selected ? 'cpn_cur' : ''}}" bindtap="selectItem" data-str="noneLinecar" data-groupi="{{GroupI}}" data-idx="{{idx}}" data-sidx="{{sidx}}"></view>
+              <view class="f_row sc_li_s">
+                <navigator class="img_nav" open-type="navigate" url="/pages/commonshop/productDetail/productDetail?goodsId={{sitem.goodsId}}&shopId={{sitem.shopId}}&storeId={{sitem.storeId}}">
+                  <image class="sc_p_img" src="{{sitem.goodsPic}}"></image>
+                </navigator>
+                <view class="f_col sc_l_des f_jc_sb">
+                  <view class="break_all sc_p_name">{{sitem.goodsName}}</view>
+                  <view class="f_row sc_p_box">
+                    <view class="sc_prop f_row f_r_cnt f_jc_sb" data-detail="{{sitem}}" data-shop="{{sitem.shopId}}" data-store="{{sitem.storeId}}" data-goods="{{sitem.goodsId}}" data-sku="{{sitem.skuId}}" wx:if="{{sitem.attrName}}" bindtap="getSkuTree">
+                      <view class="ellip">{{sitem.attrName}}</view>
+                      <view class="f_row f_r_cnt f_jc_cnt pp_i_box">
+                        <image src="/static/ico/arr_b.png"></image>
+                      </view>
+                    </view>
+                  </view>
+                  <!-- 赠品 -->
+                  <block wx:if="{{sitem.skuGiftSet && sitem.skuGiftSet.skuGiftList}}">
+                    <view class='f_row'>
+                      <text class='g_mt_10'>赠品:</text>
+                      <view class='f_col flex1 g_ml_10'>
+                        <block wx:for="{{sitem.skuGiftSet.skuGiftList}}" wx:for-item="gifItem" wx:for-index="gifIndex" wx:key="gifIndex">
+                          <text class='g_mt_10'>{{gifItem.name}} X{{gifItem.num}}</text>
+                        </block>
+                      </view>
+                    </view>
+                  </block>
+                  <!-- 商品价格 -->
+                  <view class="sc_l_bot f_row f_r_cnt f_jc_sb">
+                    <!-- 如果是会员 且  有会员价商品-->
+                    <block wx:if="{{isPaidMember && sitem.isShowGoodsMemberPrice && sitem.goodsMemberPriceResponse}}">
+                      <view class='f_row f_r_cnt'>
+                        <view class='f_vip f_row f_r_cnt f_jc_cnt'>会员价</view>
+                        <view class="c_ff4949">
+                          <label class="fs_24">￥</label>{{sitem.goodsMemberPriceResponse.amount/100}}
+                        </view>
+                        <text class='through'>￥{{sitem.priceDouble}}</text>
+                      </view>
+                    </block>
+                    <!-- 如果不是会员 且  有会员价商品-->
+                    <block wx:elif="{{!isPaidMember && sitem.isShowGoodsMemberPrice && sitem.goodsMemberPriceResponse}}">
+                      <view class='f_row f_r_cnt'>
+                        <view class="c_ff4949">
+                          <label class="fs_24">￥</label>{{sitem.priceDouble}}
+                        </view>
+                        <view class='f_vip f_row f_r_cnt f_jc_cnt'>会员价</view>
+                        <text class='through'>￥{{sitem.goodsMemberPriceResponse.amount/100}}</text>
+                      </view>
+                    </block>
+                    <!-- 如果 没有会员价商品 或 没有会员价商品信息 -->
+                    <block wx:if="{{!sitem.isShowGoodsMemberPrice || !sitem.goodsMemberPriceResponse}}">
+                      <view class='f_row f_r_cnt'>
+                        <view class="c_ff4949">
+                          <label class="fs_24">￥</label>{{sitem.priceDouble}}
+                        </view>
+                      </view>
+                    </block>
+                    <view class="f_row f_r_cnt f_jc_sb sc_num_box box_size">
+                      <button class="sc_n_p" bindtap="togNum" data-sku="{{sitem.skuId}}" data-goods="{{sitem.goodsId}}" data-cart="{{sitem.linecarId}}" data-str="noneLinecar" data-item="{{idx}}" data-sitem="{{sidx}}" data-groupi="{{GroupI}}" data-type="0">-</button>
+                      <input type="number" bindblur="iptBlur" data-sku="{{sitem.skuId}}" data-goods="{{sitem.goodsId}}" data-cart="{{sitem.linecarId}}" data-str="noneLinecar" data-item="{{idx}}" data-sitem="{{sidx}}" data-groupi="{{GroupI}}" bindinput="numChange" value="{{sitem.numbers}}" class="num_i"></input>
+                      <button class="sc_n_p" bindtap="togNum" data-sku="{{sitem.skuId}}" data-goods="{{sitem.goodsId}}" data-cart="{{sitem.linecarId}}" data-str="noneLinecar" data-item="{{idx}}" data-sitem="{{sidx}}" data-groupi="{{GroupI}}" data-type="1">+</button>
+                    </view>
+                  </view>
+                  <!-- 如果有 会员价省多少钱 且 有会员价商品-->
+                  <view wx:if="{{sitem.memberPriceCutAmount && sitem.memberPriceNumbers}}">
+                    会员价省{{sitem.memberPriceCutAmount}}元：会员价商品{{sitem.memberPriceNumbers}}个
+                  </view>
+                </view>
+              </view>
+            </view>
+          </block>
+          <!--end-->
+          <view class="f_row f_r_cnt sc_bot g_line_top">
+            <view class="f_bold">合计：
+              <text class="sc_tot_price">￥{{GroupItem.amount/100}}</text>
+            </view>
+            <button data-settle="{{GroupItem.hasSettle}}" data-lidx="{{idx}}" bindtap="gotoOrder" class="goto_order {{GroupItem.hasSettle ? '' : 'goto_dis'}}">结算</button>
+          </view>
+        </view>
+      </block>
+    </view>
+    <!--已下架-->
+    <view class="f_col sc_item" wx:if="{{item.expireLinecar}}">
+      <block wx:for="{{item.expireLinecar.linecarSupplierGroupList}}" wx:for-index="GroupI" wx:key="{{GroupI}}" wx:for-item="GroupItem">
+        <view class="f_row f_r_cnt f_jc_sb sc_i_top">
+          <view class="f_row f_r_cnt f_jc_sb sc_top_t g_line_bot">
+            <text class="c_black">失效商品</text>
+            <button class="clear_btn" data-str="expireLinecar" data-idx="{{idx}}" data-groupi="{{GroupI}}" bindtap="removeCart">清除</button>
+          </view>
+        </view>
+        <view class="f_col sc_list">
+          <view class="f_row f_r_cnt f_jc_sb sc_l_item item_gray" wx:for='{{GroupItem.linecarResponseList}}' wx:for-index="sidx" wx:key="slist" wx:for-item="sitem">
+            <view class="down_s_i">下架</view>
+            <view class="f_row sc_li_s">
+              <image class="sc_p_img" src="{{sitem.goodsPic}}"></image>
+              <view class="f_col sc_l_des">
+                <view class="break_all sc_p_name">{{sitem.goodsName}}</view>
+                <view class="down_txt_tip">商品已失效，请选择其他商品</view>
+              </view>
+            </view>
+          </view>
+          <!--end-->
+        </view>
+      </block>
+    </view>
+  </view>
+  <!--global-end-->
+</view>
+<view class="f_col empty_box" wx:else>
+  <image src="/static/img/empty.png"></image>
+  <text>暂无商品！</text>
+</view>
+<!--属性选择弹窗-->
+<view class="pop_prop_box {{slideUp ? 'm_slideUp' : ''}}">
+  <view class="mask" bindtap="closeSlide"></view>
+  <view class="m_bot_box f_col">
+    <view class="pp_prod_s g_line_bot f_row">
+      <image src="{{showSku.picUrl || goodsDetail.goodsPic}}"></image>
+      <view class="f_col pp_prod_r f_jc_sb">
+        <text class="pp_pd_name break_all">{{goodsDetail.goodsName}}</text>
+        <text class="pp_pd_no" wx:if="{{showSku.shelfNo}}">商品货号：{{showSku.shelfNo}}</text>
+        <!-- 有属性-->
+        <view wx:if="{{showSku.activityPriceDouble || showSku.salePriceDouble}}" class="txt_color pp_pd_price">
+          <block>￥{{showSku.activityPriceDouble ? showSku.activityPriceDouble : showSku.salePriceDouble}}</block>
+        </view>
+        <!-- 无属性-->
+        <view class="txt_color pp_pd_price" wx:else>￥{{goodsDetail.activityPriceDouble ? goodsDetail.activityPriceDouble : goodsDetail.minSalePriceDouble}}</view>
+      </view>
+    </view>
+    <view class="f_col pp_prod_list">
+      <block wx:for="{{optionList}}" wx:for-index="idx" wx:key="list" wx:for-item="item">
+        <text>{{item.attributeName}}</text>
+        <view class="pd_list f_row">
+          <text wx:for="{{item.attributeOptionList}}" wx:key="sky" wx:for-index="sidx" wx:for-item="sitem" class="pd_item {{(item.cur === sidx) ? 'pd_i_cur bg_color' : ''}}" data-list="{{idx}}" data-sidx="{{sidx}}" bindtap="selectAttr">{{sitem.optionValue}}</text>
+        </view>
+      </block>
+      <view class="f_row pp_num_s f_jc_sb">
+        <view class="f_row f_r_cnt">
+          <text class="rm_n_lab">数量</text>
+          <text class="rm_num">（库存{{showSku.skuId ? showSku.stock : goodsDetail.goodsSkuResponse.stock}}件）</text>
+        </view>
+        <view class="f_col f_r_cnt">
+          <view class="num_btns">
+            <button class="num_plus_btn n_p_reduce" bindtap="popTogNum" data-type="0">-</button>
+            <input type="number" class="num_p_ipt" bindblur="popIptBlur" bindchange="popIptChange" value="{{popNum || goodsDetail.numbers}}"></input>
+            <button class="num_plus_btn n_p_add" bindtap="popTogNum" data-type="1">+</button>
+          </view>
+          <text class="txt_color n_lmt_tip" wx:if='{{limitNum}}'>每人限购{{limitNum}}件</text>
+        </view>
+      </view>
+    </view>
+    <view class="f_row">
+      <form bindsubmit="sureEdit" class="form_i" report-submit="true">
+        <button class="pp_attr_btn bg_color" form-type="submit">确定</button>
+      </form>
+    </view>
+    <view class="pp_close box_size" bindtap="closeSlide">
+      <image src="/static/ico/close.png"></image>
+    </view>
+  </view>
+</view>

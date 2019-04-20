@@ -1,0 +1,355 @@
+/**app.wxss**/
+@import "/static/fonts/style.wxss";
+@import "config.wxss";
+@import "pages/template/copyright/copyright.wxss";
+
+page {
+  font-family: MicroSoft Yahei;
+  font-size: 28rpx;
+  color: #666;
+  display: flex;
+  flex-direction: column;
+  background: #f2f2f2;
+}
+
+button {
+  border-radius: 0;
+  border: none;
+  padding: 0;
+}
+
+button:after, button:before {
+  display: none;
+}
+
+.box_size {
+  -webkit-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.ellip {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.break_all {
+  word-wrap: break-word;
+  word-break: break-all;
+}
+
+.g_line_bot:after, .g_line_top:before {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: #eee;
+  position: absolute;
+  left: 0;
+  z-index: 2;
+}
+
+.g_line_bot:after {
+  bottom: 0;
+}
+
+.g_line_top:before {
+  top: 0;
+}
+
+.f_row {
+  display: -webkit-flex;
+  display: -ms-flex;
+  display: -moz-flex;
+  display: flex;
+  -ms-flex-direction: row;
+  -moz-flex-direction: row;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+}
+
+.f_col {
+  display: -webkit-flex;
+  display: -ms-flex;
+  display: -moz-flex;
+  display: flex;
+  -ms-flex-direction: column;
+  -moz-flex-direction: column;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+}
+
+.f_r_cnt {
+  -webkit-align-items: center;
+  align-items: center;
+}
+
+.f_jc_cnt {
+  -webkit-justify-content: center;
+  justify-content: center;
+}
+
+.f_jc_sb {
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+}
+
+/*水平翻转*/
+
+.flipx {
+  -moz-transform: scaleX(-1);
+  -webkit-transform: scaleX(-1);
+  -o-transform: scaleX(-1);
+  transform: scaleX(-1); /*IE*/
+  filter: FlipH;
+}
+
+/*垂直翻转*/
+
+.flipy {
+  -moz-transform: scaleY(-1);
+  -webkit-transform: scaleY(-1);
+  -o-transform: scaleY(-1);
+  transform: scaleY(-1); /*IE*/
+  filter: FlipV;
+}
+
+input {
+  font-family: MicroSoft YaHei;
+}
+
+.fs_24 {
+  font-size: 24rpx;
+}
+.fs_22 {
+  font-size: 22rpx;
+}
+.fs_26 {
+  font-size: 26rpx;
+}
+.f_bold {
+  font-weight: 600;
+}
+.c_ff4949 {
+  color: #ff4949;
+}
+.textIcon{
+  width: 34rpx;
+  height: 34rpx;
+  color: #fff;
+  text-align: center;
+  line-height: 34rpx;
+  background: #ff0036;
+  border-radius: 50%;
+  margin-right: 10rpx;
+}
+.c_ff0036, .textWarning {
+  color: #ff0036;
+}
+
+.c_333 {
+  color: #333;
+}
+
+.fs_32 {
+  font-size: 32rpx;
+}
+
+.c_black {
+  color: #000;
+}
+
+.c_gray {
+  color: #999;
+}
+
+.g_blank_30 {
+  height: 30rpx;
+}
+
+.g_blank_20 {
+  height: 20rpx;
+  background: #f2f2f2;
+}
+
+.g_blank_96 {
+  height: 96rpx;
+}
+
+.g_blank_110 {
+  height: 110rpx;
+}
+
+.g_blank_120 {
+  height: 120rpx;
+}
+.g_blank_220 {
+  height: 220rpx;
+}
+.g_mr_20{
+  margin-right:20rpx;
+}
+.g_mt_20 {
+  margin-top: 20rpx;
+}
+
+.g_mt_30 {
+  margin-top: 30rpx;
+}
+.g_ml_20 {
+  margin-left: 20rpx;
+}
+
+.g_nav_tap {
+  background: none;
+}
+
+.g_main_box {
+  position: relative;
+  z-index: 2;
+}
+
+.arr_i {
+  position: relative;
+  padding-right: 20rpx;
+}
+
+.arr_i:after {
+  content: '';
+  display: inline-block;
+  width: 16rpx;
+  height: 16rpx;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  border: 2rpx solid #999;
+  border-width: 0 2rpx 2rpx 0;
+}
+/* 按钮置灰 */
+.btn_gray {
+  background: #ccc !important;
+}
+.arr_b {
+  padding-right: 30rpx;
+}
+
+.arr_b:after {
+  transform: rotate(45deg);
+  margin-top: -13rpx;
+}
+
+.arr_r:after {
+  transform: rotate(-45deg);
+  margin-top: -9rpx;
+}
+
+.empty_box {
+  text-align: center;
+  color: #999;
+  padding-top: 60rpx;
+}
+
+.empty_box image {
+  width: 280rpx;
+  height: 250rpx;
+  margin: 20rpx auto;
+}
+
+/*顶部导航*/
+
+.g_nav_i {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  color: #000;
+  background: #fff;
+}
+
+.g_n_txt {
+  height: 96rpx;
+  line-height: 96rpx;
+  position: relative;
+  padding: 0 25rpx;
+}
+
+.g_nav_c .g_n_txt:after {
+  content: '';
+  display: block;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 5rpx;
+}
+
+.g_top_fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 999;
+}
+
+.wrap_name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.no_more {
+  padding: 15rpx 0;
+  text-align: center;
+}
+
+.no_img {
+  width: 280rpx;
+  height: 250rpx;
+}
+
+.no_trend {
+  margin-top: 200rpx;
+}
+
+.noTrend-text {
+  color: #999;
+  font-size: 28rpx;
+  margin-top: 20rpx;
+}
+
+/*-------适配iPhonex---star---------  */
+
+.fix-iphonex-button {
+  bottom: 32rpx !important;
+}
+
+.fix-iphonex-button::after {
+  content: '';
+  display: block;
+  position: fixed;
+  left: 0;
+  bottom: -32rpx;
+  height: 32rpx;
+  width: 100%;
+  background: #fff;
+}
+/* flex布局 */
+
+/* flex 纵向居下 */
+.flex_en{/* 09版 */-webkit-box-align: end;/* 12版 */-webkit-align-items: flex-end;-moz-align-items: flex-end;-ms-align-items: flex-end;-o-align-items: flex-end;align-items: flex-end;}
+/* flex 横向居右 */
+.f_jc_end{-webkit-box-pack: end;-ms-flex-pack: end;-webkit-justify-content: flex-end;justify-content: flex-end;}
+
+/* 子元素-纵向具有 */
+.item_en{align-self:flex-end;}
+/* 子元素-平均分栏 */
+.flex1 {-webkit-box-flex: 1;-moz-box-flex: 1;-webkit-flex: 1;-ms-flex: 1;flex: 1;}
+/* 强制换两行省略号 */
+.warp2{display:-webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp:2;overflow: hidden;}

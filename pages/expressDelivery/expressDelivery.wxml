@@ -1,0 +1,13 @@
+<view class="expresBox" wx:if="{{expresList.expressCompany}}">
+    <view class="exprTxt">物流名称：{{expresList.expressCompany}}</view>
+    <view class="exprTxt">物流状态：{{expresList.signingStateName}}</view>  
+    <view class="orderIn">
+      <view class="order-itme" wx:for="{{expresList.kuaidi100ExpressHistoryRecordsVos}}" wx:key="keyexpresList" wx:for-index="idx" wx:for-item="item">
+        <view class="orderData">{{item.time}}</view>
+        <view class="orderTxt">
+          <view>{{item.context}}</view>
+        </view>
+      </view>
+
+    </view>
+</view>

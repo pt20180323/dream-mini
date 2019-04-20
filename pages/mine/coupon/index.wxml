@@ -1,0 +1,83 @@
+<view class="o_nav f_row">
+  <text data-type="1" bindtap="changeTab" class="o_nav_i {{navTab === 1 ? 'o_nav_c' : ''}}">未使用</text>
+  <text data-type="2" bindtap="changeTab" class="o_nav_i {{navTab === 2 ? 'o_nav_c' : ''}}">已使用</text>
+  <text data-type="3" bindtap="changeTab" class="o_nav_i {{navTab === 3 ? 'o_nav_c' : ''}}">已过期</text>
+  <text data-type="4" bindtap="changeTab" class="o_nav_i {{navTab === 4 ? 'o_nav_c' : ''}}">已转赠</text>
+</view>
+
+<view class='wrapper'>
+  <view wx:if='{{navTab === 1}}'>
+    <view class='content' bindtap='toDeatil' wx:for="{{list1}}" wx:key="keylist" wx:for-index="idx" wx:for-item="item" data-cardId='{{item.cardId}}' data-code-data='{{item.codeData}}'>
+        <view class='img'>
+          <image src="{{item.cardType === 1 ? '/static/img/cash.png' : (item.cardType === 2 ? '/static/img/discount.png' : (item.cardType === 3 ? '/static/img/gift.png' : ''))}}"></image>
+        </view>
+        <view class='txt'>
+          <text class='txt_title'>{{item.cardType === 1 ? '代金券' : (item.cardType === 2 ? '折扣券' : (item.cardType === 3 ? '礼品券' : ''))}}</text>
+          <text class='txt_desc'>{{item.cardName}}</text>
+        </view>
+      </view>
+      <view class='empty' wx:if='{{isEmpty1}}'>
+        <image src='/static/img/none_card.png'></image>
+        <text class='empty_txt'>您还没有卡券</text>
+      </view>
+  </view>
+
+
+   <view wx:if='{{navTab === 2}}'>
+    <view class='content' bindtap='toDeatil' wx:for="{{list2}}" wx:key="keylist" wx:for-index="idx" wx:for-item="item" data-cardId='{{item.cardId}}' data-code-data='{{item.codeData}}'>
+        <view class='img'>
+          <image src="{{item.cardType === 1 ? '/static/img/cash.png' : (item.cardType === 2 ? '/static/img/discount.png' : (item.cardType === 3 ? '/static/img/gift.png' : ''))}}"></image>
+        </view>
+        <view class='txt'>
+          <text class='txt_title'>{{item.cardType === 1 ? '代金券' : (item.cardType === 2 ? '折扣券' : (item.cardType === 3 ? '礼品券' : ''))}}</text>
+          <text class='txt_desc'>{{item.cardName}}</text>
+        </view>
+        <view class='status'>
+          <image src='/static/img/used.png'></image>
+        </view>
+      </view>
+      <view class='empty' wx:if='{{isEmpty2}}'>
+        <image src='/static/img/none_card.png'></image>
+        <text class='empty_txt'>您还没有卡券</text>
+      </view>
+  </view>
+
+  <view wx:if='{{navTab === 3}}'>
+    <view class='content' bindtap='toDeatil' wx:for="{{list3}}" wx:key="keylist" wx:for-index="idx" wx:for-item="item" data-cardId='{{item.cardId}}' data-code-data='{{item.codeData}}'>
+        <view class='img'>
+          <image src="{{item.cardType === 1 ? '/static/img/cash.png' : (item.cardType === 2 ? '/static/img/discount.png' : (item.cardType === 3 ? '/static/img/gift.png' : ''))}}"></image>
+        </view>
+        <view class='txt'>
+          <text class='txt_title'>{{item.cardType === 1 ? '代金券' : (item.cardType === 2 ? '折扣券' : (item.cardType === 3 ? '礼品券' : ''))}}</text>
+          <text class='txt_desc'>{{item.cardName}}</text>
+        </view>
+        <view class='status'>
+          <image src='/static/img/overdue.png'></image>
+        </view>
+      </view>
+      <view class='empty' wx:if='{{isEmpty3}}'>
+        <image src='/static/img/none_card.png'></image>
+        <text class='empty_txt'>您还没有卡券</text>
+      </view>
+  </view>
+
+
+  <view wx:if='{{navTab === 4}}'>
+    <view class='content' bindtap='toDeatil' wx:for="{{list4}}" wx:key="keylist" wx:for-index="idx" wx:for-item="item" data-cardId='{{item.cardId}}' data-code-data='{{item.codeData}}'>
+        <view class='img'>
+          <image src="{{item.cardType === 1 ? '/static/img/cash.png' : (item.cardType === 2 ? '/static/img/discount.png' : (item.cardType === 3 ? '/static/img/gift.png' : ''))}}"></image>
+        </view>
+        <view class='txt'>
+          <text class='txt_title'>{{item.cardType === 1 ? '代金券' : (item.cardType === 2 ? '折扣券' : (item.cardType === 3 ? '礼品券' : ''))}}</text>
+          <text class='txt_desc'>{{item.cardName}}</text>
+        </view>
+        <view class='status'>
+          <image src='/static/img/give.png'></image>
+        </view>
+      </view>
+      <view class='empty' wx:if='{{isEmpty4}}'>
+        <image src='/static/img/none_card.png'></image>
+        <text class='empty_txt'>您还没有卡券</text>
+      </view>
+  </view>
+</view>

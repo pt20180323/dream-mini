@@ -1,0 +1,63 @@
+<view class='page' style='background-color:{{pageBackgroundColor}}'>
+  <view class='content'>
+    <image src="{{couponDet.type === 1 ? '/static/img/cash.png' : (couponDet.type === 2 ? '/static/img/discount.png' : (couponDet.type === 3 ? '/static/img/gift.png' : ''))}}"></image>
+    <view class='txt'>
+      <text class='txt_title txt_common'>{{couponDet.type === 1 ? '代金券' : (couponDet.type === 2 ? '折扣券' : (couponDet.type === 3 ? '礼品券' : ''))}}</text>
+      <text class='txt_desc txt_common'>{{couponDet.name }}</text>
+      <view class='limit'>
+        <text wx-if="{{couponDet.useScenes === 0 }}">通用</text>
+        <text wx-if="{{couponDet.useScenes === 1 }}">仅限电商使用</text>
+        <text wx-if="{{couponDet.useScenes === 2 }}">仅限线下门店使用</text>
+      </view>
+
+      <view wx:if='{{isCustom && !isReceive}}'>
+        <button class='txt_btn' bindtap='clickReceive' style='background-color:{{pageBackgroundColor}}'>
+          领取
+        </button>
+        <text class='txt_price txt_common'>{{(couponDet.conditionAmount > 0) ? ('满' + couponDet.conditionAmount + '元可以使用') : '无门槛使用'}}</text>
+        <text class='txt_time txt_common'>{{couponDet.dateTip}}</text>
+      </view>
+      
+      <view wx:elif='{{isCustom && isReceive}}'>
+        <button class='txt_btn' style='background-color:{{pageBackgroundColor}}'>
+          已领取
+          <view class='mask'></view>
+        </button>
+        <text class='txt_price txt_common'>{{(couponDet.conditionAmount > 0) ? ('满' + couponDet.conditionAmount + '元可以使用') : '无门槛使用'}}</text>
+        <text class='txt_time txt_common'>{{couponDet.dateTip}}</text>
+      </view>
+      <view wx:elif='{{!isCustom && !isSending}}'>
+        <button open-type="share" class='txt_btn' style='background-color:{{pageBackgroundColor}}'>
+          发给客户
+        </button>
+        <text class='txt_price txt_common'>{{(couponDet.conditionAmount > 0) ? ('满' + couponDet.conditionAmount + '元可以使用') : '无门槛使用'}}</text>
+        <text class='txt_time txt_common'>{{couponDet.dateTip}}</text>
+      </view>
+      <view wx:elif='{{!isCustom && isSending}}'>
+        <button open-type="share" class='txt_btn' style='background-color:{{pageBackgroundColor}}'>
+          已发送
+          <view class='mask'></view>
+        </button>
+        <text class='txt_price txt_common'>{{(couponDet.conditionAmount > 0) ? ('满' + couponDet.conditionAmount + '元可以使用') : '无门槛使用'}}</text>
+        <text class='txt_time txt_common'>{{couponDet.dateTip}}</text>
+      </view>
+    </view>
+    <view class='detail common_list f_row f_r_cnt f_jc_cnt f_jc_sb' bindtap='toDetail'>
+      <text>代金券详情</text>
+      <text class="more arr_i arr_r"></text>
+    </view>
+     <view class='address f_row f_r_cnt f_jc_sb' wx:if='{{storeList.length}}'>
+      <view class='f_col addr_left'>
+          <text class='addr_title'>{{storeList[0].name}}</text>
+          <text class='addr_desc'>200米 | {{storeList[0].provinceName + storeList[0].cityName + storeList[0].circleName + storeList[0].address}}</text>
+      </view>
+      <view class='addr_img' bindtap='clickCall' wx:if='{{storeList[0].phone}}'>
+        <text class='icon-icall' style='color:{{pageBackgroundColor}}'></text>
+      </view>
+    </view> 
+    <view class='store common_list f_row f_r_cnt f_jc_cnt f_jc_sb' bindtap='toStoreList' wx:if='{{storeList.length}}'>
+      <text>更多适用门店</text>
+      <text class="more arr_i arr_r"></text>
+    </view>
+  </view>
+</view>

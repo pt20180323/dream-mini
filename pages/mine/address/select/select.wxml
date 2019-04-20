@@ -1,0 +1,28 @@
+<view class="f_col addr_box" wx:if="{{isLoaded}}">
+  <view class="addr_list f_col" wx:if="{{list.length}}">
+    <view class="addr_item g_line_bot f_row f_r_cnt" wx:for="{{list}}" wx:for-index="idx" wx:key="_list" wx:for-item="item" bindtap='selectAddr' data-Defect="{{!item.area}}" data-aid='{{item.addId}}' data-item='{{item}}'>
+      <view class="cpn_chk {{selected == item.addId ? 'cpn_cur' : ''}}"></view>
+      <view class="adi_desc f_col">
+        <view class="f_row f_jc_sb adi_cnt">
+          <view class="f_row f_r_cnt">
+            <label class="inited_i" wx:if='{{item.preferred}}'>默认</label>
+            <text>{{item.tackName}}</text>
+          </view>
+          <text>{{item.tackPhone}}</text>
+        </view>
+        <text>{{(item.province || '') + (item.city || '') + (item.circle || '') + (item.area || '') + (item.address || '')}}</text>
+        <view wx:if="{{!item.area}}" class='f_row f_r_cnt textWarning'><view class='textIcon'>!</view><text class='content'>请完善乡镇信息！</text></view>
+      </view>
+    </view>
+    <!--end-->
+  </view>
+  <view class="f_col f_r_cnt none_box c_gray" wx:else>
+    <text class="icon-address"></text>
+    <text>你还没有添加收货地址</text>
+  </view>
+  <view class="bot_blank"></view>
+  <view class="f_row f_r_cnt addr_bot bot_fix">
+    <navigator hover-class="none" open-type="navigate" url="/pages/mine/address/index?deliveryType={{deliveryType}}&goodsId={{goodsId || ''}}" class="adr_btn light_btn">管理地址</navigator>
+    <navigator hover-class="none" open-type="navigate" url="/pages/mine/address/new/new?deliveryType={{deliveryType}}&goodsId={{goodsId || ''}}" class="adr_btn bg_color add_i">添加地址</navigator>    
+  </view>
+</view>

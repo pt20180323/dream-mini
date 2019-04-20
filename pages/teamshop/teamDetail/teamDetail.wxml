@@ -1,0 +1,151 @@
+<!--分享-->
+<view class="f_col team_share_s" wx:if="{{isTeamShare}}">
+  <view class="ts_header">
+    <view class="ts_t_box f_col">
+      <view class="ts_des_box f_row f_jc_sb">
+        <image src="{{teamDetailVo.pic}}"></image>
+        <view class="f_col ts_t_r">
+          <view class="f_col tsr_t f_r_cnt">
+            <view class="f_col tsr_t_line box_size">
+              <text class="tsr_tit">限时特惠</text>
+              <text class="ts_o">￥{{teamDetailVo.originaPrice || teamDetailVo.huddlePrice}}</text>
+              <text class="ts_price">￥{{teamDetailVo.huddlePrice}}</text>
+              <text class="ts_need_num">{{teamDetailVo.huddleNumber}}人团</text>
+            </view>
+          </view>
+          <view class="ts_remain">剩余<text class="c_ff4949 ts_r_time">{{countHtml}}</text>结束</view>
+          <view class="ts_b_txt">还差<text class="c_ff4949">{{teamDetailVo.huddleLackNumber}}</text>人，</view>
+          <view class="ts_b_txt">跟我一起抱团吧！</view>
+        </view>
+      </view>
+      <view class="f_row f_r_cnt ts_peo_list ts_dotted_list">
+        <view class="ts_p_item leader_i" wx:for="{{teamDetailVo.huddleJoinBuyer}}" wx:for-index="idx" wx:key="list" wx:for-item="item">
+          <image src="{{item.photo || '/static/ico/header.png'}}"></image>
+          <text wx:if="{{idx === 0}}">团长</text>
+        </view>
+        <view wx:for="{{teamDetailVo.emptyList}}" wx:for-index="eidx" wx:key="elist" wx:for-item="eitem" class="ts_p_item ts_p_empty">
+          <text>?</text>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="f_row f_r_cnt hb_box" wx:if="{{teamShopGoods.haveOpenGroupCard || teamShopGoods.haveCard}}">
+    <image class="hb" src="/static/img/hb.png"></image>
+    <view class="f_col">
+      <view class="hb_item" wx:if="{{teamShopGoods.haveOpenGroupCard}}">
+        <text class="c_ff4949">开团红包：</text>拼团成功即可获得{{teamShopGoods.openGroupCardAmountDouble}}元电商代金券
+      </view>
+      <view class="hb_item" wx:if="{{teamShopGoods.haveCard}}">
+        <text class="c_ff4949">到店红包：</text>拼团成功即可获得{{teamShopGoods.cardAmountDouble}}元到店使用的到店代金券
+      </view>     
+    </view>
+  </view>
+  <!--
+  <view class="f_row f_r_cnt sp_t_line">
+    <view wx:if="{{false}}" class="f_row">
+      <text class="sp_t_ico">开团红包</text>
+      <text>发起拼团，该团成功即可获得额外的优惠券奖励</text>
+    </view>
+    <view wx:if="{{teamShopGoods.haveCard}}" class="f_row">
+      <text class="sp_t_ico">到店红包</text>
+      <text>拼团成功即可获得{{teamShopGoods.cardAmountDouble}}元到店使用的到店代金券</text>
+    </view>
+  </view>
+  -->
+  <view class="ts_cnt_box ts_cnt_n">
+    <button class="red_btn share_to_add" open-type="share">邀请好友参团</button>
+  </view>
+  <view class="g_blank_20"></view>
+  <view class="f_row f_r_cnt ts_l_line g_line_bot f_jc_sb">
+    <label>商品名称</label>
+    <text class="ellip c_black">{{teamDetailVo.goodsName}}</text>
+  </view>
+  <view class="f_row f_r_cnt ts_l_line g_line_bot f_jc_sb">
+    <label>开团时间</label>
+    <text class="ellip c_black">{{teamDetailVo.joinTime}}</text>
+  </view>  
+</view>
+
+<!--用户-->
+<view class="c_col team_end_s" wx:if="{{isTeamDet}}">
+  <view class="f_row f_jc_sb te_top_box">
+    <image class="te_img" src="{{teamDetailVo.pic}}"></image>
+    <view class="f_col f_jc_sb end_det_box">
+      <text class="c_black">{{teamDetailVo.goodsName}}</text>
+      <text class="c_black te_yel_n">已团<text class="c_ff4949">{{teamDetailVo.salesVolume}}</text>件</text>
+      <text class="c_ff4949">限时特惠</text>
+      <view class="f_row te_n_s">
+        <text class="c_ff4949 fs_36">￥{{teamDetailVo.huddlePrice}}</text>
+        <text class="te_ico">{{teamDetailVo.huddleNumber}}人团</text>
+      </view>
+      <text class="te_o_p">￥{{teamDetailVo.originaPrice || teamDetailVo.huddlePrice}}</text>
+    </view>
+    <image class="ts_icon" wx:if="{{groupTimeout}}" src="/static/ico/ts_fail.png"></image>
+    <image class="ts_icon" wx:if="{{btSuccess}}" src="/static/ico/ts_success.png"></image>
+  </view>
+  <view class="f_col te_end_box">
+    <!--抱团成功-->
+    <view class="te_suc_show" wx:if="{{btSuccess}}">
+      <text class="c_black fs_32 te_suc_s">恭喜你，抱团成功!</text>
+    </view>
+    <!--未参团-->
+    <view class="f_col te_wct" wx:if="{{notOffer || isAdded}}">
+      <view class="c_black fs_32">还差<text class="c_ff4949">{{teamDetailVo.huddleLackNumber}}</text>人，快来跟我一起抱团吧！</view>
+      <view class="te_remain"><text>剩余<text class="c_ff4949">{{countHtml}}</text>结束</text></view>
+    </view>
+    <!--未支付-->
+    <view class="f_col te_wct" wx:if="{{notPay}}">
+      <view class="c_black fs_32">您还未支付，别错过了哦！</view>
+      <view class="te_remain"><text>剩余<text class="c_ff4949">{{countHtml}}</text>结束</text></view>
+    </view>
+    <!--此团已满-->
+    <view class="f_col te_wct" wx:if="{{groupFull}}">
+      <view class="c_black fs_32">此团已满，您可另开一团当团长！</view>
+    </view>
+    <!--此团已过期-->
+    <view class="f_col te_wct" wx:if="{{groupTimeout}}">
+      <view class="c_black fs_32">此团已过期，您可另开一团当团长！</view>
+    </view>
+    <!--此活动已结束-->
+    <view class="f_col te_wct" wx:if="{{actOver}}">
+      <view class="c_black fs_32">抱歉，此活动已结束！</view>
+    </view>
+    <!--商品已售磬-->
+    <view class="f_col te_wct"  wx:if="{{saleOut}}">
+      <view class="c_black fs_32">抱歉，此商品已售罄!</view>
+    </view>
+    <!--不同门店-->
+    <view class="f_col te_wct" wx:if="{{difStore}}">
+      <view class="c_black fs_32 break_all"> 团长与你不在同一门店，请进入您的所属门店购买!</view>
+    </view> 
+    <view class="f_row f_r_cnt ts_peo_list">
+      <view class="ts_p_item {{idx===0 ? 'leader_i' : ''}}" wx:for="{{teamDetailVo.huddleJoinBuyer}}" wx:for-index="idx" wx:key="list" wx:for-item="item">
+        <image src="{{item.photo || '/static/ico/header.png'}}"></image>
+        <text wx:if="{{idx === 0}}">团长</text>
+      </view>
+      <view wx:for="{{teamDetailVo.emptyList}}" wx:for-index="eidx" wx:key="elist" wx:for-item="eitem" class="ts_p_item ts_p_empty">
+        <text>?</text>
+      </view>
+    </view>
+    <view class="ts_cnt_box box_size">
+      <!--抱团成功/活动已结束/商品已售磬-->
+      <navigator hover-class="" open-type="switchTab" url="/pages/index/index" class="red_btn" bindtap="moreShop" wx:if="{{btSuccess || actOver || saleOut}}">更多优惠商品</navigator>
+      <!--未参团-->
+      <navigator hover-class="" url="/pages/teamshop/productDetail/productDetail?storeId={{teamDetailVo.storeId}}&goodsId={{teamDetailVo.goodsId}}&activityId={{teamDetailVo.activityId}}&teamId={{teamDetailVo.teamId}}" class="red_btn" wx:if="{{notOffer}}">一键参团</navigator>
+      <!--未支付-->
+      <form bindsubmit="gotoPay" report-submit="true" data-oid="{{teamDetailVo.orderNo}}">
+        <button class="red_btn team_pay_ord" form-type="submit" wx:if="{{notPay}}">立即支付</button>
+      </form>
+      <!--团已满/团过期-->
+      <navigator hover-class="" url="/pages/teamshop/productDetail/productDetail?storeId={{teamDetailVo.storeId}}&goodsId={{teamDetailVo.goodsId}}&activityId={{teamDetailVo.activityId}}" class="red_btn" wx:if="{{groupFull || groupTimeout}}">另开一团</navigator>
+      <!--不同门店-->
+      <navigator hover-class="" open-type="switchTab" url="/pages/home/home" class="red_btn" wx:if="{{difStore}}">去我的门店购买</navigator>
+      <!--已参团，邀请好友参团-->
+      <button class="red_btn share_to_add" wx:if="{{isAdded}}" open-type="share">邀请好友参团</button>
+    </view>
+  </view>
+</view>
+<view class="g_blank_20"></view>
+<navigator wx:hidden="{{btSuccess}}" hover-class="none" url="/pages/home/home" open-type="switchTab" class="f_row f_r_cnt ts_l_line g_line_bot">
+  <image class="ts_to_idx" src="/static/menu/index.png"></image><text>商城首页</text>
+</navigator>

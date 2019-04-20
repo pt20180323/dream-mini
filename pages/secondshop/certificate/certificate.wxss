@@ -1,0 +1,65 @@
+page{
+  background:#FFF;
+}
+.ct_box{
+  justify-content:center;
+  padding:30rpx 0;
+  font-size:30rpx;
+  color:#000;
+}
+.ct_box>image{
+  width:360rpx;
+  height:360rpx;
+}
+.pp_list{
+  padding:0 25rpx;
+}
+.pp_list>text{
+  color:#000;
+  line-height:48rpx;
+  margin-bottom:5rpx;
+}
+.buy_prd{
+  margin-bottom:40rpx;
+}
+.buy_prd>image{
+  width:140rpx;
+  height:140rpx;
+  border:1px solid #e3e3e3;
+  flex-shrink:0;
+  margin-right:20rpx;
+}
+.b_prd_des{
+  color:#000;
+  justify-content:space-between;
+  flex-shrink:0;
+  width:530rpx;
+}
+.b_pd_prop{
+  font-size:24rpx;
+  color:#999;
+}
+.b_pd_sp{
+  align-items:baseline;
+}
+.b_pd_price{
+  font-size:32rpx;
+  margin-right:15rpx;
+}
+.b_o_price{
+  font-size:24rpx;
+  text-decoration:line-through;
+}
+.ord_status{
+  position:relative;
+  padding-bottom:20rpx;
+  margin-bottom:20rpx;
+}
+.s_info{
+  height: 56rpx;
+}
+.icon-address{
+  color: #ff0036;
+  font-size:36rpx;
+  margin-left: 10rpx;
+}

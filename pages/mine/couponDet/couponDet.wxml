@@ -1,0 +1,44 @@
+<view class="couponDetTop">
+  <view class="couponDetName">{{couponDet.cardName}}</view>
+  <view class="couponDetTips">
+    <text wx-if="{{couponDet.useScenes === 0 }}">（通用）</text>
+    <text wx-if="{{couponDet.useScenes === 1 }}">（仅限电商使用）</text>
+    <text wx-if="{{couponDet.useScenes === 2 }}">（仅限线下门店使用）</text>
+  </view>
+  <view class="couponDetImg">
+    <image wx:if="{{couponDet.qrCodePic}}" src="{{couponDet.qrCodePic}}"></image>
+    <view class="f_row f_r_cnt card_mask" wx:if="{{isSending || isShare}}">
+      <block wx:if="{{isOwner}}">
+        <text wx:if="{{couponDet.status === 6 || justSending}}">赠送中...</text>
+      </block>
+      <block wx:else>
+        <view class="get_card" bindtap="receiveCard" wx:if="{{isShare && couponDet.status !== 5}}">领取</view>
+      </block>
+      <text wx:if="{{couponDet.status === 5}}">已转赠...</text>      
+    </view>
+  </view>
+  <view class="payTips">到店支付前请出示此二维码</view>
+</view>
+<view class="couponDetTxt">
+  <text class="couLeftTxt">有 效 期：</text>{{couponDet.verfyStartDateFmt + '～' + couponDet.verfyEndDateFmt}}
+</view>
+<view class='couponDetTxt'>
+  <text class="couLeftTxt">抵扣条件：</text>{{(couponDet.conditionAmount > 0) ? ('满' + couponDet.conditionAmount + '可用') : '无门槛使用'}}
+</view>
+<view class='couponDetTxt'>
+  <view class="couLeftTxt">可用门店：</view>
+  <view class="storeList" wx:for="{{storeList}}" wx:key="keylist" wx:for-index="idx" wx:for-item="item">
+    <view class="storeName">{{item.name}}</view>
+    <view class="icon-local storeAdd">{{item.provinceName}}{{item.cityName}}{{item.circleName}}{{item.address}}</view>
+  </view>
+</view>
+<view class='couponDetTxt'>
+  <text class="couLeftTxt">使用说明</text>
+  <view class="f_col">
+    {{couponDet.content || '暂无相关使用说明'}}
+  </view>
+</view>
+<button wx:if="{{couponDet.isTransferSend === 1}}" open-type="share" class="couponDetTxt lt_line_box box_size f_row f_jc_sb f_r_cnt">
+  <text class="couLeftTxt">赠送给朋友</text>
+  <image class="gift" src="/static/ico/gift.png"></image>
+</button>

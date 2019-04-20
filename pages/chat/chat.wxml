@@ -1,0 +1,278 @@
+<view class='g_fixed_top f_row f_r_cnt f_jc_sb' wx:if='{{false}}'>
+  <view class='f_row p_home f_r_cnt f_jc_sb'>
+    <image src='/static/ico/p_home.png'></image>
+    <text class='size_28'>{{title}}的个人主页</text>
+  </view>
+  <form bindsubmit='send' report-submit='true'>
+    <view class='add_friends f_row f_r_cnt f_jc_cnt txt_color' bindtap='createImg'>去看看</view>
+  </form>
+</view>
+<scroll-view scroll-y="true" class='chat-content' bindscrolltoupper='scrollUpper' scroll-into-view='{{toView}}'>
+  <view wx:for="{{list}}" wx:for-item="item" wx:key='list' class='chat-item' id='a{{item.msgId}}'>
+    <view class="padding right_role" wx:if="{{item.flag == 2}}">
+      <navigator hover-class='none' url='/pages/mine/mine' open-type='switchTab'>
+        <image class="right-Avatar" src="{{fansPhoto}}"></image>
+      </navigator>
+      <view class="right-Triangle"></view>
+      <view class="right-message padding_half f_row f_r_cnt">
+        <view wx:if='{{item.msgInfo.type == "txt" && item.msgInfo.text}}' class='txt-content'>{{item.msgInfo.text}}</view>
+        <view class='f_row m_goods' wx:elif='{{item.msgInfo.type == "goods"}}' bindtap='toDetail' data-goodsId='{{item.msgInfo.goodsObj.goodsId}}' data-activityId='{{item.msgInfo.goodsObj.activityId || ""}}' data-activityType='{{item.msgInfo.goodsObj.activityType || ""}}'>
+          <view class='g_img'>
+            <image src='{{item.msgInfo.goodsObj.pic}}'></image>
+          </view>
+          <view class='f_col g_goods'>
+            <text class='wrap_name name_color'>{{item.msgInfo.goodsObj.goodsName}}</text>
+            <text class='txt_color'>￥{{item.msgInfo.goodsObj.price}}</text>
+          </view>
+        </view>
+        <view class='f_col' wx:elif='{{item.msgInfo.type == "order"}}'>
+          <view class='color_333'>订单号:{{item.msgInfo.orderObj.orderNo}}</view>
+          <view class='f_row img_box'>
+            <view class='img_list' wx:for='{{item.msgInfo.orderObj.ordersDetails}}'>
+              <image src='{{item.goodsPic}}' class='order_img'></image>
+              <text class='goods_num f_row f_r_cnt f_jc_cnt'>X{{item.total}}</text>
+            </view>
+          </view>
+          <view class='f_row f_jc_sb mr_20'>
+            <view class='txt_color'>￥{{item.msgInfo.orderObj.goodsAmountDouble}}</view>
+            <view class='order_status'>
+              <text class="color_333" wx:if='{{item.status === 0}}'>待付款</text>
+              <text class="color_333" wx:elif='{{item.status === 2}}'>待发货</text>
+              <text class="color_333" wx:elif='{{item.status === 3}}'>已发货</text>
+              <text wx:elif='{{item.status === 4}}'>已完成</text>
+              <text class="color_333" wx:elif='{{item.status === 5}}'>已取消</text>
+              <text class="color_333" wx:elif='{{item.status === 6}}'>等待商家同意退款</text>
+              <text class="color_333" wx:elif='{{item.status === 7}}'>等待买家退货</text>
+              <text class="color_333" wx:elif='{{item.status === 8}}'>等待商家收货</text>
+              <text class="color_333" wx:elif='{{item.status === 9}}'>退款成功</text>
+              <text class="color_333" wx:elif='{{item.status === 10}}'>超时取消</text>
+            </view>
+          </view>
+          <view class='f_row f_jc_cnt'>
+            <navigator hover-class='none' class='order_btn f_row f_jc_cnt f_r_cnt' url='/pages/mine/orderDetail/orderDetail?orderNo={{item.msgInfo.orderObj.orderNo}}&detNo={{item.msgInfo.orderObj.detNo}}'>查看订单</navigator>
+          </view>
+        </view>
+        <view class='f_col' wx:elif='{{item.msgInfo.type == "orderGoods"}}'>
+          <view class='f_row m_goods'>
+            <view class='g_img'>
+              <image src='{{item.msgInfo.orderGoods.goodsPic}}'></image>
+            </view>
+            <view class='f_col g_goods'>
+              <text class='wrap_name name_color'>{{item.msgInfo.orderGoods.goodsName}}</text>
+              <text class='txt_color'>￥{{item.msgInfo.orderGoods.amountDouble}}</text>
+            </view>
+          </view>
+          <view class='f_row fs_24 f_jc_sb chat_order'>
+            <view class='color_333'>订单号:{{item.msgInfo.orderGoods.orderNo}}</view>
+            <view class='order_status'>
+              <text class="color_333" wx:if='{{item.msgInfo.orderGoods.status === 0}}'>待付款</text>
+              <text class="color_333" wx:elif='{{item.msgInfo.orderGoods.status === 2}}'>待发货</text>
+              <text class="color_333" wx:elif='{{item.msgInfo.orderGoods.status === 3}}'>已发货</text>
+              <text wx:elif='{{item.msgInfo.orderGoods.status === 4}}'>已完成</text>
+              <text class="color_333" wx:elif='{{item.msgInfo.orderGoods.status === 5}}'>已取消</text>
+              <text class="color_333" wx:elif='{{item.msgInfo.orderGoods.status === 6}}'>等待商家同意退款</text>
+              <text class="color_333" wx:elif='{{item.msgInfo.orderGoods.status === 7}}'>等待买家退货</text>
+              <text class="color_333" wx:elif='{{item.msgInfo.orderGoods.status === 8}}'>等待商家收货</text>
+              <text class="color_333" wx:elif='{{item.msgInfo.orderGoodsem.status === 9}}'>退款成功</text>
+              <text class="color_333" wx:elif='{{item.msgInfo.orderGoods.status === 10}}'>超时取消</text>
+            </view>
+          </view>
+          <view class='f_row ope_btn'>
+            <view class='order_btn f_row f_jc_cnt f_r_cnt' bindtap='toDetail' data-goodsId='{{item.msgInfo.orderGoods.goodsId}}' data-activityId='{{item.msgInfo.orderGoods.activityId || ""}}' data-activityType='{{item.msgInfo.orderGoods.activityType || ""}}'>查看商品</view>
+            <navigator hover-class='none' class='order_btn f_row f_jc_cnt f_r_cnt' url='/pages/mine/orderDetail/orderDetail?orderNo={{item.msgInfo.orderGoods.orderNo}}&detNo={{item.msgInfo.orderGoods.detNo}}'>查看订单</navigator>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="padding f_row" wx:elif="{{item.flag == 1}}">
+      <view>
+        <image class="left-Avatar" src="{{empPhoto}}"></image>
+      </view>
+      <view class="left-Triangle"></view>
+      <view class="left-message padding_half f_row f_r_cnt">
+        <view class='txt-content' wx:if='{{item.msgInfo.type == "txt"}}'>{{item.msgInfo.text}}</view>
+        <view wx:elif='{{item.msgInfo.type == "welcome"}}'>
+          <view>{{item.msgInfo.text.first}}:</view>
+          <view class='txt-content'>{{item.msgInfo.text.remark}}</view>
+          <view wx:for='{{item.msgInfo.text.linkList}}' wx:for-item='sList' wx:key='slist'>
+            <view class='f_col f_welcome' wx:if='{{sList.linkType == "10" && !sList.isBindEmp}}'>
+              <view class='f_item size_24'>没有收到回复，可以添加我的微信哦~</view>
+              <form bindsubmit='createImg' report-submit='true'>
+                <button class='add_wx_btn' form-type='submit'>添加微信</button>
+              </form>
+            </view>
+            <view class='f_col f_welcome' wx:if='{{sList.linkType == "10" && sList.isBindEmp}}'>
+              <view class='f_item size_24'>如没及时收到回复，可进入通讯录-企业微信联系人列表，给我留言噢～</view>
+            </view>
+          </view>
+        </view>
+        <view wx:elif='{{item.msgInfo.type == "picTxt"}}'>
+          <image src='{{item.msgInfo.src}}' mode='widthFix' class='cardImg' bindtap='previewImg' data-url='{{item.msgInfo.src}}'></image>
+        </view>
+        <view wx:elif='{{item.msgInfo.type == "card"}}' bindtap='toShareCard' data-goods-id='{{item.msgInfo.goodsId}}' data-card-id='{{item.msgInfo.cardComm.id}}'>
+          <view>{{item.msgInfo.cardComm.cardShareConfigVo.shareTitle}}</view>
+          <image class='coupon_img' mode='widthFix' src='{{item.msgInfo.cardComm.cardShareConfigVo.pic}}'></image>
+          <image src='/static/ico/miniProgram.png' class='mini_pro'></image>
+        </view>
+      </view>
+    </view>
+    <view class='padding' wx:else>
+      <view class='f_row f_jc_cnt'>
+        <view wx:if='{{item.msgInfo.type == "msgTime"}}' class='msg_time'>{{item.msgInfo.text}}</view>
+      </view>
+    </view>
+  </view>
+  <view id='a123456'></view>
+</scroll-view>
+
+<view class='g_bottom f_col' wx:if='{{goodsInfo.goodsId && !isSendGood}}'>
+  <view class='f_row' bindtap='toDetail' data-goodsId='{{goodsInfo.goodsId}}' data-activityId='{{goodsInfo.activityId || ""}}' data-activityType='{{goodsInfo.activityType || ""}}'>
+    <view class='g_img'>
+      <image src='{{goodsInfo.pic}}'></image>
+    </view>
+    <view class='f_col g_goods'>
+      <text class='wrap_name name_color'>{{goodsInfo.goodsName}}</text>
+      <text class='txt_color'>￥{{goodsInfo.price}}</text>
+    </view>
+  </view>
+  <view>
+    <button class='send_good f_row f_r_cnt f_jc_cnt size_24 txt_color' data-tag='1' bindtap='sendGood'>发送商品</button>
+  </view>
+</view>
+<view class='g_bottom f_col' wx:if='{{orderInfo.orderNo && !isSendOrder}}'>
+  <navigator hover-class='none' url='/pages/mine/orderDetail/orderDetail?orderNo={{orderInfo.orderNo}}&detNo={{orderInfo.detNo}}'>
+    <view class='f_row f_jc_sb'>
+      <view class='color_333'>订单号:{{orderInfo.orderNo}}</view>
+      <view class='order_status'>
+        <text class="color_999" wx:if='{{orderInfo.status === 0}}'>待付款</text>
+        <text class="color_999" wx:elif='{{orderInfo.status === 2}}'>待发货</text>
+        <text class="color_999" wx:elif='{{orderInfo.status === 3}}'>已发货</text>
+        <text wx:elif='{{orderInfo.status === 4}}'>已完成</text>
+        <text class="color_999" wx:elif='{{orderInfo.status === 5}}'>已取消</text>
+        <text class="color_999" wx:elif='{{orderInfo.status === 6}}'>等待商家同意退款</text>
+        <text class="color_999" wx:elif='{{orderInfo.status === 7}}'>等待买家退货</text>
+        <text class="color_999" wx:elif='{{orderInfo.status === 8}}'>等待商家收货</text>
+        <text class="color_999" wx:elif='{{orderInfotem.status === 9}}'>退款成功</text>
+        <text class="color_999" wx:elif='{{orderInfo.status === 10}}'>超时取消</text>
+      </view>
+    </view>
+    <view class='f_row img_box'>
+      <view class='img_list' wx:for='{{orderInfo.ordersDetails}}' wx:key="order">
+        <image src='{{item.goodsPic}}' class='order_img'></image>
+        <text class='goods_num f_row f_r_cnt f_jc_cnt'>X{{item.total}}</text>
+      </view>
+      <view>订单总价:
+        <text class='fs_36'>￥{{orderInfo.goodsAmountDouble}}</text>
+      </view>
+    </view>
+  </navigator>
+  <view>
+    <button class='send_good f_row f_r_cnt f_jc_cnt size_24 txt_color' bindtap='sendOrder'>发送订单</button>
+  </view>
+</view>
+<view class='g_bottom'>
+  <view class='f_row f_r_cnt'>
+    <view>我想：</view>
+    <view class='v_tab' bindtap='tocustom' data-idx='1'>咨询足迹商品</view>
+    <view class='v_tab' bindtap='tocustom' data-idx='2'>咨询订单</view>
+  </view>
+</view>
+<view class="wa-row f_row f_r_cnt">
+  <view class="wa-col-80 padding1_half">
+    <textarea value="{{inputValue}}" bindinput="bindKeyInput" class='chat-input {{isIos?"ios-input":"padding20"}}' auto-height show-confirm-bar='{{hideBar}}' cursor-spacing='15' placeholder='请输入...' wx:if='{{showMask}}'></textarea>
+  </view>
+  <form bindsubmit='send' report-submit='true'>
+    <view class="f_row f_r_cnt send">
+      <button class="bf_send f_row {{isSend?'isSend':''}}" form-type="submit">发送</button>
+    </view>
+  </form>
+</view>
+
+<!--底部弹框选择订单商品-->
+<view class="mask showmask" wx:if='{{showOrder}}' bindtap='closeOrder'>
+  <view class="f_col bottom-dialog-body" catchtap='preventClose'>
+    <view class='f_row f_r_cnt choose_head f_jc_sb'>
+      <view>请选择你要咨询的订单</view>
+      <view class='close_btn' bindtap='closeOrder'></view>
+    </view>
+    <scroll-view class='o_l_item' scroll-y="true" bindscrolltolower='toOrder'>
+      <view wx:for='{{orderList}}' wx:key='order' wx:for-index='idx'>
+        <view class="f_row f_jc_sb f_r_cnt ol_i_head">
+          <text>订单号：{{item.orderNo}}</text>
+          <text class="color_999" wx:if='{{item.status === 0}}'>待付款</text>
+          <text class="color_999" wx:elif='{{item.status === 2}}'>待发货</text>
+          <text class="color_999" wx:elif='{{item.status === 3}}'>已发货</text>
+          <text class="order_status" wx:elif='{{item.status === 4}}'>已完成</text>
+          <text class="color_999" wx:elif='{{item.status === 5}}'>已取消</text>
+          <text class="color_999" wx:elif='{{item.status === 6}}'>等待商家同意退款</text>
+          <text class="color_999" wx:elif='{{item.status === 7}}'>等待买家退货</text>
+          <text class="color_999" wx:elif='{{item.status === 8}}'>等待商家收货</text>
+          <text class="color_999" wx:elif='{{item.status === 9}}'>退款成功</text>
+          <text class="color_999" wx:elif='{{item.status === 10}}'>超时取消</text>
+        </view>
+        <view class="f_row ol_i_box">
+          <image src="{{item.goodsPic}}"></image>
+          <view class="f_row f_jc_sb o_right">
+            <view class="f_col o_attribute">
+              <text class="o_p_tit">{{item.goodsName}}X{{item.total}}</text>
+              <text class="o_p_pro" wx:if='{{item.modelType}}'>属性: {{item.modelType}}</text>
+              <text class='o_p_pro' wx:if='{{item.modelCode}}'>货号: {{item.modelCode}}</text>
+            </view>
+            <view class="o_p_price f_col">
+              <view class='txt_color'>￥{{item.amountDouble}}</view>
+            </view>
+          </view>
+          <view class='checkbox {{item.isSelect ? "rd_sel":""}}' catchtap='selectOrder' data-index='{{idx}}'></view>
+        </view>
+      </view>
+    </scroll-view>
+    <view class='icon_box f_row f_jc_cnt f_r_cnt'>
+      <view class='icon_btn f_row f_jc_cnt f_r_cnt' bindtap='sendGoodsOrder'>确定</view>
+    </view>
+  </view>
+</view>
+
+<!--底部弹框选择商品-->
+<view class="mask showmask" wx:if='{{showGoods}}' bindtap='closeGoods'>
+  <view class="f_col bottom-dialog-body" catchtap='preventClose'>
+    <view class='f_row f_r_cnt choose_head f_jc_sb'>
+      <view>请选择你要咨询的商品</view>
+      <view class='close_btn' bindtap='closeGoods'></view>
+    </view>
+    <scroll-view class='o_l_item' scroll-y="true" bindscrolltolower='toGoods'>
+      <view class="f_row ol_i_box" wx:for="{{goodsList}}" wx:for-item="item" wx:key='goods' wx:for-index='idx'>
+        <image src="{{item.pic}}"></image>
+        <view class="f_row f_jc_sb o_right">
+          <view class="f_col o_attribute">
+            <text class="o_p_tit">{{item.goodsName}}</text>
+            <view class='tagList'>
+              <text class='second common_icon' wx:if='{{item.activityType === 7}}'>秒杀</text>
+              <text class='second common_icon' wx:elif='{{item.activityType === 11}}'>特价</text>
+              <text class='second common_icon' wx:elif='{{item.activityType === 12}}'>抱团</text>
+              <text class='second common_icon' wx:elif='{{item.activityType === 8}}'>预售</text>
+              <text class='reduce common_icon' wx:if='{{item.isFulReduce === 1}}'>满减</text>
+              <view class='cash common_icon' wx:if='{{item.isCash === 1 }}'>券
+                <view class='cash_common_point cash_right1'></view>
+                <view class='cash_common_point cash_right2'></view>
+                <view class='cash_common_point cash_right3'></view>
+                <view class='cash_common_point cash_left1'></view>
+                <view class='cash_common_point cash_left2'></view>
+                <view class='cash_common_point cash_left3'></view>
+              </view>
+              <text class='second common_icon' wx:if='{{item.isIntegral === 1}}'>积分</text>
+            </view>
+            <view class='f_row o_price'>
+              <text class='txt_color'>￥{{item.activityId ? item.activityPriceDouble : item.minSalePriceDouble}}</text>
+              <text class='fs_24 o_orign' wx:if='{{(item.activityId && item.minSalePriceDouble) || (!item.activityId && item.minMarketPriceDouble)}}'>￥{{item.activityId ? item.minSalePriceDouble : item.minMarketPriceDouble}}</text>
+            </view>
+          </view>
+          <view class='checkbox checkbox1 {{item.isSelect ? "rd_sel":""}}' catchtap='selectGoods' data-index='{{idx}}'></view>
+        </view>
+
+      </view>
+    </scroll-view>
+    <view class='icon_box f_row f_jc_cnt f_r_cnt'>
+      <view class='icon_btn f_row f_jc_cnt f_r_cnt' catchtap='sendGood' data-tag='2'>确定</view>
+    </view>
+  </view>
+</view>

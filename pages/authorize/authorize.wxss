@@ -1,0 +1,24 @@
+page{
+  background:#FFF;
+}
+.empty{
+  width:280rpx;
+  height:250rpx;
+  margin-top:100rpx;
+}
+.tips{
+  margin-top:40rpx;
+  justify-content:center;
+  align-items:center;
+}
+.loginBtn{
+  width:500rpx;
+  height:60rpx;
+  background:#2093fc;
+  border-radius:10rpx;
+  color:#fff;
+  line-height:60rpx; 
+  text-align:center;
+  margin-top:100rpx;
+  font-size:30rpx;
+}

@@ -1,0 +1,48 @@
+<import src="../template/loading/loading.wxml" />
+<view class='f_col g_line_top'>
+  <view class='hearder'>
+    <view class="search_box">
+      <view class="search_i search_i1 box_size"></view>
+      <input class="search box_size" placeholder-style="color:#aaa;" type="text" placeholder="请输入商品名称/商品货号/商品价格" value='{{searchKey}}' confirm-type='search' bindconfirm='searchOrder' bindfocus='showClose' bindinput='inputValue' />
+      <view class="s_close_i" bindtap='clearKey' wx:if='{{showClose}}'></view>
+    </view>
+  </view>
+  <!-- <view class='f_head f_row f_r_cnt'>
+    <block wx:for='{{typeList}}' wx:key="type" wx:for-index='index'>
+      <view class='activity_type {{item.isSelect ? "cur" : ""}}' bindtap='changeType' data-type='{{item.activityType}}' data-index='{{index}}'>{{item.activityName}}</view>
+    </block>
+  </view> -->
+  <view>
+    <view class='goods_item f_row f_r_cnt' wx:for='{{goodsList}}' wx:for-item='item' wx:for-index='idx' wx:key="goods" bindtap='check' data-index='{{idx}}'>
+      <image src='{{item.pic || "/static/ico/header.png"}}' class='goods_image'></image>
+      <view class='goods_info' data-aid="{{item.activityId}}" data-gid="{{item.id}}" data-sid="{{item.shopId}}" data-stid="{{item.storeId}}" data-type="{{item.activityType}}" catchtap='toDetail'>
+        <view class='goods_name'>{{item.goodsName}}</view>
+        <view class='f_row goods_price'>
+          <view>￥
+            <text class='fs_36'>{{item.minSalePriceDouble}}</text>
+          </view>
+          <view class='tagList f_row'>
+            <text class='second common_icon' wx:if='{{item.activityType === 7}}'>秒杀</text>
+            <text class='second common_icon' wx:if='{{item.activityType === 11}}'>特价</text>
+            <text class='second common_icon' wx:if='{{item.activityType === 12}}'>抱团</text>
+            <text class='second common_icon' wx:if='{{item.activityType === 8}}'>预售</text>
+            <text class='reduce common_icon' wx:if='{{item.isFulReduce === 1}}'>满减</text>
+            <view class='cash common_icon' wx:if='{{item.isCash === 1 }}'>券</view>
+            <text class='second common_icon' wx:if='{{item.isIntegral === 1}}'>积分</text>
+          </view>
+        </view>
+        <view class='g_commission' wx:if='{{item.clerkCommDouble}}'>
+          <text class='fs_24'>佣金：</text>
+          <text class='color_yellow'>{{item.clerkCommDouble}}</text>
+        </view>
+      </view>
+      <view class='checkbox {{item.isSelect ?"rd_sel":""}}'></view>
+    </view>
+    <template is="loading" data="{{loading, isshowEmpty,isLastPage,imgSrc,noMsg}}"></template>
+  </view>
+</view>
+<view class="g_blank_120"></view>
+<view class="f_row f_jc_sb bot_fixed_box f_r_cnt g_line_top box_size" wx:if='{{!isshowEmpty}}'>
+  <view>选择商品，即可生成促销海报</view>
+  <view class='sure_btn f_row f_r_cnt f_jc_cnt' bindtap='sureBtn'>确认添加</view>
+</view>

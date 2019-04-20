@@ -1,0 +1,114 @@
+<import src="../../template/loading/loading.wxml" />
+<view class="o_nav f_row">
+  <text data-type="-1" bindtap="changeTab" class="o_nav_i {{navTab === -1 ? 'o_nav_c' : ''}}">全部</text>
+  <text data-type="0" bindtap="changeTab" class="o_nav_i {{navTab === 0 ? 'o_nav_c' : ''}}">待付款</text>
+  <text data-type="2" bindtap="changeTab" class="o_nav_i {{navTab === 2 ? 'o_nav_c' : ''}}">待发货</text>
+  <text data-type="3" bindtap="changeTab" class="o_nav_i {{navTab === 3 ? 'o_nav_c' : ''}}">待收货</text>
+  <text data-type="4" bindtap="changeTab" class="o_nav_i {{navTab === 4 ? 'o_nav_c' : ''}}">已完成</text>
+  <text data-type="6" bindtap="changeTab" class="o_nav_i {{navTab === 6? 'o_nav_c' : ''}}">退款</text>
+</view>
+<view class="list-g-box">
+  <view class="f_col o_list">
+    <view class="f_col" wx:for="{{list}}" wx:key="keylist" wx:for-index="idx" wx:for-item="item">
+      <view class="g_blank_20"></view>
+      <view class='o_l_item'>
+        <view class="f_row f_jc_sb f_r_cnt ol_i_head">
+          <text>{{navTab === 6 ? '售后单号：'+ item.serviceId: '订单编号：'+item.orderNo}}</text>
+          <!-- 订单状态 -->
+          <text class="txt_color">{{item.statusName}}</text>
+        </view>
+        <!-- 如果有detailNo， -->
+        <block wx:if="{{item.detailNo != null && item.detailNo!=''}}">
+          <view class="f_row ol_i_box" data-order-no='{{item.orderNo}}' data-det-no='{{item.detailNo}}' catchtap="toDetail">
+            <image src="{{item.goodsPic}}"></image>
+            <view class="f_row f_jc_sb o_right">
+              <view class="f_col o_attribute">
+                <text class="o_p_tit">{{item.goodsName}}</text>
+                <view wx:if='{{item.fansDiscount}}'>
+                  <text class='second common_icon'>{{item.discountLevel}}享{{item.fansDiscount}}折</text>
+                </view>
+                <text class="o_p_pro" wx:if='{{item.modelType}}'>属性：{{item.modelType}}</text>
+              </view>
+              <view class="o_p_price f_col">
+                <view class='o_price'>￥{{item.priceDouble}}</view>
+                <view class='o_orignPrice' wx:if="{{item.minMarketPriceDouble}}">￥{{item.minMarketPriceDouble}}</view>
+                <view class='o_goodNum'>X{{item.total}}</view>
+              </view>
+            </view>
+          </view>
+        </block>
+        <!-- 如果没有 -->
+        <block wx:else>
+          <view class="f_row ol_i_box" wx:for="{{item.ordersDetails}}" wx:for-index="idx2" wx:key="{{idx2}}" wx:for-item="item2" data-order-no='{{item.orderNo}}' catchtap="toDetail">
+            <image src="{{item2.goodsPic}}"></image>
+            <view class="f_row f_jc_sb o_right">
+              <view class="f_col o_attribute">
+                <text class="o_p_tit">{{item2.goodsName}}</text>
+                <view wx:if='{{item2.fansDiscount}}'>
+                  <text class='second common_icon'>{{item2.discountLevel}}享{{item2.fansDiscount}}折</text>
+                </view>
+                <text class="o_p_pro" wx:if='{{item2.modelType}}'>属性：{{item2.modelType}}</text>
+              </view>
+              <view class="o_p_price f_col">
+                <view class='o_price'>￥{{item2.priceDouble}} </view>
+                <view class='o_orignPrice' wx:if="{{item2.originalPriceDouble}}">￥{{item2.originalPriceDouble}}</view>
+                <view class='o_goodNum'>X{{item2.total}}</view>
+              </view>
+            </view>
+          </view>
+        </block>
+        <!-- 价格信息 -->
+        <view class="f_row f_r_cnt ol_i_bot" wx:if="{{navTab != 6}}">
+          <text class='o_text1'>共{{item.total}}件，{{item.status === 0 || item.status === 5 || item.status === 10 ? '应' : '实'}}付款：</text>
+          <text class='o_text2'>¥{{item.amountDouble}}</text>
+          <text class='o_text3'>（{{item.freightDouble === 0 ? '包邮' : '含运费￥' + item.freightDouble}}）</text>
+        </view>
+
+        <!-- 订单列表按钮组 -->
+        <!-- 0 -->
+        <view class="f_row f_jc_sb f_r_cnt ol_i_operation" wx:if="{{item.status === 0}}">
+          <view class="cencal-text" wx:if='{{item.payTimeCountDownA > 5}}'>订单在{{item.payTimeFormat}}后自动取消</view>
+          <view class="cencal-text" wx:else>订单取消中...</view>
+          <view wx:if='{{item.payTimeCountDownA > 5}}'>
+            <form bindsubmit="setFormId" data-orderNo="{{item.orderNo}}" report-submit="true">
+              <button class="ol_btn" form-type="submit">取消订单</button>
+            </form>
+            <form bindsubmit="gotoPay" data-orderNo="{{item.orderNo}}" report-submit="true" wx:if='{{!environment}}'>
+              <button class="ol_btn o_pay bg_color" form-type="submit">付款</button>
+            </form>
+          </view>
+        </view>
+
+        <!-- 2 3 4 -->
+        <view class="f_row f_jc_sb f_r_cnt ol_i_operation" wx:if="{{item.status === 2 || item.status === 3 || item.status === 4}}">
+          <form bindsubmit="toRefund" data-orderNo="{{item.orderNo}}" report-submit="true" wx:if="{{item.refund && !item.isVirtual && item.refundType != 2 && item.supplierCode != 'JD10001'}}">
+            <button class="ol_btn" form-type="submit">申请售后</button>
+          </form>
+          <!-- 如果状态为2 -->
+          <form bindsubmit="remindGood" report-submit="true" wx:if="{{item.status === 2 && item.payWay !== 3}}">
+            <button class="ol_btn" form-type="submit">提醒发货</button>
+          </form>
+          <!-- 如果状态不等于2 -->
+          <button wx:if="{{item.status !== 2 && (item.delivery === 1 || item.delivery === 3)}}" bindtap='toexpress' class="ol_btn" data-order-no='{{item.orderNo}}'>查看物流</button>
+          <!-- 如果状态为3 -->
+          <button wx:if="{{item.status === 3 && item.delivery === 2 && item.payWay === 3}}" bindtap='toCertiticate' class="ol_btn" data-order-no='{{item.orderNo}}'>提货码</button>
+        </view>
+
+        <!-- 1 5 10 -->
+        <view class="f_row f_jc_sb f_r_cnt ol_i_operation" wx:if="{{item.status === 1 ||item.status === 5 || item.status === 10}}">
+          <form bindsubmit="delOrder" data-orderNo="{{item.orderNo}}" report-submit="true">
+            <button class="ol_btn" form-type="submit">删除订单</button>
+          </form>
+        </view>
+
+         <!-- 20:待商户审核,28:企业审核通过,29:企业审核拒绝,71:待平台审核,72:平台审核通过73:平台审核拒绝,74:待用户发货,75:待商户收货,76:已收货,80:退款成功,90:用户取消(退款关闭),91:商户取消(退款关闭) -->
+        <view class="f_row f_jc_sb f_r_cnt ol_i_operation" wx:if='{{navTab === 6}}'>
+          <form bindsubmit="toRecord" report-submit="true" data-afterSaleId="{{item.afterSaleId}}" data-order-no='{{item.orderNo}}' data-det-no='{{item.detailNo}}'>
+            <button class="ol_btn" form-type="submit">售后详情</button>
+          </form>
+         </view>
+      </view>
+    </view>
+  </view>
+</view>
+<template is="loading" data="{{loading, isshowEmpty,isLastPage,imgSrc,noMsg}}"></template>

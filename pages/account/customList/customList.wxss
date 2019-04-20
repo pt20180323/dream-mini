@@ -1,0 +1,152 @@
+.p_listHeader {
+  position: fixed;
+  height: 92rpx;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  background: #f2f2f2;
+}
+
+.c_blue {
+  color: #2093fc;
+}
+
+.mask_search_box {
+  width: 100%;
+  padding: 0 25rpx;
+  box-sizing: border-box;
+}
+
+.search_input {
+  flex: 1;
+  height: 64rpx;
+  border-radius: 8rpx;
+  background: #f2f2f2;
+  padding: 0 20rpx 0 70rpx;
+  margin-right: 10rpx;
+  background: #fff;
+}
+
+.search_i {
+  width: 26rpx;
+  height: 26rpx;
+  border-radius: 50%;
+  border: 4rpx solid #999;
+  position: absolute;
+  z-index: 3;
+  left: 50rpx;
+}
+
+.search_i:after {
+  content: '';
+  display: inline-block;
+  height: 4rpx;
+  position: absolute;
+  bottom: -2rpx;
+  right: -10rpx;
+  transform: rotate(45deg);
+  z-index: 2;
+  background-color: #999;
+  bottom: -4rpx;
+  width: 12rpx;
+}
+
+.user_img {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 6rpx;
+  margin: 20rpx 10rpx 20rpx 0;
+}
+
+.s_box {
+  margin-top: 92rpx;
+}
+
+.s_item {
+  box-sizing: border-box;
+  padding: 0 25rpx;
+  background: #fff;
+  border-bottom: 1rpx solid #eee;
+  justify-content: space-between;
+}
+
+.ope_btn {
+  width: 96rpx;
+  height: 48rpx;
+  border-radius: 8rpx;
+  color: #2093fc;
+  border: solid 1rpx #2093fc;
+  text-align: center;
+  line-height: 48rpx;
+  font-size: 24rpx;
+}
+
+.mask {
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  height: 0;
+  position: fixed;
+  background: rgba(0, 0, 0, 0.6);
+  transition: opacity 0.3s ease-in-out;
+  z-index: 9999;
+  opacity: 0;
+}
+
+.showmask {
+  height: 100%;
+  opacity: 1;
+}
+
+.iknow_tip {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+  width: 510rpx;
+  background: #fff;
+  padding: 45rpx 25rpx 25rpx;
+  border-radius: 12rpx;
+}
+
+.share_img {
+  width: 270rpx;
+}
+
+.show_box {
+  border: 1rpx solid #eee;
+  padding: 10rpx;
+  margin-top: 20rpx;
+  font-size: 24rpx;
+  width: 290rpx;
+}
+
+.mini_pro {
+  width: 153rpx;
+  height: 30rpx;
+  margin-top: 10rpx;
+}
+
+.icon_btn {
+  width: 240rpx;
+  height: 80rpx;
+  background-color: #2093fc;
+  border-radius: 8rpx;
+  color: #fff;
+  font-size: 30rpx;
+  margin: 32rpx 0;
+}
+
+.icon_btn1 {
+  color: #666;
+  border: 1rpx solid #bbb;
+  background: #fff;
+  margin-right: 32rpx;
+}
+
+.icon_box {
+  width: 100%;
+  height: 112rpx;
+  margin-top: 40rpx;
+}

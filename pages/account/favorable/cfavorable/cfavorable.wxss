@@ -1,0 +1,168 @@
+page {
+  background: #ef4047;
+}
+
+.fav_head {
+  position: relative;
+}
+
+.header_bg {
+  width: 750rpx;
+  height: 800rpx;
+}
+.coupon_txt{
+  position: absolute;
+  width: 100%;
+  top: 64rpx;
+  text-align: center;
+}
+.txt1{
+  font-size: 44rpx;
+  color: #fff;
+}
+.txt2{
+  font-size: 30rpx;
+  color: #fff;
+}
+.coupon_box {
+  position: absolute;
+  width: 700rpx;
+  height: 310rpx;
+  top: 170rpx;
+  left: 25rpx;
+}
+.coupon_btn{
+  position: absolute;
+  top: 196rpx;
+  left: 45rpx;
+}
+.fav_goods {
+  width: 650rpx;
+  height: 240rpx;
+  background-color: #fff;
+  box-shadow: 0 0 10rpx 0 rgba(188, 12, 19, 0.2);
+  border-radius: 8rpx;
+  border: solid 1rpx #ffe4ba;
+  position: absolute;
+  padding: 0 25rpx;
+  top: 502rpx;
+  left: 25rpx;
+}
+
+.fav_rules {
+  width: 650rpx;
+  height: 390rpx;
+  background-color: #ffe7d9;
+  box-shadow: 0 0 10rpx 0 rgba(188, 12, 19, 0.2);
+  border-radius: 8rpx;
+  border: solid 1rpx #ffe4ba;
+  padding: 25rpx 25rpx 20rpx;
+  position: absolute;
+  top: 770rpx;
+  left: 25rpx;
+}
+.empty_div{
+  width: 650rpx;
+  height: 390rpx;
+  margin-bottom: 40rpx;
+}
+.fav_share {
+  width: 610rpx;
+  height: 88rpx;
+  background-image: linear-gradient(0deg, #ffa600 0%, #ffc434 58%, #ffe168 100%),
+                      linear-gradient(#ffd200, #ffd200);
+  box-shadow: 0 4rpx 0 0 rgba(188, 12, 19, 0.5);
+  border-radius: 44rpx;
+  color: #dd1d24;
+  font-size: 36rpx;
+}
+.goods_img {
+  width: 184rpx;
+  height: 184rpx;
+}
+
+.goods_name {
+  font-size: 30rpx;
+  color: #000;
+  width: 450rpx;
+}
+
+.inf_box {
+  margin-left: 20rpx;
+}
+
+.ora_price {
+  color: #999;
+  font-size: 24rpx;
+  text-decoration: line-through;
+  margin-top: 15rpx;
+}
+
+.now_price {
+  color: #ef4047;
+}
+
+.fs_42 {
+  font-size: 42rpx;
+}
+
+.c_left {
+  color: #424242;
+  font-size: 40rpx;
+  height: 170rpx;
+  padding: 0 20rpx;
+}
+
+.f_100 {
+  font-size: 100rpx;
+}
+
+.f_32 {
+  font-size: 32rpx;
+}
+
+.c_right {
+  color: #999;
+  font-size: 24rpx;
+  padding-top: 45rpx;
+}
+
+.g_mt_10{
+  margin-top: 10rpx;
+}
+
+.h_rules{
+  font-size: 36rpx;
+  color: #ef4047;
+  height: 65rpx;
+}
+
+.rule_step{
+	width: 36rpx;
+	height: 36rpx;
+	background-color: #ef4047;
+  color: #fff;
+  font-size: 24rpx;
+  border-radius: 36rpx;
+  text-align: center;
+  line-height: 36rpx;
+  margin: 0 20rpx;
+}
+
+.c_rules{
+  margin:0 0 20rpx;
+}
+
+.rules_text{
+  margin: 25rpx 0 15rpx;
+}
+
+.rules_bg{
+  width: 40rpx;
+  height: 40rpx;
+  margin: 0 10rpx;
+}
+
+.w_550{
+  width: 550rpx;
+}

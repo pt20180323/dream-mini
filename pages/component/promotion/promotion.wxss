@@ -1,0 +1,39 @@
+/* pages/component/promotion/promotion.wxss */
+@import "../../home/home.wxss";
+
+.f_row {
+  display: -webkit-flex;
+  display: -ms-flex;
+  display: -moz-flex;
+  display: flex;
+  -ms-flex-direction: row;
+  -moz-flex-direction: row;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+}
+
+.f_col {
+  display: -webkit-flex;
+  display: -ms-flex;
+  display: -moz-flex;
+  display: flex;
+  -ms-flex-direction: column;
+  -moz-flex-direction: column;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+}
+
+.f_r_cnt {
+  -webkit-align-items: center;
+  align-items: center;
+}
+
+.f_jc_cnt {
+  -webkit-justify-content: center;
+  justify-content: center;
+}
+
+.f_jc_sb {
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+}

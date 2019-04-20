@@ -1,0 +1,65 @@
+.list_box{
+    background: #fff;
+    margin: 20rpx 20rpx 140rpx 20rpx;
+}
+.title{
+    color:#079300;
+    padding: 30rpx;
+    border-bottom: 1px solid #eee;
+    font-size: 34rpx;
+}
+.item_box{
+    padding:20rpx 30rpx;
+}
+.icon{
+    width: 40rpx;
+    height: 40rpx;
+    margin-right: 15rpx;
+}
+.item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    line-height: 2;
+}
+.item_left{
+    color: #999;
+}
+
+.bot_fixed_box {
+    position: fixed;
+    height: 120rpx;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    background: #fff;
+    z-index: 10;
+    justify-content:center;
+  }
+  
+  .bf_btn {
+    color: #fff;
+    background: #2093fc;
+    width: 280rpx;
+    height: 80rpx;
+    border-radius: 8rpx;
+    font-size: 30rpx;
+    margin: 0 40rpx;
+    justify-content:center;
+  }
+  
+  .btn_login {
+    background: #2093fc;
+    color: #fff;
+    position: relative;
+  }
+  .btn_cancel{
+    background: #fff;
+    color: #666;
+  }
+  .bf_cancel{
+    color: #666;
+    background:#fff;
+    border: 2rpx solid #ccc;
+  }
+  

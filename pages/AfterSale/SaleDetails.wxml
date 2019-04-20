@@ -1,0 +1,74 @@
+<block wx:if="{{saleData}}">
+  <!-- 商品信息 -->
+  <view class='f_col Det_goods'>
+    <view class='f_row f_r_cnt f_jc_sb Det_goods_title'>
+      <text>{{saleData.storeName}}</text>
+      <text>{{saleData.statusName}}</text>
+    </view>
+    <view class='f_row Det_goods_main'>
+      <image class='main_img' src='{{saleData.goodsPic}}'/>
+      <view class='f_col main_text flex1 f_jc_sb'>
+        <view class='c_333 weight5 main_title wrap_name size_28'>{{saleData.goodsName}}</view>
+        <text class='c_gray' wx:if="{{saleData.modelType}}">{{saleData.modelType}}</text>
+        <view class='f_row f_jc_sb c_333 weight5 f_r_cnt'>
+          <text class='fs_32' wx:if="{{saleData.price}}">￥{{saleData.price/100}}</text>
+          <text wx:if="{{saleData.total}}">X {{saleData.total}}</text>
+        </view>
+      </view>
+    </view>
+    <!-- 附件 -->
+    <view class='f_row Det_goods_Enc size_24' wx:if="{{GiftData && GiftData.ordersAttachList && GiftData.ordersAttachList.length}}">
+      <text class='c_333 Enc_left'>附件</text>
+      <view class='f_col flex1'>
+        <!-- 配件列表 -->
+        <block wx:for="{{GiftData.ordersAttachList}}" wx:key="{{index}}">
+          <view class='f_row f_jc_sb Enc_list'>
+            <text class='c_gray flex1'>{{item.supGiftSkuName}}</text>
+            <text class='c_333 Num' wx:if="{{item.num}}"> X {{item.num}}</text>
+          </view>
+        </block>
+      </view>
+    </view>
+    <!-- 赠品 -->
+    <view class='f_row Det_goods_Enc size_24' wx:if="{{GiftData && GiftData.ordersGiftList && GiftData.ordersGiftList.length}}">
+      <text class='c_333 Enc_left'>赠品</text>
+      <view class='f_col flex1'>
+        <!-- 赠品列表列表 -->
+        <block wx:for="{{GiftData.ordersGiftList}}" wx:key="{{index}}">
+          <view class='f_row f_jc_sb Enc_list'>
+            <text class='c_gray flex1'>{{item.supGiftSkuName}}</text>
+            <text class='c_333 Num' wx:if="{{item.num}}"> X {{item.num}}</text>
+          </view>
+        </block>
+      </view>
+    </view>
+  </view>
+  <view class='g_blank_20'></view>
+  <!-- 服务 -->
+  <block wx:if="{{saleData.customerExpectList && saleData.customerExpectList.length}}">
+    <block wx:for="{{serviceData}}" wx:key="{{index}}">
+      <view class='service f_row f_jc_sb' data-id="{{item.id}}" data-Isdisabled="{{item.disabled}}" bindtap='goHandle'>
+        <view class='f_col'>
+          <text class='{{item.disabled?"c_gray":"c_333"}} weight5 size_28'>{{item.name}}</text>
+          <text class='size_24 c_gray'>{{item.content}}</text>
+        </view>
+        <text class='arr_i arr_r'></text>
+      </view>
+    </block>
+  </block>
+  <block wx:else>
+    <view class='service f_row f_jc_sb'>
+      <view class='f_col'>
+        <text class='size_24 c_gray'>暂时还不能进行售后申请!</text>
+      </view>
+      <text class='arr_i arr_r'></text>
+    </view>
+  </block>
+</block>
+<!-- <view class='service f_row f_jc_sb'>
+  <view class='f_col'>
+    <text class='c_333 weight5 size_28'>退货</text>
+    <text class='size_24 c_gray'>已收到货，需要退换已收到的货物</text>
+  </view>
+  <text class='arr_i arr_r'></text>
+</view> -->

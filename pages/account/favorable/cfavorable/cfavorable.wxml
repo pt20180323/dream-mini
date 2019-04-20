@@ -1,0 +1,67 @@
+<view class='f_col f_r_cnt'>
+    <view class='fav_head'>
+      <image src='/static/ico/c_favorable1.png' class='header_bg'></image>
+      <view class='coupon_txt'>
+        <view class='txt1'>专属顾问 {{storeObj.empName}}给你推荐</view>
+        <view class='txt2'>{{storeObj.storeName}}</view>
+      </view>
+      <view class='coupon_box' bindtap='toCouponDet'>
+        <view class='f_row'>
+          <view class='c_left f_row f_r_cnt' wx:if='{{coupon.type == 1}}'> 
+           ￥
+           <text class='f_100'>{{coupon.amount}}</text>
+          </view>
+        <view class='c_left f_row f_r_cnt' wx:elif='{{coupon.type == 2}}'>
+          <text class='f_100'>{{coupon.discountAmount}}</text>折
+        </view>
+        <view class='c_left f_row f_r_cnt' wx:elif='{{coupon.type == 3}}'>
+          <text class='f_100'>礼品券</text>
+        </view>
+          <view class='c_right f_col'>
+            <view class='c_333 f_32' wx:if='{{coupon.type == 1}}'>
+              <text wx:if='{{coupon.conditionAmount}}'>满{{coupon.conditionAmount}}元可用</text>
+              <text wx:else>无门槛使用</text>
+            </view>
+            <view class='c_333 f_32' wx:if='{{coupon.type == 2}}'>
+              <text wx:if='{{coupon.discountLimit}}'>最多抵扣{{item.discountLimit}}元</text>
+            </view>
+            <view class='g_mt_10'>有效期：{{coupon.dateTip}}</view>
+            <view class='g_mt_10'>使用规则 >></view>
+          </view>
+        </view>
+        <view class='coupon_btn fav_share f_row f_r_cnt f_jc_cnt' catchtap='receiveCoupon'>立即领取</view>
+      </view>
+      <view class='fav_goods f_row f_r_cnt' bindtap='toDetail'>
+        <image src='{{goods.pic}}' class='goods_img'></image>
+        <view class='f_col inf_box'>
+          <view class='goods_name'>{{goods.goodsName}}</view>
+          <view class='ora_price'>原价￥{{goods.minSalePriceDouble}}</view>
+          <view class='now_price'>用券后￥
+            <text class='fs_42'>{{goods.couponPrice || 0}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class='fav_rules f_col f_r_cnt'>
+      <view class='h_rules f_row f_r_cnt'>
+        <image src='/static/ico/favorable2.png' class='rules_bg'></image>
+        <text>活动规则</text>
+        <image src='/static/ico/favorable3.png' class='rules_bg'></image>
+      </view>
+      <view class='c_rules'>
+        <view class='rules_text f_row'>
+          <view class='rule_step'>1</view>
+          <view class='w_550'>点击“立即领取”按钮，领取后在个人中心-卡券查看。</view>
+        </view>
+        <view class='rules_text f_row'>
+          <view class='rule_step'>2</view>
+          <view class='w_550'>因优惠券领取用户级别、数量、时间等均不同，可能存在无法领取的情况。</view>
+        </view>
+        <view class='rules_text f_row'>
+          <view class='rule_step'>3</view>
+          <view class='w_550'>领取成功后，请遵循优惠券使用规则，以订单结算页中的优惠券使用提示为准。</view>
+        </view>
+      </view>
+    </view>
+    <view class='empty_div'></view>
+</view>

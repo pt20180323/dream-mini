@@ -1,0 +1,67 @@
+<view class="f_col">
+  <view class="thm_ban f_col" wx:if="{{elActivityVo.httpsPic}}">
+    <image mode="widthFix" src="{{elActivityVo.httpsPic}}"></image>
+    <view class="f_row act_count_box f_jc_sb f_r_cnt g_line_bot">
+      <view class="fs_icon">
+        <image src="/static/ico/yg.png"></image>
+      </view>
+      <view class="f_row act_c_show" wx:if="{{!isCountDownEnd}}">
+        <text>还有</text><rich-text nodes="{{countHtml}}"></rich-text><text>开始</text>
+      </view>
+    </view>
+  </view>
+  <view class="f_col">
+    <view wx:for="{{shopList}}" wx:for-index="idx" wx:key="list" wx:for-item="item" hover-class="none" url="/pages/productDetail/productDetail?activityId={{item.activityId}}&goodsId={{item.goodsId}}&storeId={{item.storeId}}" class="idx_itm f_col">
+      <view class="idx_img f_col">
+        <image mode="widthFix" src="{{item.coverUrl}}"></image>
+        <text class="idx_ico">{{item.teamNumber}}人团</text>
+      </view>
+      <view class="idx_desc f_col">
+        <text class="idx_tit break_all">{{item.goodsName}}</text>
+        <view class="f_row f_jc_sb i_p_box">
+          <view class="f_row idx_p">
+            <text class="c_price">¥{{item.price}}</text>
+            <text class="o_price">¥{{item.originaPrice}}</text>
+            <!--
+            <view class="act_i">开团红包</view>
+            <view class="act_i">到店红包</view>
+            -->
+          </view>
+        </view>
+        <text class="idx_time" wx:if="{{false}}">活动时间：{{item.startDate}}--{{item.endDate}}</text>
+      </view>
+    </view>
+    <!--
+    <navigator hover-class="none" url="/pages/productDetail/productDetail" class="idx_itm f_col">
+      <view class="idx_img f_col">
+        <image src="/static/img/theme_banner.jpg"></image>
+        <text class="idx_ico">2人团</text>
+      </view>
+      <view class="idx_desc f_col">
+        <text class="idx_tit break_all">安满（Anmum） 智孕宝 孕妇配方奶粉1000克*2（新西兰原装进口1000g）</text>
+        <view class="f_row f_jc_sb i_p_box">
+          <view class="f_row idx_p">
+            <text class="c_price">¥388.8</text>
+            <text class="o_price">¥488.8</text>
+          </view>
+          <view class="f_row idx_p_r">
+            <view class="ts_s">已团<text>2586</text>件</view>
+            <text class="go_ts">去开团</text>
+          </view>
+        </view>
+        <text class="idx_time">活动时间：01月01日 12:00--01月05日 12:00</text>
+      </view>
+    </navigator>
+    -->
+  </view>
+</view>
+<view class="f_col empty_box" wx:if="{{isshowEmpty}}">
+  <image src="/static/img/empty.png"></image>
+  <text>这里啥都没有·····</text>
+</view>
+<form bindsubmit="toIndex" report-submit="true">
+  <button class="to_idx_btn f_col" form-type="submit">
+    <image src="/static/ico/idx.png"></image>
+    <text>商城</text>
+  </button>
+</form>

@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "发优惠券",
+  "navigationBarBackgroundColor": "#FFF",
+  "navigationBarTextStyle": "black",
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark",
+  "usingComponents": {
+    "poster": "/pages/component/wxa-plugin-canvas/poster/index"
+  }
+}

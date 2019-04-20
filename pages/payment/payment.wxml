@@ -1,0 +1,74 @@
+<view class="f_col">
+  <view class="f_col f_jc_cnt head g_line_top">
+    <view class="f_row f_r_cnt f_jc_cnt time"><text class="icon-time"></text><text class="c_black">还剩{{countHtml}}</text></view>
+    <text class="pay_n">￥{{topay.orderAmountDouble}}</text>
+  </view>
+  <view class="g_mt_20 f_row f_r_cnt f_jc_sb line" wx:if="{{topay.czpay}}" data-type="5" bindtap="payorder">
+    <view class="f_row">
+      <image class="ico" src="/static/ico/pay/coin.png"></image>
+      <view class="f_col f_jc_cnt" wx:if="{{topay.ordersPrepaidDouble}}">
+        <view class="f_row f_r_cnt cz_tit">
+          <text>储值支付:</text><text class="txt_color">￥{{topay.ordersPrepaidDouble}}</text>
+        </view>
+        <text>当前余额￥{{topay.prepaidDouble}}</text>
+      </view>
+      <view class="f_col f_jc_cnt" wx:else>
+        <view class="f_row cz_tit">
+          <text>储值卡余额:</text><text class="txt_color">￥{{topay.prepaidDouble}}</text>
+        </view>
+      </view>
+    </view>
+    <view class="cpn_chk {{topay.ordersPrepaidDouble>0 ? 'cpn_cur' : ''}}"></view>
+  </view>
+  <view class="f_col other g_mt_20">
+    <view class="f_row f_jc_sb tit g_line_bot" wx:if="{{topay.hdpay || topay.ddpay}}">
+      <text class="c_black">其他支付方式</text>
+      <view wx:if="{{topay.ordersPrepaidDouble && topay.balanceAmountDouble}}">剩余支付<text class="txt_color">￥{{topay.balanceAmountDouble}}</text></view>
+    </view>
+    <view class="f_row f_r_cnt f_jc_sb line" wx:if="{{topay.wxpay}}" bindtap="payorder" data-type="2">
+      <view class="f_row f_r_cnt">
+        <image class="ico" src="/static/ico/pay/wx.png"></image>
+        <text>微信支付</text>
+      </view>
+      <view class="cpn_chk {{iswxpay ? 'cpn_cur' : ''}}"></view>
+    </view>
+    <view class="f_row f_r_cnt f_jc_sb line" wx:if="{{topay.hdpay}}" bindtap="payorder" data-type="4">
+      <view class="f_row f_r_cnt">
+        <image class="ico" src="/static/ico/pay/store.png"></image>
+        <text>货到付款</text>
+      </view>
+      <view class="cpn_chk {{ishdpay ? 'cpn_cur' : ''}}"></view>
+    </view>
+    <view class="f_row f_r_cnt f_jc_sb line" wx:if="{{topay.ddpay}}" bindtap="payorder" data-type="3">
+      <view class="f_row f_r_cnt">
+        <image class="ico" src="/static/ico/pay/store.png"></image>
+        <text>到店付款</text>
+      </view>
+      <view class="cpn_chk {{isddpay ? 'cpn_cur' : ''}}"></view>
+    </view>
+  </view>
+</view>
+
+<!--属性选择弹窗-->
+<view class="f_row f_r_cnt f_jc_cnt pop_pay_box {{slideUp ? 'm_slideUp' : ''}}" wx:if="{{slideUp}}">
+  <view class="mask" bindtap="closeSlide"></view>
+  <view class="f_col f_r_cnt pay_box pay_pwd_box c_black">
+    <text class="pay_tit" wx:if="{{topay.noPwd}}">本单将从储值余额中扣除</text>
+    <view class="pay_top g_line_bot" wx:else>
+      <text class="icon-close" bindtap="closeSlide"></text>
+      <text>请输入支付密码</text>
+    </view>    
+    <text class="pay_num">￥{{topay.perpaidAmountDouble}}</text>
+    <view class="pwd_box" wx:if="{{!topay.noPwd}}">
+      <paySix bindvalueSix="valueSix" input_value="{{inputData.input_value}}" value_length="{{inputData.value_length}}" isNext="{{inputData.isNext}}" get_focus="{{inputData.get_focus}}" focus_class="{{inputData.focus_class}}" value_num="{{inputData.value_num}}" height="{{inputData.height}}" width="{{inputData.width}}" see="{{inputData.see}}" interval="{{inputData.interval}}"></paySix>
+    </view>
+    <view class="pay_btn box_size g_mt_30 f_row f_r_cnt">
+      <form class="f_1">
+        <button class="f_1 btn" bindtap="closeSlide">取消</button>
+      </form>
+      <form class="f_1">
+        <button class="f_1 btn bg_color" bindtap="surepay">确认支付</button>
+      </form>
+    </view>    
+  </view>
+</view>

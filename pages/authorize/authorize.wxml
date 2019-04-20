@@ -1,0 +1,11 @@
+<view class='f_col f_r_cnt'>
+  <image src='/static/img/empty.png' class='empty'></image>
+  <view class="tips f_col">
+    <text>此应用需要授权允许获取您的用户信息，</text>
+    <text>请选择允许否则将无法使用。</text>
+  </view>
+  <!--
+  <view class='loginBtn' bindtap='authorizeBtn'>立即授权</view>
+  -->
+  <button class='loginBtn' open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="onGotUserInfo">立即授权</button>
+</view>

@@ -1,0 +1,12 @@
+<view class='wapper'>
+  <view wx:for='{{storeList}}' class='content' wx:key="keylist" wx:for-index="idx" wx:for-item="item" bindtap='showAddr' data-latitude='{{item.tencentLat}}' data-longitude='{{item.tencentLng}}' data-name='{{item.name}}' data-address='{{item.address}}'>
+    <view class='store f_row f_jc_sb'>
+      <text class='txt_title'>{{item.name}}</text>
+      <text class='txt_dis' wx:if='{{item.distanceDouble}}'>{{item.distanceDouble}}公里</text>
+    </view>
+    <view class='f_row f_jc_sb'>
+      <view class='txt_addr'>{{item.provinceName + item.cityName + item.circleName + item.address}}</view>
+      <text class="icon-address"></text>
+    </view>
+  </view>
+</view>

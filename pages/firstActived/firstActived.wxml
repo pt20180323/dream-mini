@@ -1,0 +1,7 @@
+<view class="f_row f_r_cnt mask" bindtap="gotoIndex" wx:if="{{actived}}">
+  <view class="act_box f_col f_r_cnt">
+    <view class="f_row f_r_cnt suc"></view>
+    <text class="tip">恭喜你，激活成功！</text>
+    <view class="into">马上进入员工小程序体验吧~<text>立即体验</text></view>
+  </view>
+</view>

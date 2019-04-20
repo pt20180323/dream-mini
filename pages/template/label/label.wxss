@@ -1,0 +1,21 @@
+.sp_qt_box{
+  height:80rpx;
+  position:relative;
+  padding:0 25rpx;
+  border-bottom: 2rpx solid #eee;
+}
+.sp_qt_item{
+  font-size:24rpx;
+  color:#999;
+}
+.sp_qt_i{
+  display:inline-block;
+  width:34rpx;
+  height:34rpx;
+  line-height:34rpx;
+  text-align:center;
+  border:2rpx solid #ff4949;
+  color:#ff4949;
+  border-radius:50%;
+  margin-right:10rpx;
+}

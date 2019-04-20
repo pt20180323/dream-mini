@@ -1,0 +1,33 @@
+<view class="f_col able_list">
+  <view class="f_row cpn_s_box f_jc_sb f_r_cnt cpn_c">
+      <view class="f_row f_r_cnt cpn_f_f">
+       不使用优惠券
+      </view>
+      <view class="cpn_chk cpn_f {{selectNo ? 'cpn_cur' : ''}}"></view> 
+  </view>
+  <button class="f_m_btn" bindtap="selectCoupon" data-able="no"></button>  
+  <view class="f_col able_item {{item.verifyStatus ? '' : 'disabled_item'}}" wx:for="{{couponList}}" wx:for-index="idx" wx:key="list" wx:for-item="item">
+    <view class="cpn_top box_size b_dot">
+      <text>{{item.cardName || '【消费现金抵扣券】'}}</text>
+      <image src="/static/ico/b_dot.png"></image>
+    </view>
+    <view class="f_row cpn_s_box f_jc_sb f_r_cnt">
+      <view class="f_row f_r_cnt">
+        <view class="cpn_val">
+          <text class="cpn_v_i">￥</text>
+          <text class="cpn_v_n">{{item.amount}}</text>
+        </view>
+        <view class="f_col cpn_s_des">
+          <text class="cpn_dist">{{item.conditionAmount ? ('满' + item.conditionAmount + '元可用') : '无门槛使用'}}</text>
+          <text class="cpn_date">有效期：{{item.validStartTimeFmt + '-' + item.validEndTimeFmt}}</text>
+        </view>
+      </view>
+      <view class="cpn_chk {{item.selected ? 'cpn_cur' : ''}}"></view>
+    </view>
+    <button class="f_m_btn" bindtap="selectCoupon" data-able="{{item.verifyStatus ? 1 : 0}}" data-code="{{item.cardCode}}" data-idx="{{idx}}"></button>
+  </view>
+  <view class="f_col empty_box" wx:if="{{isshowEmpty}}">
+    <image src="/static/img/empty.png"></image>
+    <text>这里啥都没有·····</text>
+  </view>
+</view>

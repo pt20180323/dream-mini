@@ -1,0 +1,96 @@
+<import src="../template/copyright/copyright.wxml" />
+<import src="../template/countdown/countdown.wxml" />
+<import src="../template/loading/loading.wxml" />
+<view class="f_col g_main_box {{elActivityVo.runStatus === 1 ? 'foreshow' : ''}}">
+  <view class="thm_ban f_col" wx:if="{{isloaded}}">
+    <image mode="widthFix" wx:if="{{elActivityVo.prefecturePicUrl}}" src="{{elActivityVo.prefecturePicUrl}}"></image>
+    <view class="thm_remark" wx:if="{{elActivityVo.remark}}">{{elActivityVo.remark}}</view>
+      <view class='limit_box'>
+        <button bindtap='toShare'><image class='limit_logo' src='/static/img/limit.png' mode='widthFix'></image></button>
+        <view class="f_row act_count_box f_r_cnt">
+          <block wx:if="{{!isCountDownEnd}}">
+            <view class="f_row act_c_show" wx:if="{{elActivityVo.runStatus === 1}}">
+              <text>还有</text>
+              <template is="countdown" data="{{countHtml}}"></template>
+              <text>开始</text>
+            </view>
+            <view class="f_row act_c_show" wx:elif="{{elActivityVo.runStatus === 2}}">
+              <text>仅剩</text>
+              <template is="countdown" data="{{countHtml}}"></template>
+              <text>结束</text>
+            </view>
+            <view class="f_row act_c_show" wx:else>
+              <text>活动已结束！</text>
+            </view>
+          </block>
+          <view class="f_row act_c_show" wx:else>
+            <text>活动已结束！</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+  <view class='g_blank_20'></view>
+  <view class="f_col lc_list">
+    <view class="lc_item {{(elActivityVo.runStatus === 2 && item.status === 1) ? '' : 'bg f999'}}" wx:for="{{cardList}}" wx:for-index="idx" wx:key="list" wx:for-item="item">
+        <view class="left_box f_col f_jc_cnt f_r_cnt {{(elActivityVo.runStatus === 2 && item.status === 1) ? 'fe2f54' : 'left_box2 f999'}}" bindtap="{{(elActivityVo.runStatus === 2 && item.status === 1) ? 'toCoupon' : ''}}" data-id='{{item.id}}' data-use='{{elActivityVo.runStatus === 2 && item.status === 1 && item.limits - item.received === 0 ? true : false}}'>
+          <view wx:if="{{item.type === 1}}" class='ellipsis'>￥<text class='fs_56 weight'>{{item.amount}}</text></view>
+          <view wx:if="{{item.type === 2}}" class='ellipsis'><text class='fs_56 weight'>{{item.discountAmount}}</text>折</view>
+          <view wx:if="{{item.type === 3}}" class='ellipsis'><text class='fs_56 weight'>礼品券</text></view>
+          <view wx:if="{{item.status !== 10000}}">
+            <view class='fs_24 ellipsis' wx:if="{{item.type === 1}}">
+              <text wx:if="{{!item.conditionAmount}}">无门槛使用</text>
+              <text wx:else>满{{item.conditionAmount}}元使用</text>
+            </view>
+            <view class='fs_24 ellipsis' wx:elif="{{item.type === 2 && item.discountLimit}}">最多抵扣￥{{item.discountLimit}}</view>
+            <view class='fs_24 ellipsis' wx:elif="{{item.type === 3}}"></view>
+          </view>
+        </view>
+        <view class='right_box f_row f_r_cnt f_jc_sb'>
+          <view class='f_col'>
+            <text class="c_name ellipsis {{(elActivityVo.runStatus === 2 && item.status === 1) ? '' : 'f999'}}">{{item.name}}</text>
+            <text class="c_date {{(elActivityVo.runStatus === 2 && item.status === 1) ? '' : 'f999'}}">{{item.dateTip}}</text>
+          </view>
+          <view wx:if="{{elActivityVo.runStatus === 1}}"><button class='btn btn_bg f_row f_r_cnt f_jc_cnt'>未开始</button></view>
+          <block wx:elif="{{elActivityVo.runStatus === 2}}">
+            <form catchsubmit="getCard" data-ctype="{{item.type}}" data-cidx="{{idx}}" data-cid="{{item.id}}" report-submit="true" wx:if="{{item.status === 1}}">
+              <button class='btn f_row f_r_cnt f_jc_cnt' form-type="submit" wx:if='{{item.received === 0 && item.limits > 0 && item.total !== 0}}'>立即领取</button>
+              <button class='btn f_row f_r_cnt f_jc_cnt' form-type="submit" wx:if='{{item.received > 0 && item.limits > 0 && item.limits - item.received > 0 && item.total !== 0}}'>继续领取</button>
+              <button class='use_btn f_row f_r_cnt f_jc_cnt' bindtap='toCoupon' data-use='{{true}}' data-id='{{item.id}}' wx:if='{{item.limits - item.received === 0}}' data-type='{{item.type}}' data-use-scenes='{{item.useScenes}}' data-condition='{{item.conditionAmount}}'>立即使用</button>
+            </form>
+            <view wx:elif="{{item.status === 10000}}"><button class='btn btn_bg f_row f_r_cnt f_jc_cnt'>已过期</button></view>
+
+            <view wx:elif="{{item.status === 10001}}"><button class='btn btn_bg f_row f_r_cnt f_jc_cnt'>已领完</button></view>
+          </block>
+          <view wx:elif="{{elActivityVo.runStatus === 3}}"><button class='btn btn_bg f_row f_r_cnt f_jc_cnt'>已结束</button></view>
+          <image src='/static/ico/card/recived.png' class='re_img' wx:if='{{item.received > 0 && item.limits > 0 && item.limits - item.received > 0 && item.total !== 0}}'></image>
+        </view>
+    </view>
+  </view>
+</view>
+<template is="loading" data="{{loading, isshowEmpty,isLastPage,imgSrc,noMsg}}"></template>
+<template is="copyright"></template>
+<!-- 去分享 -->
+<view class="mask showmask" bindtap='close' wx:if='{{isShow && shareImg}}'>
+  <view class="f_col f_r_cnt iknow_tip" catchtap='preventClose'>
+    <image src='{{shareImg}}' mode='widthFix' style='width:480rpx;margin-bottom:40rpx;border-radius:8rpx;' bindtap='previewImg'></image>
+    <view class='f_row'>
+      <view class='icon_box f_row f_jc_cnt'>
+        <button open-type='share' class='c_btn f_col f_r_cnt'>
+          <view class='icon_btn f_row f_r_cnt f_jc_cnt'>
+            <image src='/static/ico/share3.png' style='width:41rpx;height:34rpx;'></image>
+          </view>
+          <view>发给客户</view>
+        </button>
+      </view>
+      <view class='icon_box f_row f_jc_cnt'>
+        <view bindtap='saveImg' class='c_btn f_col f_r_cnt'>
+          <view class='icon_btn c_share1 f_row f_r_cnt f_jc_cnt'>
+            <image src='/static/ico/share2.png' style='width:26rpx;height:39rpx;'></image>
+          </view>
+          <view>保存图片</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

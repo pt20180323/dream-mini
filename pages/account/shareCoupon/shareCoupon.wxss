@@ -1,0 +1,257 @@
+.coupon_box {
+  background: #fff;
+}
+
+.coupon_item {
+  position: relative;
+  height: 196rpx;
+  background: #fff7f7;
+  border-radius: 14rpx;
+  display: flex;
+  flex-direction: row;
+  border: 2rpx solid #ffe4e9;
+  margin: 25rpx 25rpx 30rpx 25rpx;
+}
+
+.mask {
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  height: 0;
+  position: fixed;
+  background: rgba(0, 0, 0, 0.6);
+  transition: opacity 0.3s ease-in-out;
+  z-index: 9999;
+  opacity: 0;
+}
+
+.showmask {
+  height: 100%;
+  opacity: 1;
+}
+
+.iknow_tip {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+  width: 560rpx;
+}
+
+.icon_box {
+  color: #fff;
+  font-size: 30rpx;
+  width: 200rpx;
+}
+
+.icon_btn {
+  width: 80rpx;
+  height: 80rpx;
+  background-color: #ff9400;
+  border-radius: 40rpx;
+  margin-bottom: 15rpx;
+}
+
+.c_share1 {
+  background: #2093fc;
+}
+
+.c_share3 {
+  background: #f74866;
+}
+
+.g_mt_15 {
+  margin-top: 15rpx;
+}
+
+.no_coupon {
+  width: 136rpx;
+  height: 90rpx;
+  margin: 100rpx 0 30rpx;
+}
+
+.bg {
+  background: #f2f2f2;
+  border: 2rpx solid #eee;
+}
+
+.left_box {
+  position: relative;
+  padding: 0 24rpx;
+  border-right: dashed 2rpx #ffe4e9;
+  width: 180rpx;
+}
+
+.left_box:before {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 20rpx;
+  height: 10rpx;
+  border: 2rpx solid #ffe4e9;
+  border-top: none;
+  background: #fff;
+  border-radius: 0 0 20rpx 20rpx;
+  top: -2rpx;
+  right: -12rpx;
+}
+
+.left_box:after {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 20rpx;
+  height: 10rpx;
+  border: 2rpx solid #ffe4e9;
+  border-bottom: none;
+  border-radius: 20rpx 20rpx 0 0;
+  bottom: -2rpx;
+  right: -12rpx;
+  background: #fff;
+}
+
+.right_box {
+  flex: 1;
+  padding: 0 22rpx 0 26rpx;
+  position: relative;
+}
+
+.btn {
+  width: 132rpx;
+  height: 56rpx;
+  background: #fe2f54;
+  border-radius: 30rpx;
+  color: #fff;
+  font-size: 24rpx;
+  flex-shrink: 0;
+}
+
+.btn_bg {
+  background: #999;
+}
+
+.c_date {
+  font-size: 24rpx;
+  color: #666;
+  max-width: 260rpx;
+}
+
+.c_name {
+  font-size: 28rpx;
+  color: #333;
+  margin-bottom: 20rpx;
+  max-width: 260rpx;
+}
+
+.fs_56 {
+  font-size: 56rpx;
+}
+
+.fe2f54 {
+  color: #fe2f54;
+}
+
+.f999 {
+  color: #999;
+}
+
+.weight {
+  font-weight: 600;
+}
+
+.ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.mask_wnj {
+  position: absolute;
+  width: 298rpx;
+  height: 72rpx;
+  background: rgba(77, 81, 84, 0.9);
+  color: #fff;
+  border-radius: 8rpx;
+  bottom: -18rpx;
+  right: 22rpx;
+}
+
+.send_c>image {
+  width: 33rpx;
+  height: 28rpx;
+  display: block;
+  margin-right: 10rpx;
+}
+
+.add_g>image {
+  width: 29rpx;
+  height: 29rpx;
+  display: block;
+  margin-right: 10rpx;
+}
+
+.send_c, .add_g {
+  padding: 0 16rpx;
+}
+
+.send_c {
+  border-right: 2rpx solid #4d5154;
+}
+
+.mask_wnj:before {
+  content: "";
+  position: absolute;
+  right: 20rpx;
+  top: -8rpx;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 10rpx 10rpx 10rpx;
+  border-color: transparent transparent rgba(77, 81, 84, 0.9) transparent;
+}
+.topNav{
+  background:#fff;
+  height:80rpx;
+  line-height:79rpx;
+  padding:0 25rpx;
+  position:relative;
+}
+.topNav .tab{
+  overflow:hidden;
+  position:relative;
+  margin-right:30rpx;
+  height:79rpx;
+  border-bottom:1rpx solid #fff;
+}
+.downArr{
+  padding-right:35rpx;
+}
+.downArr::after{
+  content: '';
+  width:19rpx;
+  height:16rpx;
+  position:absolute;
+  right:0;
+  top:50%;
+  border-top:1rpx solid #999;
+  border-right:1rpx solid #999;
+  transform:rotate(135deg);
+  -ms-transform:rotate(135deg); 	/* IE 9 */
+  -moz-transform:rotate(135deg); 	/* Firefox */
+  -webkit-transform:rotate(135deg); /* Safari 和 Chrome */
+  -o-transform:rotate(135deg);
+  margin-top:-10rpx;
+}
+.posTxt{
+  position:absolute;
+  left:25rpx;
+  top:60rpx;
+  width:160rpx;
+  overflow:hidden;
+  z-index:99999;
+  background:#fff;
+}
+.cur {
+  color:#2093fc;
+  border-bottom:1rpx solid #2093fc!important
+}

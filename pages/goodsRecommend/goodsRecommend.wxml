@@ -1,0 +1,88 @@
+<view class='container' wx:if='{{goodsInfo}}'>
+  <view class='goods bg_c f_row'>
+    <image src='{{goodsInfo.pic}}' class='goods_img'></image>
+    <view class='desc c_333 f_col f_jc_sb fs_30'>
+      <view class='desc_txt f_row'>{{goodsInfo.goodsName}}</view>
+      <view>
+        <text decode="{{true}}" class="fs_24">{{goodsInfo.addLinecarTime}}添加</text>
+      </view>
+      <view class="fs_24">
+        <text decode="{{true}}">浏览<text class="c_blue">{{goodsInfo.visitTotal}}</text>次</text>
+        <text class='ml_30'>停留时长<text class="c_blue">{{goodsInfo.liveTimeTotal}}s</text> </text>
+      </view>
+    </view>
+  </view>
+  <view class="g_blank_68 f_row f_jc_cnt f_r_cnt fs_26">请推荐商品的相关内容给客户，提升销售转化</view>
+  <view class='tab_nav_box f_row'>
+    <view wx:for="{{navList}}" wx:for-index="idx" wx:key="list" wx:for-item="item" data-type="{{item.idx}}" bindtap="changeTab" class="tab_nav_item {{navTab === item.idx ? 'tab_nav_sel' : ''}} {{item.className ? item.className : ''}}">
+      <text>{{item.txt}}</text>
+    </view>
+  </view>
+  <view wx:if='{{navTab == 1}}' class='f_col f_r_cnt'>
+    <image src='/static/img/no_article.png' class='no_article'></image>
+    <text>敬请期待</text>
+  </view>
+  <view class='f_col g_line_top coupon_box' wx:if='{{navTab == 2}}'>
+    <view class='f_col f_r_cnt coupon_content'>
+      <view class='coupon_item f_col' wx:for='{{couponList}}' wx:for-item='item' wx:for-index='idx' wx:key="coupon">
+        <view class='c_header f_row f_r_cnt'>
+          <view class='c_333'>{{item.name}}</view>
+          <view>库存{{item.total}}张</view>
+        </view>
+        <view class='f_row f_jc_cnt'>
+          <image src='/static/ico/coupon_cir.png' class='coupon_cir'></image>
+        </view>
+        <view class='c_info f_row'>
+          <view class='c_left f_row f_r_cnt' wx:if='{{item.type == 1}}'>
+            ￥
+            <text class='f_80'>{{item.amount}}</text>
+          </view>
+          <view class='c_left f_row f_r_cnt' wx:elif='{{item.type == 2}}'>
+            <text class='f_80'>{{item.discountAmount}}</text> 折
+          </view>
+          <view class='c_left f_row f_r_cnt fs_56' wx:elif='{{item.type == 3}}'>礼品券</view>
+          <view class='c_right f_col f_jc_cnt'>
+            <view class='c_333 f_32' wx:if='{{item.type == 1}}'>
+              <text wx:if='{{item.conditionAmount}}'>满{{item.conditionAmount}}元可用</text>
+              <text wx:else>无门槛使用</text>
+            </view>
+            <view class='c_333 f_32' wx:elif='{{item.type == 2}}'>
+              <text wx:if='{{item.discountLimit}}'>最多抵扣{{item.discountLimit}}元</text>
+            </view>
+            <view class='g_mt_10'>有效期：{{item.dateTip}}</view>
+            <view class='g_mt_15' bindtap='toCoupon' data-id='{{item.id}}'>使用规则 >></view>
+          </view>
+          <view class='checkbox f_row f_jc_cnt f_r_cnt' catchtap='toShare' data-id='{{item.id}}' data-type='{{item.type}}'>
+            发送
+          </view>
+        </view>
+        <view class='left_cir'></view>
+        <view class='right_cir'></view>
+      </view>
+      <view wx:if='{{isshowEmpty}}'>
+        <image src='/static/img/no_coupon.png' class='no_coupon'></image>
+        <text>暂无可用优惠券</text>
+      </view>
+    </view>
+  </view>
+  <!-- 去分享 -->
+  <view class="mask showmask" wx:if='{{showImg}}' bindtap='close'>
+    <view class="f_col f_r_cnt iknow_tip" catchtap='preventClose'>
+      <image src='{{shareImg || "/static/ico/header.png"}}' mode='aspectFill' style='width:480rpx;height:610rpx;margin-bottom:40rpx;'></image>
+      <view class='f_row'>
+        <button class='icon_box f_col f_r_cnt' open-type='share'>
+          <view class='icon_btn f_row f_r_cnt f_jc_cnt'>
+            <image src='/static/ico/share3.png' style='width:41rpx;height:34rpx;'></image>
+          </view>
+          <view>发给客户</view>
+        </button>
+        <view class='icon_box f_col f_r_cnt' bindtap='saveImg'>
+          <view class='icon_btn c_share1 f_row f_r_cnt f_jc_cnt'>
+            <image src='/static/ico/share2.png' style='width:26rpx;height:39rpx;'></image>
+          </view>
+          <view>保存图片</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

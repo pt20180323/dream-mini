@@ -1,0 +1,176 @@
+<!--pages/mine/orderDetail/orderDetail.wxml-->
+<view class='overflow'>
+  <view class='bg_color list_h f_row'>
+    <view class='f_col'>
+      <text class='f_color list_s' wx:if='{{orderVo.status === 0}}'>未付款</text>
+      <text class='f_color list_s' wx:elif="{{orderVo.status === 1}}">已取消(商家删除)</text>
+      <text class='f_color list_s' wx:elif="{{orderVo.status === 2}}">未发货</text>
+      <text class='f_color list_s' wx:elif='{{orderVo.status === 3}}'>已发货</text>
+      <text class='f_color list_s' wx:elif="{{orderVo.status === 4}}">已签收</text>
+      <text class='f_color list_s' wx:elif="{{orderVo.status === 5}}">已取消(用户删除)</text>
+      <text class='f_color list_s' wx:elif='{{orderVo.status === 6}}'>等待商家同意退款</text>
+      <text class='f_color list_s' wx:elif="{{orderVo.status === 7}}">等待买家退货</text>
+      <text class='f_color list_s' wx:elif="{{orderVo.status === 8}}">等待商家收货</text>
+      <text class='f_color list_s' wx:elif='{{orderVo.status === 9}}'>退款成功</text>
+      <text class='f_color list_s' wx:elif="{{orderVo.status === 10}}">超时取消</text>
+
+      <text class='f_color list_t' wx:if='{{orderVo.status === 1}}'>订单已被商家取消</text>
+      <text class='f_color list_t' wx:if='{{orderVo.status === 5}}'>订单已被用户取消</text>
+      <text class='f_color list_t' wx:if='{{orderVo.status === 10}}'>订单已超时</text>
+      <text class='f_color list_t' wx:if='{{orderVo.status === 2 && orderVo.orderType !== 2}}'>等待商家发货中...</text>
+      <text class='f_color list_t' wx:if='{{orderVo.status === 4}}'>订单完成时间：{{orderVo.payTime}}</text>
+      <text class='f_color list_t' wx:if='{{orderVo.status === 9}}'>退款完成时间：{{orderVo.editTime}}</text>
+      <text class='f_color list_t' wx:if='{{orderVo.status === 3 && orderVo.orderType === 1}}'>快递配送：{{dservices}}</text>
+      <text class='f_color list_t' wx:if='{{orderVo.status === 3 && orderVo.orderType === 1}}'>快递单号：{{deliverNo}}</text>
+      <text class='f_color list_t' wx:if='{{(orderVo.status === 3 || orderVo.status === 2) && orderVo.orderType === 2}}'>门店自提</text>
+      <text class='f_color list_t' wx:if='{{(orderVo.status === 3 || orderVo.status === 2) && orderVo.orderType === 2}}'>到店时间：{{orderVo.userStoreTime}}</text>
+      <text class='f_color list_t' wx:if='{{orderVo.status === 3 && orderVo.orderType === 3}}'>商家配送</text>
+      <text class='f_color list_t' wx:if='{{orderVo.status === 3 && orderVo.orderType === 3}}'>{{orderVo.shopdeTime}}已发货，3小时送到</text>
+      <text class='f_color list_t' wx:if='{{orderVo.status === 6}}'>待商家同意退款</text>
+      <text class='f_color list_t' wx:if='{{orderVo.status === 7}}'>待买家退货</text>
+      <text class='f_color list_t' wx:if='{{orderVo.status === 8}}'>等待商家收货</text>
+    </view>
+
+    <view>
+      <image src="/static/img/wait_pay.png" wx:if='{{orderVo.status === 0}}'></image>
+      <image src="/static/img/close.png" wx:if='{{orderVo.status === 1 || orderVo.status === 5 || orderVo.status === 10}}'></image>
+      <image src="/static/img/wait_send.png" wx:if='{{orderVo.status === 2 && orderVo.orderType !== 2}}'></image>
+      <image src="/static/img/pay_finish.png" wx:if='{{orderVo.status === 4 || orderVo.status === 9}}'></image>
+      <image src="/static/img/wait_get.png" wx:if='{{orderVo.status === 3 && orderVo.orderType === 1}}'></image>
+      <image src="/static/img/wait_receive.png" wx:if='{{(orderVo.status === 3 || orderVo.status === 2) && orderVo.orderType === 2}}'></image>
+      <image src="/static/img/wait_get.png" wx:if='{{orderVo.status === 3 && orderVo.orderType === 3}}'></image>
+      <image src="/static/img/refund.png" wx:if='{{orderVo.status === 6 || orderVo.orderType === 7 || orderVo.orderType === 8}}'></image>
+    </view>
+
+  </view>
+  <view class='f_col'>
+    <view wx:if='{{orderVo.delivery === 1 || orderVo.delivery === 3}}'>
+      <view class="f_jc_sb f_r_cnt o_l_item view_p f_row r_people" wx:if='{{orderVo.takeName && orderVo.takePhone}}'>
+        <view>收货人：{{orderVo.takeName}}</view>
+        <text class='phone'>{{orderVo.takePhone}}</text>
+      </view>
+      <view class="f_jc_sb o_l_item view_p f_row" wx:if='{{orderVo.takeAddress}}'>
+        <image class='addr_img' src='/static/ico/address.png'></image>
+        <view class='addr_txt'>收货地址：{{orderVo.takeAddress}}</view>
+      </view>
+    </view>
+    <view wx:if='{{orderVo.delivery === 2}}'>
+      <view class="f_jc_sb f_r_cnt o_l_item view_p f_row r_people" wx:if='{{orderVo.userStoreTime}}'>
+        <view>到店时间：{{orderVo.userStoreTime}}</view>
+      </view>
+      <view class="f_jc_sb o_l_item view_p f_row" wx:if='{{orderVo.takeAddress}}'>
+        <image class='addr_img' src='/static/ico/address.png'></image>
+        <view class='addr_txt'>到店门店：{{orderVo.arriveStoreName}}</view>
+      </view>
+    </view>
+    <view class="f_jc_sb o_l_item view_p" wx:if='{{orderVo.lmsg}}'>
+      <view class="mess_box {{orderVo.takeAddress ? '' : 'mess_border' }}">
+        <image class='mess_img' src='/static/ico/message.png'></image>
+        <text class='mess_txt'>买家留言：</text>
+        <view class='mess_txt'>{{orderVo.lmsg}}</view>
+      </view>
+    </view>
+  </view>
+  <view class="g_blank_20"></view>
+  <view class='o_l_item'>
+    <view class="f_row f_jc_sb f_r_cnt ol_i_head c_black">
+      <text>订单编号：{{orderVo.orderNo}}</text>
+    </view>
+    <view>
+      <view class="f_col ol_box" wx:for='{{orderVo.teamshopOrderDetailVoList}}' wx:key="keylist" wx:for-index="key" wx:for-item="item" bindtap='toDetail' data-goodsId='{{item.goodsId}}' data-activityId='{{item.goodsActivitiesResponse.activityId || ""}}' data-activityType='{{item.goodsActivitiesResponse.activityType || ""}}'>
+        <view class='f_row ol_i_box'>
+          <image src="{{item.goodsPic}}"></image>
+          <view class="f_row f_jc_sb o_right">
+            <view class="f_col o_attribute">
+              <text class="o_p_tit">{{item.goodsName}}</text>
+              <text class="o_p_pro" wx:if='{{item.skuName}}'>属性：{{item.skuName}}</text>
+              <view>
+                <text class='second common_icon'>抱团</text>
+              </view>
+            </view>
+            <view class="o_p_price f_col">
+              <view class='o_price'>￥{{item.priceDouble}}</view>
+              <view class='o_orignPrice' wx:if="{{item.originalPriceDouble}}">￥{{item.originalPriceDouble}}</view>
+              <view class='o_goodNum'>X{{item.total}}</view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view>
+    <view class="f_row f_jc_sb f_r_cnt o_l_item view_p c_black">
+      <label>订单总价 :</label>
+      <text>￥{{orderVo.cost}}</text>
+    </view>
+    <view class="f_row f_jc_sb f_r_cnt o_l_item view_p c_black" wx:if='{{orderVo.exchangeFeeDouble > 0}}'>
+      <label>积分抵扣 :</label>
+      <text>￥{{orderVo.exchangeFeeDouble}}</text>
+    </view>
+    <view class="f_row f_jc_sb f_r_cnt o_l_item view_p c_black" wx:if="{{orderVo.freightDouble > 0}}">
+      <label>运费 :</label>
+      <text>{{orderVo.freightDouble === 0 ? '包邮' : '￥' + (orderVo.freightDouble || '')}}</text>
+    </view>
+    <view class="f_row f_jc_sb f_r_cnt o_l_item view_p view_p_b c_black" wx:if='{{(orderVo.status === 2 && (orderVo.payWay === 3 || orderVo.payWay === 4)) || orderVo.status === 0 || orderVo.status === 1 || orderVo.status === 5 || orderVo.status === 10}}'>
+      <label>订单应付 :</label>
+      <text class='txt_color'>￥{{orderVo.amountDouble}}</text>
+    </view>
+    <view class="f_row f_jc_sb f_r_cnt o_l_item view_p view_p_b c_black" wx:else>
+      <label>订单实付 :</label>
+      <text class='txt_color'>￥{{orderVo.actualPaymentDouble}}</text>
+    </view>
+  </view>
+  <view class='chat_box' bindtap='toChat'>
+    <view class='f_row chat_item f_jc_cnt f_r_cnt'>
+      <image src='/static/ico/chat.png'></image>
+      <text class='chat_txt'> 联系顾问</text>
+    </view>
+  </view>
+  <view class="g_blank_20"></view>
+  <view class='p_bottom'>
+    <view class="o_l_item view_p c_black f_row">
+      <label>配送方式 :</label>
+      <text class='t_mar' wx:if='{{orderVo.orderType === 1}}'>快递配送</text>
+      <text class='t_mar' wx:if='{{orderVo.orderType === 2}}'>用户到店</text>
+      <text class='t_mar' wx:if='{{orderVo.orderType === 3}}'>商家配送</text>
+      <text class='t_mar' wx:if='{{orderVo.orderType === 4}}'>动态</text>
+    </view>
+    <view class="o_l_item view_p c_black f_row" wx:if='{{orderVo.payWay !== 0}}'>
+      <label>支付方式 :</label>
+      <text class='t_mar' wx:if='{{orderVo.payWay === 1}}'>支付宝</text>
+      <text class='t_mar' wx:if='{{orderVo.payWay === 2}}'>微信支付</text>
+      <text class='t_mar' wx:if='{{orderVo.payWay === 3}}'>到店付款</text>
+      <text class='t_mar' wx:if='{{orderVo.payWay === 4}}'>货到付款</text>
+      <text class='t_mar' wx:if='{{orderVo.payWay === 5}}'> 储值支付</text>
+      <text class='t_mar' wx:if='{{orderVo.payWay === 6}}'>线上抵扣</text>
+    </view>
+    <view class="o_l_item view_p c_black f_row" wx:if='{{orderVo.userName}}'>
+      <label>用户姓名 :</label>
+      <text class='t_mar'>{{orderVo.userName}}</text>
+    </view>
+    <view class="o_l_item view_p c_black f_row" wx:if='{{orderVo.userTelphone}}'>
+      <label>用户手机 :</label>
+      <text class='t_mar'>{{orderVo.userTelphone}}</text>
+    </view>
+    <view class="o_l_item view_p c_black f_row">
+      <label>下单时间 :</label>
+      <text class='t_mar'>{{orderVo.createTime || ''}}</text>
+    </view>
+    <view class="o_l_item view_p c_black f_row" wx:if='{{orderVo.payTime !== null && orderVo.payTime !== 0}}'>
+      <label>支付时间 :</label>
+      <text class='t_mar'>{{orderVo.payTime || ''}}</text>
+    </view>
+    <view class="o_l_item view_p c_black f_row">
+      <text class='re_desc'>退款说明 :</text>
+      <view class='t_mar re_txt'>粉丝折扣、红包抵扣、代金券抵扣、满减抵扣的金额不退款，退款成功后积分可返还，已发货订单运费不退款(许愿订单除外)，未发货订单整个订单退款时可退运费{{refundInfo.remark || ''}}</view>
+    </view>
+  </view>
+  <view class="f_row f_jc_sb f_r_cnt ol_i_operation o_l_item over_flow f_fixed_bottom" wx:if="{{orderVo.status === 0}}">
+    <form bindsubmit="setFormId" data-orderNo="{{orderVo.orderNo}}" report-submit="true">
+      <button class="ol_btn re_btn_cor" form-type="submit">取消订单</button>
+    </form>
+    <form bindsubmit="gotoPay" report-submit="true" wx:if='{{!environment}}'>
+      <button class="ol_btn o_pay ol_btn_last" form-type="submit">立即支付</button>
+    </form>
+  </view>
+</view>

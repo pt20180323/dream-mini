@@ -1,0 +1,9 @@
+<template name="tabnav">
+  <view class="g_top_nav g_top_fixed f_row">
+    <view wx:for="{{navList}}" wx:for-index="idx" wx:key="list" wx:for-item="item" data-type="{{item.idx}}" bindtap="changeTab" class="g_nav_i {{navTab === item.idx ? 'g_nav_c' : ''}} {{item.className ? item.className : ''}}"><text class="g_n_txt">{{item.txt}}</text></view>
+    <!--
+    <view data-type="2" bindtap="changeTab" class="g_nav_i {{navTab === 2 ? 'g_nav_c' : ''}}"><text class="g_n_txt">活动预告</text></view>
+    -->
+  </view>
+  <view class="g_blank_96"></view>
+</template>

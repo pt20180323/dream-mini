@@ -1,0 +1,136 @@
+<!-- 商品信息 -->
+<view class='f_col Det_goods'>
+  <view class='f_row Det_goods_main'>
+    <image class='main_img' src='{{detData.goodsPic}}'/>
+    <view class='f_col flex1 f_jc_sb'>
+      <text class='c_333 weight5 wrap_name size_28'>{{detData.goodsName}}</text>
+      <text class='c_gray' wx:if="{{detData.modelType}}">{{detData.modelType}}</text>
+      <view class='f_row f_jc_sb c_333 weight5 f_r_cnt'>
+        <text class='fs_32' wx:if="{{detData.price}}">￥{{detData.price/100}}</text>
+        <text wx:if="{{detData.total}}">X {{detData.total}}</text>
+      </view>
+    </view>
+  </view>
+  <!-- 附件 -->
+  <view class='f_row Det_goods_Enc size_24' wx:if="{{detData && detData.ordersAttachList && detData.ordersAttachList.length}}">
+    <text class='c_333 Enc_left'>附件</text>
+    <view class='f_col flex1'>
+      <!-- 配件列表 -->
+      <block wx:for="{{detData.ordersAttachList}}" wx:key="{{index}}">
+        <view class='f_row f_jc_sb Enc_list'>
+          <text class='c_gray flex1'>{{item.supGiftSkuName}}</text>
+          <text class='c_333 Num' wx:if="{{item.num}}"> X {{item.num}}</text>
+        </view>
+      </block>
+    </view>
+  </view>
+  <!-- 赠品 -->
+  <view class='f_row Det_goods_Enc size_24' wx:if="{{detData && detData.ordersGiftList && detData.ordersGiftList.length}}">
+    <text class='c_333 Enc_left'>赠品</text>
+    <view class='f_col flex1'>
+      <!-- 赠品列表列表 -->
+      <block wx:for="{{detData.ordersGiftList}}" wx:key="{{index}}">
+        <view class='f_row f_jc_sb Enc_list'>
+          <text class='c_gray flex1'>{{item.supGiftSkuName}}</text>
+          <text class='c_333 Num' wx:if="{{item.num}}"> X {{item.num}}</text>
+        </view>
+      </block>
+    </view>
+  </view>
+</view>
+<!-- 操作 -->
+<view class='f_col handle g_mt_20'>
+  <!-- 选择包装 -->
+  <picker bindchange="DescPickerChange" mode="selector" value="{{DescValue}}" range="{{DescData}}">
+    <view class='f_row f_r_cnt f_jc_sb handle_list'>
+      <text>包装</text>
+      <view>
+        <text class='c_333 size_28 g_mr_20'>{{DescData[DescValue]}}</text>
+        <text class='arr_i arr_r'></text>
+      </view>
+    </view>
+  </picker>
+  <!-- 说明 -->
+  <view class='f_col'>
+    <text class='handle_Exp g_mt_30'>问题描述</text>
+    <textarea class='g_mt_20 handle_textarea' maxlength="-1" bindinput="textChange" placeholder="问题描述(选填)"/>
+  </view>
+  <!-- 上传图片 -->
+  <view class='f_col'>
+    <text class='handle_Exp g_mt_30'>上传图片</text>
+    <view class='g_mt_20 f_row img_list flex-hw'>
+      <block wx:for="{{ImgList}}" wx:key="{{index}}">
+        <view class='Img_main'>
+          <image class='imgs_margin' src="{{item.picPath}}"/>
+          <view class='e_del' bindtap='delImg' data-index='{{index}}'></view>
+        </view>
+      </block>
+      <view wx:if="{{ImgList.length<4}}" class='img_list_add Img_main f_col f_r_cnt f_jc_cnt c_gray' bindtap='bindAddImg'>
+        <text class='add_icon'>+</text>
+        <text>上传照片</text>
+      </view>
+    </view>
+  </view>
+</view>
+<!-- 取件-收件地址 -->
+<view class='f_col handle g_mt_20'>
+  <!-- 取件方式 -->
+  <picker bindchange="addressPickerChange" mode="selector" value="{{partsVal}}" range="{{partsData}}">
+    <view class='f_row f_r_cnt f_jc_sb handle_list'>
+      <text>取件方式</text>
+      <view>
+        <text class='c_333 size_28 g_mr_20'>{{partsData[partsVal]}}</text>
+        <text class='arr_i arr_r'></text>
+      </view>
+    </view>
+  </picker>
+  <!-- 取件地址  url='../../mine/address/select/select?' -->
+  <view bindtap='getAddress' data-i="1" class='f_row f_jc_sb handle_list'>
+    <view class='f_col'>
+      <text>取件地址</text>
+      <text class='c_333' wx:if="{{partsAddress}}">{{partsAddress}}</text>
+    </view>
+    <text class='arr_i arr_r'></text>
+  </view>
+  <block wx:if="ExpectType != 10">
+    <!-- 返件方式 -->
+    <picker bindchange="addressReturnChange" mode="selector" value="{{ReturnVal}}" range="{{ReturnData}}">
+      <view class='f_row f_r_cnt f_jc_sb handle_list'>
+        <text>返件方式</text>
+        <view>
+          <text class='c_333 size_28 g_mr_20'>{{ReturnData[ReturnVal]}}</text>
+          <text class='arr_i arr_r'></text>
+        </view>
+      </view>
+    </picker>
+    <!-- 返件地址 -->
+    <view bindtap='getAddress' data-i="2" class='f_row f_jc_sb handle_list noBorder'>
+      <view class='f_col'>
+        <text>返件地址</text>
+        <text class='c_333' wx:if="{{ReturnAddress}}">{{ReturnAddress}}</text>
+      </view>
+      <text class='arr_i arr_r'></text>
+    </view>
+  </block>
+</view>
+<!-- 联系信息 -->
+<view class='f_col handle g_mt_20'>
+  <!-- 联系人 -->
+  <view class='f_row f_r_cnt f_jc_sb handle_list'>
+    <text>联系人</text>
+    <view class="f_row">
+      <input value="{{data.customerContactName}}" bindinput="changeUserName" adjust-position placeholder="请输入联系人" class='c_333 size_28 g_mr_20 handle_inp'></input>
+      <text class='arr_i arr_r'></text>
+    </view>
+  </view>
+  <!-- 联系号码 -->
+  <view class='f_row f_r_cnt f_jc_sb handle_list noBorder'>
+    <text>联系电话</text>
+    <view class="f_row">
+      <input value="{{data.customerTel}}" bindinput="changeUserPhone" maxlength="11" adjust-position type='number' placeholder="请输入11位手机号码" class='c_333 size_28 g_mr_20 handle_inp'></input>
+      <text class='arr_i arr_r'></text>
+    </view>
+  </view>
+</view>
+<!-- 提交按钮 -->
+<button class='handle_btn handle_det_Btn' bindtap='submit'>提交</button>

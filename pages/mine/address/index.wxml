@@ -1,0 +1,30 @@
+<view class="f_col addr_box" wx:if="{{isLoaded}}">
+  <view class="addr_list f_col" wx:if="{{list.length}}">
+    <view class="addr_item g_line_bot f_col"  wx:for="{{list}}" wx:for-index="idx" wx:key="_list" wx:for-item="item">
+      <view class="adi_desc f_col">
+        <view class="f_row adi_cnt">
+          <text>{{item.tackName}}</text>
+          <text>{{item.tackPhone}}</text>
+        </view>
+        <text>{{(item.province || '') + (item.city || '') + (item.circle || '') + (item.area || '') + (item.address || '')}}</text>
+        <view wx:if="{{!item.area}}" class='f_row f_r_cnt textWarning'><view class='textIcon'>!</view><text class='content'>请完善乡镇信息！</text></view>
+      </view>      
+      <view class="f_row f_r_cnt f_jc_sb g_line_top adi_handle">
+        <view class="set_init {{item.preferred ? 'set_cur' : ''}}" bindtap="setInit" data-Defect="{{!item.area}}" data-aid="{{item.addId}}" data-idx="{{idx}}"><label class="init_i"></label>设为默认</view>
+        <view class="f_row">
+            <text class="icon-edit c_gray" bindtap="edit" data-aid="{{item.addId}}">编辑</text>
+            <text class="icon-del c_gray" bindtap="delAddr" data-aid="{{item.addId}}">删除</text>
+        </view>
+      </view>
+    </view>    
+    <!--end-->
+  </view>
+  <view class="f_col f_r_cnt none_box c_gray" wx:else>
+    <text class="icon-address"></text>
+    <text>你还没有添加收货地址</text>
+  </view>
+  <view class="bot_blank"></view>
+  <view class="f_row f_r_cnt addr_bot bot_fix">
+    <navigator hover-class="none" open-type="navigate" url="/pages/mine/address/new/new?deliveryType={{deliveryType}}&goodsId={{goodsId || ''}}" class="adr_btn bg_color add_i">新增收货地址</navigator>    
+  </view>
+</view>

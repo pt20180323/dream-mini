@@ -1,0 +1,43 @@
+<view class='f_col g_line_top'>
+  <view class='f_col coupon_box f_r_cnt' wx:if='{{couponList.length > 0}}'>
+    <view class='coupon_item f_col' wx:for='{{couponList}}' wx:for-item='item' wx:for-index='idx' wx:key="coupon" bindtap='check' data-index='{{idx}}'>
+      <view class='c_header f_row f_r_cnt'>
+        <view class='c_333'>{{item.name}}</view>
+        <view>库存{{item.total}}张</view>
+      </view>
+      <view class='f_row f_jc_cnt'>
+        <image src='/static/ico/coupon_cir.png' class='coupon_cir'></image>
+      </view>
+      <view class='c_info f_row'>
+        <view class='c_left f_row f_r_cnt' wx:if='{{item.type == 1}}'>
+          ￥
+          <text class='f_80'>{{item.amount}}</text>
+        </view>
+        <view class='c_left f_row f_r_cnt' wx:elif='{{item.type == 2}}'>
+          <text class='f_80'>{{item.discountAmount}}</text>折
+        </view>
+        <view class='c_left f_row f_r_cnt fs_56' wx:elif='{{item.type == 3}}'>礼品券</view>
+        <view class='c_right f_col f_jc_cnt'>
+          <view class='c_333 f_32' wx:if='{{item.type == 1}}'>
+            <text wx:if='{{item.conditionAmount}}'>满{{item.conditionAmount}}元可用</text>
+            <text wx:else>无门槛使用</text>
+          </view>
+          <view class='c_333 f_32' wx:elif='{{item.type == 2}}'>
+            <text wx:if='{{item.discountLimit}}'>最多抵扣{{item.discountLimit}}元</text>
+          </view>
+          <view class='g_mt_10'>
+            有效期：{{item.dateTip}}
+          </view>
+          <view class='g_mt_15' catchtap='toCoupon' data-id='{{item.id}}'>使用规则 >></view>
+        </view>
+        <view class='checkbox {{item.isSelect ? "rd_sel":""}}'></view>
+      </view>
+      <view class='left_cir'></view>
+      <view class='right_cir'></view>
+    </view>
+  </view>
+</view>
+<view class="{{isIpx?'g_blank_164':'g_blank_96'}}"></view>
+<view class="f_row f_jc_cnt bot_fixed_box f_r_cnt g_line_top {{isIpx?'fix-iphonex-button':''}}">
+  <view class='sure_btn f_row f_r_cnt f_jc_cnt' bindtap='sureBtn'>确定，下一步选商品</view>
+</view>

@@ -1,0 +1,60 @@
+<import src="../template/tabnav/tabnav.wxml" />
+<import src="../template/countdown/countdown.wxml" />
+<import src="../template/loading/loading.wxml" />
+
+<template is="tabnav" data="{{navTab, navList}}"></template>
+<view hidden="{{navTab !== 2}}" class="f_col g_main_box">
+  <block wx:for="{{shopList}}" wx:for-index="idx" wx:key="list" wx:for-item="item">
+    <view class="act_item f_col g_mt_20">
+      <view class="f_row f_r_cnt f_jc_sb act_hd">
+        <view class="f_row f_r_cnt">
+          <view class="act_ico box_size bg_color" wx:if="{{item.type === 7}}">秒杀</view>
+          <view class="act_ico box_size bg_color" wx:elif="{{item.type === 9}}">满立减</view>
+          <view class="act_ico box_size bg_color" wx:elif="{{item.type === 11}}">限时特价</view>
+          <view class="act_ico box_size bg_color" wx:elif="{{item.type === 12}}">抱团购</view>
+          <view class="act_ico box_size bg_color" wx:elif="{{item.type === 13}}">限时领券</view>
+          <text class="txt_color" wx:if="{{item.type === 7 || item.type === 12}}">{{item.lowPrice}}元起</text>
+          <text wx:elif="{{(item.type === 9 || item.type === 11) && item.privilege}}">{{item.privilege}}</text>
+        </view>
+        <view class="f_row act_c_show" wx:if="{{!elActivityVo[idx].isCountDownEnd}}">
+          <text>仅剩</text>
+          <template is="countdown" data="{{...elActivityVo[idx]}}"></template>
+          <text>结束</text>
+        </view>
+        <text wx:else>活动已结束！</text>
+      </view>
+      <view class="aidx_nav" bindtap="gotoAct" data-atype="{{item.type}}" data-aid="{{item.id}}">
+        <image mode="widthFix" class="act_img" src="{{item.picUrl}}"></image>
+      </view>
+    </view>
+  </block>
+  <!--end-->
+</view>
+<view hidden="{{navTab !== 1}}" class="f_col foreshow g_main_box">
+  <block wx:for="{{shopList}}" wx:for-index="idx" wx:key="list" wx:for-item="item">
+    <view class="act_item f_col g_mt_20">
+      <view class="f_row f_r_cnt f_jc_sb act_hd">
+        <view class="f_row f_r_cnt">
+          <view class="act_ico box_size bg_color" wx:if="{{item.type === 7}}">秒杀</view>
+          <view class="act_ico box_size bg_color" wx:elif="{{item.type === 9}}">满立减</view>
+          <view class="act_ico box_size bg_color" wx:elif="{{item.type === 11}}">限时特价</view>
+          <view class="act_ico box_size bg_color" wx:elif="{{item.type === 12}}">抱团购</view>
+          <view class="act_ico box_size bg_color" wx:elif="{{item.type === 13}}">限时领券</view>
+          <text c lass="txt_color" wx:if="{{item.type === 7 || item.type === 12}}">{{item.lowPrice}}元起</text>
+          <text wx:elif="{{(item.type === 9 || item.type === 11) && item.privilege}}">{{item.privilege}}</text>
+        </view>
+        <view class="f_row act_c_show" wx:if="{{!elActivityVo[idx].isCountDownEnd}}">
+          <text>还有</text>
+          <template is="countdown" data="{{...elActivityVo[idx]}}"></template>
+          <text>开始</text>
+        </view>
+        <text wx:else>活动已开始！</text>
+      </view>
+      <view class="aidx_nav" bindtap="gotoAct" data-atype="{{item.type}}" data-aid="{{item.id}}">
+        <image mode="widthFix" class="act_img" src="{{item.picUrl}}"></image>
+      </view>
+    </view>
+  </block>
+  <!--end-->
+</view>
+<template is="loading" data="{{loading, isshowEmpty,isLastPage,imgSrc,noMsg}}"></template>

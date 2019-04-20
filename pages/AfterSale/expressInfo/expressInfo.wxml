@@ -1,0 +1,36 @@
+
+<!-- 快递信息 -->
+<view class='f_col handle g_mb_30'>
+  <view class='f_row f_r_cnt f_jc_sb handle_list'>
+    <text>快递公司</text>
+    <view >
+    <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
+      <view class="picker">
+        <text class='c_333 size_28 g_mr_20 expTxt'>{{array[index]}}</text>
+        <text class='arr_i arr_r'></text>
+      </view>
+  </picker>
+      
+    </view>
+  </view>
+  <view class='f_row f_r_cnt f_jc_sb handle_list'>
+    <text>快递单号</text>
+    <input class='c_333 size_28 input_text' placeholder='请填写快递单号' bindinput="bindKeySingleNo"/>
+  </view>
+  <view class='f_row f_r_cnt f_jc_sb handle_list'>
+    <text>运费</text>
+    <input class='c_333 size_28 input_text' placeholder='运费' type='digit' bindinput="bindKeyFreight"/>
+  </view>
+  <view class='f_row f_r_cnt f_jc_sb handle_list noBorder'>
+    <text>发货日期</text>
+    <picker mode="date" value="{{date}}" start="2015-09-01" end="2017-09-01" bindchange="bindDateChange">
+    <view class="picker expTxt">{{date}}</view>
+  </picker>
+  </view>
+</view>
+<!-- 提示 -->
+<view class='tishi c_gray size_28'>快递公司支持圆通、申通、韵达、中通、宅急送、EMS、顺丰快递，不接受到付件。</view>
+<!-- 提交按钮 -->
+<view class='Exp_btm_btn'>
+  <button class='handle_btn' bindtap='submitInfo'>提交</button>
+</view>

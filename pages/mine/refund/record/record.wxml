@@ -1,0 +1,79 @@
+<!-- 顶部状态图片 -->
+<view class='Sale_title title_bg f_row f_r_cnt' wx:if="{{orderInfo.refundStatusName}}">
+  <text>{{orderInfo.refundStatusName}}</text>
+</view>
+<!-- 操作区域 -->
+<view class='f_col handle Sale_handle' wx:if="{{orderInfo.operAreaisShow}}">
+  <text class='c_333 size_28' wx:if="{{orderInfo.afsServiceStepName}}">{{orderInfo.afsServiceStepName}}</text>
+  <view class='item_en f_row Sale_btns'>
+    <button class='Sale_btn g_mr_20' wx:if="{{orderInfo.fillinBtnisShow}}" data-isSet="{{false}}" bindtap='goExpressInfo'>填写快递信息</button>
+    <button class='Sale_btn g_mr_20' wx:if="{{orderInfo.setBtnisShow}}" data-isSet="{{true}}" bindtap='goExpressInfo'>修改快递信息</button>
+    <button class='Sale_btn' bindtap='cancelApp'>撤销申请</button>
+  </view>
+</view>
+<!-- 退货信息 -->
+<view class='f_col handle g_mt_20' wx:if="{{orderInfo.pickwareType}}">
+  <view class='f_row f_r_cnt f_jc_sb handle_list'>
+    <text>退货类型</text>
+    <text class='c_333 size_28'>{{orderInfo.pickText}}</text>
+  </view>
+  <view class='f_row f_r_cnt f_jc_sb handle_list' wx:if="{{orderInfo.pickwareType == 2}}">
+    <text>退货门店</text>
+    <text class='c_333 size_28'>{{orderInfo.storeName}}</text>
+  </view>
+  <view class='f_row f_r_cnt f_jc_sb handle_list' wx:if="{{orderInfo.pickwareType == 1 || orderInfo.pickwareType == 3}}">
+    <text>取货地址</text>
+    <text class='c_333 size_28 addressWidth'>{{orderInfo.pickwareAddress}}</text>
+  </view>
+</view>
+<!-- 售后进度 -->
+<view class='f_col handle Sale_handle g_mt_20' wx:if="{{orderInfo.refundDialogs}}">
+  <text class='size_28'>售后进度</text>
+  <block  wx:for='{{orderInfo.refundDialogs}}' wx:key='{{index}}'>
+    <view class='f_row g_mt_30'>
+      <view class="status_yuan g_mt_10 {{index==0?'frist':'last'}}">
+      </view>
+      <view class='f_col g_ml_20 flex1' >
+        <text class='c_333 size_28'>{{item.actionName}}</text>
+        <text class='c_gray size_28 g_mt_10'>{{item.actionDesc}}</text>
+        <text class='c_gray size_24 g_mt_20'>{{item.actionTime}}</text>
+      </view>
+    </view>
+  </block>
+  <view class='g_mt_30 f_row f_jc_cnt' bindtap='switchList' wx:if="{{orderInfo.refundDialogs && orderInfo.refundDialogs.length>1}}">
+    <text>{{txt}}</text>
+    <view class='arr_i arr_b'></view>
+  </view>
+</view>
+<!-- 商品信息 -->
+<view class='f_col handle g_mt_20 g_mb_30'>
+  <block wx:for="{{orderInfo.afterSaleDetails}}" wx:key="{{index}}">
+    <view class='f_row g_mt_20'>
+      <image class='main_img' src='{{item.goodsPic}}'/>
+      <view class='f_col flex1 f_jc_sb'>
+        <text class='c_333 weight5 wrap_name size_28'>{{item.goodsName}}</text>
+        <view class='f_row f_jc_sb c_333 weight5 f_r_cnt'>
+          <text class='fs_32'>￥{{item.price/100}}</text>
+          <text>X {{item.total}}</text>
+        </view>
+      </view>
+    </view>
+  </block>
+  <!-- 数量 -->
+  <view class='f_row f_r_cnt f_jc_sb handle_list'>
+    <text>退款原因</text>
+    <text class='c_333 size_28'>{{orderInfo.questionDesc}}</text>
+  </view>
+  <view class='f_row f_r_cnt f_jc_sb handle_list'>
+    <text>订单号码</text>
+    <text class='c_333 size_28'>{{orderInfo.orderNo}}</text>
+  </view>
+  <view class='f_row f_r_cnt f_jc_sb handle_list'>
+    <text>服务单号</text>
+    <text class='c_333 size_28'>{{orderInfo.serviceId}}</text>
+  </view>
+  <view class='f_row f_r_cnt f_jc_sb handle_list noBorder'>
+    <text>退款数量</text>
+    <text class='c_333 size_28'>{{orderInfo.skuNum}}</text>
+  </view>
+</view>

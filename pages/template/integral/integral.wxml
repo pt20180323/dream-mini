@@ -1,0 +1,45 @@
+<template name='integral'>
+<view class="pop_prop_box {{integraSlideUp ? 'm_slideUp' : ''}}">
+  <view class="mask" bindtap="useIntegral"></view>
+  <view class="m_bot_box f_col">
+    <view class="f_row g_line_bot rel_store_tit">
+      <text class="rel_s_txt">积分抵扣</text>
+      <view class="pp_close box_size" bindtap="useIntegral">
+        <image src="/static/ico/close.png"></image>
+      </view>
+    </view>
+    <view class="f_col rel_st_list">
+      <view class="f_col r_sub_lisit">
+        <view class='f_col'>
+         <radio-group class="radio-group f_col" bindchange="radioChange"> 
+            <label class="radio f_row f_r_cnt f_jc_sb integral_box g_line_bot">
+              <text class='c_black'>不使用积分抵扣</text>
+              <radio value="0" checked='{{!isUseIntegral}}' color='#ff0036'/>
+            </label>
+            <label class="radio f_row f_r_cnt f_jc_sb integral_box">
+              <text class='c_black'>使用积分抵扣</text>
+              <radio value="1" checked='{{isUseIntegral}}' color='#ff0036'/>
+            </label>
+          </radio-group>
+       
+          <view class='f_col integral_box' wx:if='{{isUseIntegral}}'>
+            <view class='f_row f_r_cnt'>
+              <text class='c_black'>本次抵扣积分</text>
+              <input type='number' value='{{integral.integral === "no" ? 0 : integral.integral}}' class='c_black integral_input' bindinput='bindKeyInput'></input>
+              <text class='txt_color'>抵扣￥{{calcAmount.exchangeFeeDouble}}</text>
+            </view>
+            <view class='f_row integral_nums'>
+              本次订单最大可使用积分<text class='txt_color'>{{integral.maxIntegral}}</text>,当前积分<text class='txt_color'>{{fansIntegral}}</text>
+            </view>
+          </view>
+          <view class='btn_box g_line_top'>
+            <form report-submit='true' bindsubmit='submitIntegral'>
+              <button class='in_btn' formType="submit">确定</button>
+            </form>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+</template>

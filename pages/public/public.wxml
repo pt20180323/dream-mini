@@ -1,0 +1,2 @@
+<!--pages/public/public.wxml-->
+<web-view src="{{path}}"></web-view>

@@ -1,0 +1,86 @@
+<import src="../../template/loading/loading.wxml" />
+<view class="f_row topNav">
+  <view class='tab downArr'  bindtap='selectStoreCard' >{{storeLevel == 1 ? '企业卡券' : '平台卡券'}}</view>
+  <view class="tab {{curCard == 1?'cur':''}}" bindtap='selectCardType' data-card-type='1' >代金券</view>
+  <view class="tab {{curCard == 2?'cur':''}}" bindtap='selectCardType' data-card-type='2'>折扣券</view>
+  <view class="tab {{curCard == 3?'cur':''}}" bindtap='selectCardType' data-card-type='3'>礼品券</view>
+  <view class="posTxt"  bindtap='getStoreCard' wx:if="{{showStoreCard}}">{{storeLevel == 0 ? '企业卡券' : '平台卡券'}}</view>
+</view>
+<view class='f_col g_line_top coupon_box' bindtap='toCancel'data->
+  <view class='coupon_box'>
+    <view class='coupon_item' wx:for='{{couponList}}' wx:for-item='item' wx:for-index='idx' wx:key="coupon">
+      <view class='left_box f_col f_jc_cnt f_r_cnt fe2f54'>
+        <view wx:if='{{item.type === 1}}' class='ellipsis'>￥
+          <text class='fs_56 weight'>{{item.amount}}</text>
+        </view>
+        <view wx:if="{{item.type === 2}}" class='ellipsis'>
+          <text class='fs_56 weight'>{{item.discountAmount}}</text>折</view>
+        <view wx:if='{{item.type === 3}}' class='ellipsis'>
+          <text class='fs_56 weight'>礼品券</text>
+        </view>
+        <view wx:if="{{item.status !== 10000}}">
+          <view class='fs_24 ellipsis' wx:if="{{item.type === 1}}">
+            <text wx:if="{{!item.conditionAmount}}">无门槛使用</text>
+            <text wx:else>满{{item.conditionAmount}}元使用</text>
+          </view>
+          <view class='fs_24 ellipsis' wx:elif="{{item.type === 2 && item.discountLimit}}">最多抵扣￥{{item.discountLimit}}</view>
+          <view class='fs_24 ellipsis' wx:elif="{{item.type === 3}}"></view>
+        </view>
+      </view>
+      <view class='right_box f_row f_r_cnt f_jc_sb'>
+        <view class='f_col'>
+          <text class='c_name ellipsis'>{{item.name}}</text>
+          <text class='c_date ellipsis'>{{item.dateTip}}</text>
+          <view class='g_mt_15' bindtap='toCoupon' data-id='{{item.id}}'>使用规则 >></view>
+        </view>
+        <view wx:if='{{wnjCoupon}}'>
+          <button class='btn f_row f_jc_cnt f_r_cnt' catchtap='{{item.type === 1 && (item.useScenes ===0 || item.useScenes  === 1) ? "toSend" : "toCoupon"}}' data-idx='{{idx}}' data-id='{{item.id}}'>发送</button>
+          <!-- 发送弹框信息 -->
+          <view class='mask_wnj f_row f_jc_cnt f_r_cnt' wx:if='{{idx === showMaskIdx && item.type === 1 && (item.useScenes ===0 || item.useScenes  === 1)}}'>
+            <view class='f_row send_c f_r_cnt' catchtap='toCoupon' data-id='{{item.id}}' data-use-scenes='{{item.useScenes}}'>
+              <image src='/static/ico/card/send_c.png'></image>
+              <text>发券</text>
+            </view>
+            <view class='f_row add_g f_r_cnt' catchtap='toGoods' data-type='{{item.type}}' data-id='{{item.id}}'>
+              <image src='/static/ico/card/add_g.png'></image>
+              <text>加商品</text>
+            </view>
+          </view>
+        </view>
+        <view wx:else>
+          <view class='btn f_row f_jc_cnt f_r_cnt' catchtap='toShare' data-idx='{{idx}}' data-use-scenes='{{item.useScenes}}' data-id='{{item.id}}' data-type='{{item.type}}' wx:if='{{item.status === 1}}'>发送</view>
+          <view class='btn btn_bg f_row f_jc_cnt f_r_cnt' data-id='{{item.id}}' data-type='{{item.type}}' wx:if='{{item.status === 10000}}'>已结束</view>
+          <view class='btn btn_bg f_row f_jc_cnt f_r_cnt' data-id='{{item.id}}' data-type='{{item.type}}' wx:if='{{item.status === 10001}}'>已领完</view>
+        </view>
+      </view>
+    </view>
+    <template is="loading" data="{{loading, isshowEmpty,isLastPage,imgSrc,noMsg}}"></template>
+  </view>
+</view>
+<poster id="poster" config="{{config}}" bind:success="onPosterSuccess" bind:fail="onPosterFail" hide-loading="{{true}}"></poster>
+<!-- 去分享 -->
+<view class="mask showmask" wx:if='{{showImg}}' bindtap='close'>
+  <view class="f_col f_r_cnt iknow_tip" catchtap='preventClose'>
+    <image src='{{cardImg}}' mode='widthFix' style='width:480rpx;margin-bottom:40rpx;border-radius:8rpx;' bindtap='previewImg'></image>
+    <view class='f_row'>
+      <view class='icon_box f_col f_r_cnt' bindtap='toGoods' wx:if='{{showGoods}}'>
+        <view class='icon_btn c_share3 f_row f_r_cnt f_jc_cnt'>
+          <image src='/static/ico/add_goods.png' style='width:45rpx;height:45rpx;'></image>
+        </view>
+        <view>加商品</view>
+      </view>
+      <view class='icon_box f_col f_r_cnt' bindtap='toList'>
+        <view class='icon_btn f_row f_r_cnt f_jc_cnt'>
+          <image src='/static/ico/share3.png' style='width:41rpx;height:34rpx;'></image>
+        </view>
+        <view>发给客户</view>
+      </view>
+      <view class='icon_box f_col f_r_cnt' bindtap='saveImg'>
+        <view class='icon_btn c_share1 f_row f_r_cnt f_jc_cnt'>
+          <image src='/static/ico/share2.png' style='width:26rpx;height:39rpx;'></image>
+        </view>
+        <view>保存图片</view>
+      </view>
+    </view>
+  </view>
+</view>

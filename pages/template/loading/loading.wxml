@@ -1,0 +1,11 @@
+<template name="loading">
+  <view class='no_more f_row f_r_cnt f_jc_cnt' hidden='{{loading !== 1}}'>
+    <image src='/static/ico/loading.gif' style='width:48rpx;height:48rpx;margin-right:10rpx;'></image>
+    <text>加载中</text>
+  </view>
+  <view class="c_gray no_more c_t" wx:if="{{!isshowEmpty && isLastPage}}">人家也是有底限的啦^_^</view>
+  <view class='no_trend f_col f_r_cnt' wx:if='{{isshowEmpty}}'>
+    <image src="{{imgSrc || '/static/img/empty.png'}}" class='no_img'></image>
+    <text class='noTrend-text'>{{noMsg}}</text>
+  </view>
+</template>

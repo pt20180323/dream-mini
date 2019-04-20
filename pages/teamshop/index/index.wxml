@@ -1,0 +1,104 @@
+<view class="f_col">
+  <view class="thm_ban f_col" wx:if="{{elActivityVo.httpsPic}}">
+    <image mode="widthFix" src="{{elActivityVo.httpsPic}}"></image>
+    <view class="f_row act_count_box f_r_cnt g_line_bot" wx:if='{{!isfore}}'>
+      <view class="f_row act_c_show" wx:if="{{!isCountDownEnd}}">
+        <text>仅剩</text>
+        <rich-text nodes="{{countHtml}}"></rich-text>
+        <text>结束</text>
+      </view>
+      <text wx:else>活动已结束！</text>
+    </view>
+    <view class='f_row act_count_box f_r_cnt g_line_bot' wx:if='{{isfore}}'>
+      <view class='f_row act_c_show' wx:if='{{!isCountDownEnd}}'>
+        <text>还有</text>
+        <rich-text nodes='{{countHtml}}'></rich-text>
+        <text>开始</text>
+      </view>
+    </view>
+  </view>
+  <view class="f_col">
+    <navigator wx:for="{{shopList}}" wx:for-index="idx" wx:key="list" wx:for-item="item" hover-class="none" url="/pages/teamshop/productDetail/productDetail?activityId={{item.activityId}}&goodsId={{item.goodsId}}&storeId={{item.storeId}}&activityType={{activityType}}"
+      class="idx_itm f_col">
+      <view class="idx_img f_col">
+        <image mode="widthFix" src="{{item.coverUrl}}"></image>
+        <text class="idx_ico">{{item.teamNumber}}人团</text>
+      </view>
+      <view class="idx_desc f_col">
+        <text class="idx_tit break_all">{{item.goodsName}}</text>
+        <view class="f_row f_jc_sb i_p_box">
+          <view class="f_row idx_p">
+            <text class="c_price">¥{{item.price}}</text>
+            <text class="o_price" wx:if="{{item.originaPrice}}">¥{{item.originaPrice}}</text>
+            <view class="act_i" wx:if="{{item.haveOpenGroupCard}}">开团红包</view>
+            <view class="act_i" wx:if="{{item.haveCard}}">到店红包</view>
+          </view>
+          <view class="f_row idx_p_r">
+            <view class="ts_s">已团
+              <text>{{item.salesVolume}}</text>件</view>
+            <!--
+            <text class="go_ts">去开团</text>
+            -->
+          </view>
+        </view>
+        <text class="idx_time" wx:if="{{false}}">活动时间：{{item.startDate}}--{{item.endDate}}</text>
+      </view>
+      <form bindsubmit="setFormId" report-submit="true">
+        <button class="form_id_mash" form-type="submit"></button>
+      </form>
+    </navigator>
+    <!--
+    <navigator hover-class="none" url="/pages/productDetail/productDetail" class="idx_itm f_col">
+      <view class="idx_img f_col">
+        <image src="/static/img/theme_banner.jpg"></image>
+        <text class="idx_ico">2人团</text>
+      </view>
+      <view class="idx_desc f_col">
+        <text class="idx_tit break_all">安满（Anmum） 智孕宝 孕妇配方奶粉1000克*2（新西兰原装进口1000g）</text>
+        <view class="f_row f_jc_sb i_p_box">
+          <view class="f_row idx_p">
+            <text class="c_price">¥388.8</text>
+            <text class="o_price">¥488.8</text>
+          </view>
+          <view class="f_row idx_p_r">
+            <view class="ts_s">已团<text>2586</text>件</view>
+            <text class="go_ts">去开团</text>
+          </view>
+        </view>
+        <text class="idx_time">活动时间：01月01日 12:00--01月05日 12:00</text>
+      </view>
+    </navigator>
+    -->
+  </view>
+</view>
+<view class="f_col empty_box" wx:if="{{isshowEmpty}}">
+  <image src="/static/img/empty.png"></image>
+  <text>很抱歉，您所在的门店没有参与抱团购活动！</text>
+</view>
+<view class='share_box' bindtap='toShare'>
+  <image src='/static/ico/share_icon.png'></image>
+</view>
+<!-- 去分享 -->
+<view class="mask showmask" bindtap='close' wx:if='{{isShow && shareImg}}'>
+  <view class="f_col f_r_cnt iknow_tip" catchtap='preventClose'>
+    <image src='{{shareImg}}' mode='widthFix' style='width:480rpx;margin-bottom:40rpx;border-radius:8rpx;' bindtap='previewImg'></image>
+    <view class='f_row'>
+      <view class='icon_box f_row f_jc_cnt'>
+        <button open-type='share' class='c_btn f_col f_r_cnt'>
+          <view class='icon_btn f_row f_r_cnt f_jc_cnt'>
+            <image src='/static/ico/share3.png' style='width:41rpx;height:34rpx;'></image>
+          </view>
+          <view>发给客户</view>
+        </button>
+      </view>
+      <view class='icon_box f_row f_jc_cnt'>
+        <view bindtap='saveImg' class='c_btn f_col f_r_cnt'>
+          <view class='icon_btn c_share1 f_row f_r_cnt f_jc_cnt'>
+            <image src='/static/ico/share2.png' style='width:26rpx;height:39rpx;'></image>
+          </view>
+          <view>保存图片</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

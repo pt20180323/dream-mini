@@ -1,0 +1,44 @@
+<view bindtap='clickPage'>
+<view class='searchNav'>
+  <view class="section">
+    <input type='text' placeholder-style="color:#cccccc" placeholder="请输入你要搜索的关键词" confirm-type='search' bindconfirm='finishSearch'/>
+    <view class='search_title' catchtap='changeSearch'>
+      {{searchContent === 0 ? '名称' : (searchContent === 1 ? '价格' : (searchContent === 2 ? '货号' : ''))}}
+      <image src='/static/ico/icon_bottom.png'></image>
+    </view>
+    <image class='search' src='/static/ico/search.png'></image>
+    <image bindtap='clickClose' class='close' src='/static/ico/search_close.png'></image>
+  </view>
+  <view class='search_con {{flag ? "pic_show" : "pic_hidden"}}'>
+    <view class='con_line' bindtap='changeContent' data-idx='0'>
+        <image src='/static/ico/search_01.png'></image>
+        <text>名称</text>
+    </view>
+    <view class='con_line' bindtap='changeContent' data-idx='1'>
+        <image src='/static/ico/search_02.png'></image>
+        <text>价格</text>
+    </view>
+    <view class='con_line' bindtap='changeContent' data-idx='2'>
+        <image src='/static/ico/search_03.png'></image>
+        <text>货号</text>
+    </view>
+  </view>
+</view>
+
+<view class='category'>
+  <view class="grade_all">
+     <text class="txt_wh {{defaultCategory === '0' ? 'txt_common' : ''}}" bindtap="changeGrade" data-idx='0' data-level='0'>全部分类</text>
+  </view>
+  <view class="grade_one" wx:for='{{categoryList}}' wx:for-index="idx" wx:key="list"  wx:for-item="item">
+    <image wx:if='{{item.hassub}}' class='openImg' src="{{item.open ? '/static/img/cate_open.png' : '/static/img/cate_close.png'}}"></image>
+    <text class="txt_wh {{defaultCategory === item.id ? 'txt_common' : ''}}" bindtap="changeGrade" data-index='{{idx}}' data-idx='{{item.id}}' data-level='{{item.categoryLevel}}' data-hassub='{{item.hassub}}'>{{item.categoryName}}</text>
+    <view class="grade_two {{item.open ? 'grade_show' : 'grade_hidden'}}" wx:for='{{categoryList[idx].sub}}' wx:for-index="idx2" wx:key="list2"  wx:for-item="item2">
+      <image wx:if='{{item2.hassub}}' class='openImg' src="{{item2.open ? '/static/img/cate_open.png' : '/static/img/cate_close.png'}}"></image>
+      <text class="txt_wh {{defaultCategory2 === item2.id ? 'txt_common' : ''}}" bindtap="changeGrade" data-index='{{idx}}' data-indexsub='{{idx2}}' data-idx='{{item2.id}}' data-level='{{item2.categoryLevel}}' data-hassub='{{item2.hassub}}'>{{item2.categoryName}}</text>
+       <view class="grade_three {{item2.open ? 'grade_show' : 'grade_hidden'}}" wx:for='{{categoryList[idx].sub[idx2].sub}}' wx:for-index="idx3" wx:key="list3"  wx:for-item="item3">
+          <text class="txt_wh {{defaultCategory3 === item3.id ? 'txt_common' : ''}}" bindtap="changeGrade" data-idx='{{item3.id}}' data-level='{{item3.categoryLevel}}' data-hassub='{{item3.hassub}}'>{{item3.categoryName}}</text>
+        </view>
+    </view>
+   </view>
+</view>
+</view>

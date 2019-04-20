@@ -1,0 +1,44 @@
+<view class='f_col'>
+  <view class='share_tag'>此劵建议分享给<text wx:for='{{shareInfo.fansTagLevelResponses}}'>“{{item.name}}”</text></view>
+  <view class='s_box'>
+    <view class='s_item f_row f_r_cnt' wx:for='{{groupList}}' wx:for-index='idx' wx:key='group'>
+      <view class='f_col s_name'>
+        <view wx:if='{{item.qy == 0}}' class='c_333'>未添加企业微信({{item.fansList.length}})人</view>
+        <view wx:elif='{{item.qy == 1}}' class='c_333'>已添加企业微信({{item.fansList.length}})人</view>
+        <view class='c_name row'>
+          <text wx:for='{{item.fansList}}' wx:for-item='sitem' wx:key='name'>{{sitem.wxNickName}},</text>
+        </view>
+      </view>
+      <view class='ope_btn' data-index='{{idx}}' bindtap='toShare' data-qy='{{item.qy}}' wx:if='{{!item.isSend}}'>发送</view>
+      <view class='ope_btn' wx:else>已发送</view>
+    </view>
+  </view>
+  <view class='no_trend f_col f_r_cnt' wx:if='{{isshowEmpty}}'>
+    <image src="/static/img/empty.png" class='no_img'></image>
+    <text class='noTrend-text'>你的客户中暂无符合此标签的！</text>
+  </view>
+  <view class='g_blank_110'></view>
+</view>
+<view class="f_row f_r_cnt bot_fixed_box g_line_top box_size">
+  <view class="i_btn f_row f_r_cnt" bindtap='toCustom'>发给指定客户</view>
+</view>
+<!-- 发送弹框 -->
+<view class="mask showmask" wx:if='{{showChat}}' bindtap='hideChat'>
+  <view class="f_col iknow_tip" catchtap='preventClose'>
+    <view class='c_333 fs_32'>发送给{{usersPhoto.length}}位：</view>
+    <scroll-view class='img_box' scroll-x>
+      <image src='{{item}}' class='user_img' wx:for='{{usersPhoto}}' wx:key='img'></image>
+    </scroll-view>
+    <view class='f_row f_jc_cnt'>
+      <view class='show_box f_col'>
+        <view>{{shareInfo.shareTitle}}</view>
+        <image src='{{shareInfo.pic}}' class='share_img' mode='widthFix'></image>
+        <image src='/static/ico/miniProgram.png' class='mini_pro'></image>
+      </view>
+    </view>
+    <view class='icon_box f_row f_jc_cnt f_r_cnt'>
+      <view class='icon_btn f_row f_jc_cnt f_r_cnt icon_btn1' bindtap='hideChat'>取消</view>
+      <view class='icon_btn f_row f_jc_cnt f_r_cnt' bindtap='sureSend'>确定</view>
+    </view>
+  </view>
+</view>

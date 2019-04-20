@@ -1,0 +1,101 @@
+@import "/pages/template/countdown/countdown.wxss";
+.count_box{
+  padding: 10rpx 0;
+}
+.g_nav_c.foreshow{
+  color:#2bc682 !important;
+}
+.g_nav_c.foreshow .g_n_txt:after{
+  background-color:#2bc682;
+}
+.act_item{
+  background:#FFF;
+}
+.act_hd{
+  height:100rpx;
+  padding-right:25rpx;
+}
+.act_ico{
+  width:140rpx;
+  height:46rpx;
+  line-height:46rpx;
+  position:relative;
+  text-align:center;
+  color:#FFF;
+  padding-right:18rpx;
+  margin-right:10rpx;
+  background: #f50029;
+}
+.act_ico:after{
+  content:'';
+  display:block;
+  position:absolute;
+  right:0;
+  top:0;
+  width:0; 
+  height:0;
+  border-width:24rpx 10rpx;
+  border-style:solid;
+  border-color:transparent #FFF #FFF transparent;
+}
+
+.txt_color{
+  color: #f50029;
+}
+.act_img{
+  width:100%;
+  height: 100%;
+}
+.foreshow .bg_color{
+  background-color:#2bc682 !important;
+}
+.txt1_color{
+  color:#2bc682;
+}
+.act_count_box{
+  height:80rpx;
+  background:#FFF;
+  justify-content:center;
+  color:#000;
+  font-size:24rpx;
+  position:relative;
+}
+.act_c_show>text{
+  line-height:40rpx;
+  margin:0 10rpx;
+}
+/*新增*/
+.index-nav {
+  position: relative;
+  flex:1;
+}
+
+.head_box{
+  height:64rpx;
+  background: #fff4df;
+  color: #ff9400;
+  font-size: 24rpx;
+  margin:12rpx 25rpx;
+  position: relative;
+  border-radius: 8rpx;
+}
+
+.ac_list{
+	width: 132rpx;
+	height: 40rpx;
+	background-color: #ff9400;
+	border-radius: 24rpx;
+	border: solid 2rpx #ff9400;
+  font-size: 22rpx;
+  color: #fff;
+  position: absolute;
+  right: 20rpx;
+  top: 50%;
+  margin-top: -20rpx;
+}
+
+.known_icon{
+  width: 32rpx;
+  height: 32rpx;
+  margin: 0 10rpx 0 20rpx;
+}

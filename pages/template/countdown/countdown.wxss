@@ -1,0 +1,17 @@
+.shape{
+  display:inline-block;
+  width:40rpx;
+  height:40rpx;
+  line-height:40rpx;
+  background:#333;
+  color:#FFF;
+  border-radius:4rpx;
+  text-align:center;
+  font-size:24rpx;
+}
+.st_txt{
+  font-size:22rpx;
+  display:inline-block;
+  padding:0 5rpx;
+  font-style:normal;
+}

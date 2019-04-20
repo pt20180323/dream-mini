@@ -1,0 +1,7 @@
+<template name="copyright">
+  <view class="f_row f_r_cnt copy_right_bot">
+    <image class="c_log_i" src="/static/ico/c_log.png"></image>
+    <text class="copy_right_txt">技术支持</text>
+  </view>
+  <!-- <view class="g_blank_96"></view> -->
+</template>

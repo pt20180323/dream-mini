@@ -1,0 +1,69 @@
+<view class="f_col n_addr_list">
+  <view class="f_row g_line_bot n_addr_item f_jc_sb f_r_cnt">
+    <label>收货人</label>
+    <input placeholder="姓名" value="{{tackName}}" bindinput="nameIpt" />
+  </view>
+  <view class="f_row g_line_bot n_addr_item f_jc_sb f_r_cnt">
+    <label>手机号码</label>
+    <input placeholder="联系人手机号码" value="{{tackPhone}}" bindinput="phoneIpt" />
+  </view>
+  <view class="f_row g_line_bot n_addr_item f_jc_sb f_r_cnt">
+    <label>选择地区</label>
+    <view class="local_box">
+      <input class='right_font' bindtap="togPickPop" placeholder="省市区信息" value="{{newProvince[newValue[0]].name || ''}}{{newCity[newValue[1]].name || ''}}{{newCounty[newValue[2]].name || ''}}" disabled="{{true}}" />
+      <view class="local_btn" bindtap="getLocal">
+        <text class="icon-address"></text>
+      </view>
+    </view>
+  </view>
+  <view class="f_row g_line_bot n_addr_item f_jc_sb f_r_cnt" wx:if="{{newRegion.length}}">
+    <label>选择区域</label>
+    <view class="local_box lb_cpr">
+      <input class="right_font" bindtap="togSubPop" placeholder="请选择" value="{{newRegion[subValue[0]].name || ''}}" disabled="{{true}}" />
+    </view>
+  </view>
+  <view class="f_row g_line_bot n_addr_item f_jc_sb f_r_cnt">
+    <label>详细地址</label>
+    <input placeholder="街道门牌信息" value="{{address}}" bindinput="addrIpt" />
+  </view>
+  <view class="f_row set_box g_line_bot">
+    <view class="set_init {{inited ? 'set_cur' : ''}}" bindtap="setInit"><label class="init_i"></label>设为默认</view>
+  </view>
+  <button class="save_btn" bindtap="addAddr">确 定</button>
+</view>
+<!-- 省市区弹出框 -->
+<view class="pick_pop {{isshowPop ? 'show_pick' : ''}}">
+  <view class="pick_mask"></view>
+  <view class="f_col pick_box">
+    <view class="f_row f_r_cnt f_jc_sb g_line_bot pick_head">
+      <text class="pick_btn" bindtap="togPickPop" data-cancel="true">取消</text>
+      <text class="pick_btn pick_sure" bindtap="surePick">确认</text>
+    </view>
+    <picker-view indicator-style="height:50px;" class="pop_pick_view" value="{{newValue}}" bindchange="bindNewChange">
+      <picker-view-column>
+        <view class="pop_pick_item" wx:for="{{newProvince}}" wx:for-index="idx" wx:key="list" wx:for-item="item">{{item.name}}</view>
+      </picker-view-column>
+      <picker-view-column>
+        <view class="pop_pick_item" wx:for="{{newCity}}" wx:for-index="idx" wx:key="list" wx:for-item="item">{{item.name}}</view>
+      </picker-view-column>
+      <picker-view-column>
+        <view class="pop_pick_item" wx:for="{{newCounty}}" wx:for-index="idx" wx:key="list" wx:for-item="item">{{item.name}}</view>
+      </picker-view-column>
+    </picker-view>
+  </view>  
+</view>
+<!-- 乡镇选择弹出框 -->
+<view class="pick_pop {{issubPop ? 'show_pick' : ''}}">
+  <view class="pick_mask"></view>
+  <view class="f_col pick_box">
+    <view class="f_row f_r_cnt f_jc_sb g_line_bot pick_head">
+      <text class="pick_btn" bindtap="togSubPop" data-cancel="true">取消</text>
+      <text class="pick_btn pick_sure" bindtap="sureSubPick">确认</text>
+    </view>
+    <picker-view indicator-style="height:50px;" class="pop_pick_view" value="{{subValue}}" bindchange="bindSubChange">
+      <picker-view-column>
+        <view class="pop_pick_item" wx:for="{{newRegion}}" wx:for-index="idx" wx:key="list" wx:for-item="item">{{item.name}}</view>
+      </picker-view-column>
+    </picker-view>
+  </view>  
+</view>

@@ -1,0 +1,23 @@
+.copy_right_bot{
+  position: absolute;
+  width:100%;
+  bottom:0;
+  left:0;
+  height:96rpx;
+  justify-content:center;
+  z-index: -1;
+  /* margin-top: 96rpx; */
+}
+.c_log_i{
+  width:137rpx;
+  height:20rpx;
+}
+.copy_right_txt{
+  position:relative;
+  border-left:1rpx solid #c8c8c8;
+  color:#b7b7b7;
+  padding-left:12rpx;
+  margin-left:12rpx;
+  font-size:24rpx;
+  line-height:24rpx;
+}

@@ -1,0 +1,278 @@
+<!--pages/mine/orderDetail/orderDetail.wxml-->
+<view class='overflow'>
+  <view class='bg_color list_h f_row'>
+    <view class='f_col'>
+      <text class='f_color list_s'>{{orderInfo.status}}</text>
+      <text class='f_color list_t' wx:if='{{orderStatus === 0}}'>{{orderInfo.payTimeCountDown > 5 ? '订单在' + orderInfo.payTimeFormat + '后关闭，请尽快支付' : '订单取消中...'}}</text>
+      <text class='f_color list_t' wx:if='{{orderStatus === 1}}'>订单已被商家取消</text>
+      <text class='f_color list_t' wx:if='{{orderStatus === 5}}'>订单已被用户取消</text>
+      <text class='f_color list_t' wx:if='{{orderStatus === 10}}'>订单已超时</text>
+      <text class='f_color list_t' wx:if='{{orderStatus === 2 && orderInfo.orderType !== 2}}'>等待商家发货中...</text>
+      <text class='f_color list_t' wx:if='{{orderStatus === 4}}'>订单完成时间：{{orderInfo.payTime}}</text>
+      <text class='f_color list_t' wx:if='{{orderStatus === 9}}'>退款完成时间：{{orderInfo.editTime}}</text>
+      <view class='f_color list_t' wx:if='{{orderStatus === 3 && orderInfo.orderType === 1}}'>
+        快递配送：{{orderInfo.deliverResponse.dservices}}
+        <text style='padding-left:30rpx;' bindtap='toexpress' data-order-no='{{orderInfo.orderNo}}'>查看物流</text>
+      </view>
+      <text class='f_color list_t' wx:if='{{orderStatus === 3 && orderInfo.orderType === 1}}'>快递单号：{{orderInfo.deliverResponse.deliverNo}}</text>
+      <text class='f_color list_t' wx:if='{{(orderStatus === 3 || orderStatus === 2) && orderInfo.orderType === 2}}'>门店自提</text>
+      <text class='f_color list_t' wx:if='{{(orderStatus === 3 || orderStatus === 2) && orderInfo.orderType === 2 && orderInfo.userStoreTime}}'>到店时间：{{orderInfo.userStoreTime}}</text>
+      <text class='f_color list_t' wx:if='{{orderStatus === 3 && orderInfo.orderType === 3}}'>商家配送</text>
+      <text class='f_color list_t' wx:if='{{orderStatus === 3 && orderInfo.orderType === 3}}'>{{orderInfo.shopdeTime}}已发货，3小时送到</text>
+      <text class='f_color list_t' wx:if='{{orderStatus === 6}}'>待商家同意退款</text>
+      <text class='f_color list_t' wx:if='{{orderStatus === 7}}'>待买家退货</text>
+      <text class='f_color list_t' wx:if='{{orderStatus === 8}}'>等待商家收货</text>
+    </view>
+    <view>
+      <image src="/static/img/wait_pay.png" wx:if='{{orderStatus === 0}}'></image>
+      <image src="/static/img/close.png" wx:if='{{orderStatus === 1 || orderStatus === 5 || orderStatus === 10}}'></image>
+      <image src="/static/img/wait_send.png" wx:if='{{orderStatus === 2 && orderInfo.orderType !== 2}}'></image>
+      <image src="/static/img/pay_finish.png" wx:if='{{orderStatus === 4 || orderStatus === 9}}'></image>
+      <image src="/static/img/wait_get.png" wx:if='{{orderStatus === 3 && orderInfo.orderType === 1}}'></image>
+      <image src="/static/img/wait_receive.png" wx:if='{{(orderStatus === 3 || orderStatus === 2) && orderInfo.orderType === 2}}'></image>
+      <image src="/static/img/wait_get.png" wx:if='{{orderStatus === 3 && orderInfo.orderType === 3}}'></image>
+      <image src="/static/img/refund.png" wx:if='{{orderStatus === 6 || orderInfo.orderType === 7 || orderInfo.orderType === 8}}'></image>
+    </view>
+  </view>
+  <view class='f_col'>
+    <view class="f_jc_sb f_r_cnt o_l_item view_p f_row r_people" wx:if='{{orderInfo.takeName && orderInfo.takePhone}}'>
+      <view>收货人：{{orderInfo.takeName}}</view>
+      <text class='phone'>{{orderInfo.takePhone}}</text>
+    </view>
+    <view class="f_jc_sb o_l_item view_p f_row" wx:if='{{orderInfo.takeAddress}}'>
+      <image class='addr_img' src='/static/ico/address.png'></image>
+      <view class='addr_txt'>收货地址：{{orderInfo.takeAddress}}</view>
+    </view>
+    <view class="f_jc_sb o_l_item view_p" wx:if='{{orderInfo.lmsg}}'>
+      <view class="mess_box {{orderInfo.takeAddress ? '' : 'mess_border' }}">
+        <image class='mess_img' src='/static/ico/message.png'></image>
+        <text class='mess_txt'>买家留言：</text>
+        <view class='mess_txt'>{{orderInfo.lmsg}}</view>
+      </view>
+    </view>
+  </view>
+  <view class="g_blank_20"></view>
+  <view class='o_l_item'>
+    <view class="f_row f_jc_sb f_r_cnt ol_i_head c_black">
+      <text>订单编号：{{orderInfo.orderNo}}</text>
+    </view>
+    <view>
+      <view class="f_col ol_box" wx:for='{{orderInfo.ordersDetails}}' wx:key="keylist" wx:for-index="key" wx:for-item="item">
+        <view class='f_row ol_i_box' bindtap='toDetail' data-goodsId='{{item.goodsId}}' data-activityId='{{item.goodsActivitiesResponse.activityId || ""}}' data-activityType='{{item.goodsActivitiesResponse.activityType || ""}}'>
+          <image src="{{item.goodsPic}}"></image>
+          <view class="f_row f_jc_sb o_right">
+            <view class="f_col o_attribute">
+              <text class="o_p_tit">{{item.goodsName}}</text>
+              <view wx:if='{{item.fansDiscount}}'>
+                <text class='second common_icon'>{{item.discountLevel}}享{{item.fansDiscount}}折</text>
+              </view>
+              <text class="o_p_pro" wx:if='{{item.modelType}}'>属性：{{item.modelType}}</text>
+              <text class="o_p_pro" wx:if='{{item.modelCode}}'>货号：{{item.modelCode}}</text>
+              <text class='o_p_pro' wx:if='{{!orderInfo.userStoreTime && item.userStoreTime}}'>到店时间:{{item.userStoreTime}}</text>
+            </view>
+            <view class="o_p_price f_col">
+              <view class='o_price'>￥{{item.priceDouble}}</view>
+              <view class='o_orignPrice' wx:if="{{item.minMarketPriceDouble}}">￥{{item.minMarketPriceDouble}}</view>
+              <view class='o_goodNum'>X{{item.total}}</view>
+            </view>
+          </view>
+        </view>
+        <!-- 跳转京东售后申请 条件:订单状态已完成 && 有供应商ID && 有供应链商品SKU -->
+        <view class='f_row f_jc_end' wx:if="{{item.supplierSkuId}}">
+          <!-- 供应链商品售后状态码为60或者为null && refundInfo.finishStatus === 1 && refundInfo.undeliverStatus === 1 -->
+          <block wx:if='{{(item.supplierApplyAfterSaleStatus == 60 || !item.supplierApplyAfterSaleId) && orderStatus== 4 && refundInfo.finishStatus == 1 && refundInfo.undeliverStatus == 1}}'>
+            <navigator url='../../AfterSale/SaleDetails?orderNo={{orderInfo.orderNo}}&detailNo={{item.detailNo}}' class="ol_btn re_btn_cor ol_btn_last_cacel">售后申请</navigator>
+          </block>
+          <!-- 售后详情按钮 条件： -->
+          <block wx:if='{{item.supplierApplyAfterSaleId || (orderStatus >= 6 && orderStatus < 10)}}'>
+            <navigator url='../../AfterSale/serviceSale/serviceSale?applyId={{item.supplierApplyAfterSaleId}}' class="ol_btn re_btn_cor ol_btn_last_cacel">售后详情</navigator>
+          </block>
+        </view>
+        <!-- 单商品退款判断条件 -->
+        <!-- 单商品数量大于1 且可以退款 且商品实际要支付的金额大于0或（分摊到商品使用的积分大于0 且积分优惠价格,单位为分大于0）且是实体商品 且 单个商品状态不为 6 7 8 9-->
+        <!-- 0=未付款, 1=已取消(商家删除), 2=已付款, 未发货, 3=已发货, 4=已核销, 已签收, 5=已取消(用户删除),6=等待商家同意退款, 7=等待买家退货, 8=等待商家收货, 9=退款成功, 10超时取消, 11已付定金-->
+        <!-- goodsType (integer, optional): 商品类别ID 1=实体商品,2=虚拟商品,3=储值卡,4=券 -->
+        <view class='f_row re_btn' wx:else>
+          <view wx:if='{{item.goodsType !== 1 && orderStatus === 4}}'>
+            <view class='f_row' wx:if='{{item.goodsType === 4}}'>
+              <button class="ol_btn re_btn_cor" catchtap='toRecive' wx:if='{{!item.virtualGoodsResend.isReceive}}' data-type='hycard' data-detail-no='{{item.detailNo}}' data-voucher-id='{{item.outterId}}'>领取</button>
+              <button class="ol_btn re_btn_cor" catchtap='toRecive' wx:if='{{item.virtualGoodsResend.isReceive && !item.virtualGoodsResend.isAddWxCard}}' data-type='wxcard' data-detail-no='{{item.detailNo}}' data-voucher-id='{{item.outterId}}'>领取微信</button>
+              <text class='re_txt f_r_cnt f_row' wx:if='{{item.virtualGoodsResend.isReceive && item.virtualGoodsResend.isAddWxCard}}'>已领取到卡包</text>
+              <button class="ol_btn re_btn_cor" wx:if='{{item.virtualGoodsResend.isReceive && item.virtualGoodsResend.isAddWxCard}}' catchtap='gotoCoupon'>查看</button>
+            </view>
+            <view class='f_row' wx:if='{{item.goodsType === 3}}'>
+              <text class='re_txt f_r_cnt f_row' wx:if='{{item.virtualGoodsResend.topUpBuyerId && item.virtualGoodsResend.topUpBuyerId === item.virtualGoodsResend.sendBuyerId}}'>已充值到储值账户</text>
+              <button class="ol_btn re_btn_cor" wx:if='{{item.virtualGoodsResend.topUpBuyerId && item.virtualGoodsResend.topUpBuyerId === item.virtualGoodsResend.sendBuyerId}}' catchtap='gotoCoin'>查看</button>
+              <button class="ol_btn re_btn_cor" catchtap='toRecharge' data-detail-no='{{item.detailNo}}' data-buyer-id='{{orderInfo.buyerId}}' wx:else>去充值</button>
+            </view>
+          </view>
+          <view class='f_row re_btn' wx:if='{{orderInfo.ordersDetails.length > 1 && (item.actualPaymentDouble > 0 || (item.integral > 0 && item.exchangeFee > 0)) && item.goodsType === 1}}'>
+
+            <!-- 订单状态为待发货（2.订单待发货可以退款）、已发货（3.订单已发货可以退款）、已签收（4.已签收可以退款  且未超过退款时间） 订单退款配置-->
+            <view wx:if='{{orderStatus >= 2 && orderStatus <= 4 && !orderInfo.parentOrderNo}}'>
+              <text class='re_txt' wx:if='{{item.status === 6 || item.status === 7 || item.status === 8 }}'>退款中</text>
+              <text class='re_txt' wx:elif='{{item.status === 9 }}'>退款成功</text>
+              <view wx:else>
+                <block wx:if="{{orderInfo.refund && (refundInfo.undeliverStatus === 1 || refundInfo.confirmDeliverStatus === 1 || (refundInfo.finishStatus === 1 && !refundFlag))}}">
+                  <button class="ol_btn re_btn_cor" catchtap='toRefund' data-order-no='{{orderInfo.orderNo}}' data-det-no='{{item.detailNo}}' data-single="{{true}}">退款</button>
+                </block>
+              </view>
+            </view>
+
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view>
+    <view class="f_row f_jc_sb f_r_cnt o_l_item view_p c_black">
+      <label>订单总价 :</label>
+      <text>￥{{orderInfo.goodsAmountDouble}}</text>
+    </view>
+    <view class="f_row f_jc_sb f_r_cnt o_l_item view_p c_black" wx:if='{{orderInfo.exchangeFeeDouble != null && orderInfo.exchangeFeeDouble > 0}}'>
+      <label>积分抵扣 :</label>
+      <text>￥{{orderInfo.exchangeFeeDouble}}</text>
+    </view>
+    <view class="f_row f_jc_sb f_r_cnt o_l_item view_p c_black" wx:if='{{orderInfo.redPackFeeDouble != null && orderInfo.redPackFeeDouble > 0}}'>
+      <label>红包抵扣：</label>
+      <text>￥{{orderInfo.redPackFeeDouble}}</text>
+    </view>
+    <view class="f_row f_jc_sb f_r_cnt o_l_item view_p c_black" wx:if='{{orderInfo.cashCouponFeeDouble != null && orderInfo.cashCouponFeeDouble > 0}}'>
+      <label>代金券抵扣：</label>
+      <text>￥{{orderInfo.cashCouponFeeDouble}}</text>
+    </view>
+    <view class="f_row f_jc_sb f_r_cnt o_l_item view_p c_black" wx:if='{{orderInfo.fulReduceFeeDouble != null && orderInfo.fulReduceFeeDouble > 0}}'>
+      <label>满减抵扣：</label>
+      <text>￥{{orderInfo.fulReduceFeeDouble}}</text>
+    </view>
+    <view class="f_row f_jc_sb f_r_cnt o_l_item view_p c_black" wx:if="{{orderInfo.orderType !== 2 && !orderInfo.isVirtual}}">
+      <label>运费 :</label>
+      <text>{{orderInfo.freightDouble === 0 ? '包邮' : '￥' + (orderInfo.freightDouble || '')}}</text>
+    </view>
+    <view class="f_row f_jc_sb f_r_cnt o_l_item view_p view_p_b c_black" wx:if='{{(orderStatus === 2 && (orderInfo.payWay === 3 || orderInfo.payWay === 4)) || orderStatus === 0 || orderStatus === 1 || orderStatus === 5 || orderStatus === 10 || (orderStatus === 3 && orderInfo.payWay === 4)}}'>
+      <label>订单应付 :</label>
+      <text class='txt_color'>￥{{orderInfo.amountDouble}}</text>
+    </view>
+    <view class="f_row f_jc_sb f_r_cnt o_l_item view_p view_p_b c_black" wx:else>
+      <label>订单实付 :</label>
+      <text class='txt_color'>￥{{orderInfo.amountDouble}}</text>
+    </view>
+  </view>
+  <view class='chat_box' bindtap='toChat'>
+    <view class='f_row chat_item f_jc_cnt f_r_cnt'>
+      <image src='/static/ico/chat.png'></image>
+      <text class='chat_txt'> 联系顾问</text>
+    </view>
+  </view>
+  <view class="g_blank_20"></view>
+  <view class='p_bottom'>
+    <view class="o_l_item view_p c_black f_row">
+      <label>配送方式 :</label>
+      <text class='t_mar' wx:if='{{orderInfo.orderType === 1}}'>快递配送</text>
+      <text class='t_mar' wx:elif='{{orderInfo.orderType === 2}}'>用户到店</text>
+      <text class='t_mar' wx:elif='{{orderInfo.orderType === 3}}'>商家配送</text>
+      <text class='t_mar' wx:elif='{{orderInfo.orderType === 4}}'>动态</text>
+      <text class='t_mar' wx:else>系统配送</text>
+    </view>
+    <view class="o_l_item view_p c_black f_row" wx:if='{{orderInfo.payWay !== 0}}'>
+      <label>支付方式 :</label>
+      <text class='t_mar' wx:if='{{orderInfo.payWay === 1}}'>支付宝</text>
+      <text class='t_mar' wx:if='{{orderInfo.payWay === 2}}'>微信支付</text>
+      <text class='t_mar' wx:if='{{orderInfo.payWay === 3}}'>到店付款</text>
+      <text class='t_mar' wx:if='{{orderInfo.payWay === 4}}'>货到付款</text>
+      <text class='t_mar' wx:if='{{orderInfo.prepaidDouble > 0 }}'> 储值支付</text>
+      <text class='t_mar' wx:if='{{orderInfo.payWay === 6}}'>线上抵扣</text>
+    </view>
+    <view class="o_l_item view_p c_black f_row" wx:if='{{orderInfo.userName}}'>
+      <label>用户姓名 :</label>
+      <text class='t_mar'>{{orderInfo.userName}}</text>
+    </view>
+    <view class="o_l_item view_p c_black f_row" wx:if='{{orderInfo.userTelphone}}'>
+      <label>用户手机 :</label>
+      <text class='t_mar'>{{orderInfo.userTelphone}}</text>
+    </view>
+    <view class="o_l_item view_p c_black f_row">
+      <label>下单时间 :</label>
+      <text class='t_mar'>{{orderInfo.createTime}}</text>
+    </view>
+    <view class="o_l_item view_p c_black f_row" wx:if='{{orderInfo.payTime !== null && orderInfo.payTime !== 0}}'>
+      <label>支付时间 :</label>
+      <text class='t_mar'>{{orderInfo.payTime}}</text>
+    </view>
+    <view class="o_l_item view_p c_black f_row">
+      <text class='re_desc'>退款说明 :</text>
+      <view class='t_mar re_txt'>粉丝折扣、红包抵扣、代金券抵扣、满减抵扣的金额不退款，退款成功后积分可返还，已发货订单运费不退款(许愿订单除外)，未发货订单整个订单退款时可退运费{{refundInfo.remark || ''}}</view>
+    </view>
+  </view>
+
+  <!-- 订单状态为 0 -->
+  <view class="f_row f_jc_sb f_r_cnt ol_i_operation o_l_item over_flow f_fixed_bottom" wx:if='{{orderStatus === 0}}'>
+    <form bindsubmit="setFormId" data-orderNo="{{orderInfo.orderNo}}" report-submit="true" wx:if='{{orderInfo.payTimeCountDown > 5}}'>
+      <button class="ol_btn re_btn_cor" form-type="submit">取消订单</button>
+    </form>
+    <form bindsubmit="gotoPay" report-submit="true" wx:if='{{orderInfo.payTimeCountDown > 5 && !environment}}'>
+      <button class="ol_btn o_pay ol_btn_last" form-type="submit">付款</button>
+    </form>
+  </view>
+
+  <!-- 订单状态为  2 3 4-->
+  <block wx:if="{{orderStatus ===2 || orderStatus === 3 || orderStatus === 4}}">
+    <view class="f_row f_jc_sb f_r_cnt ol_i_operation o_l_item over_flow f_fixed_bottom">
+      <!-- 整单退款详情  退款类型不是部分退款的-->
+      <blcok wx:if="{{orderInfo.refund && !orderInfo.isVirtual && refundInfo.undeliverStatus === 1 && orderInfo.refundType !== 2 && orderInfo.supplierCode != 'JD10001'}}">
+        <form bindsubmit='toRefund' report-submit="true">
+          <button class="ol_btn re_btn_cor ol_btn_last_cacel" form-type="submit">申请售后</button>
+        </form>
+      </blcok>
+
+      <!-- 如果状态为3-->
+      <block wx:if="{{orderStatus === 3}}">
+        <!-- 支付方式为到店付款 配送方式为用户到店 -->
+        <form wx:if='{{orderInfo.payWay === 3 && orderInfo.orderType === 2}}'>
+          <button bindtap='toCertiticate' class="ol_btn o_pay ol_btn_last">查看提货码</button>
+        </form>
+        <!--订单类型不是用户到店 而是快递配送或商家配送-->
+        <form bindsubmit="confirmReceipt" report-submit="true" wx:if='{{orderInfo.orderType !== 2 && (!refundObj || refundObj.status === 0)}}'>
+          <button class="ol_btn o_pay ol_btn_last" form-type="submit">确认收货</button>
+        </form>
+      </block>
+
+      <!--如果状态为2 支付方式不是到店付款 -->
+      <form bindsubmit="remindGood" report-submit="true" wx:if='{{orderStatus ===2 && orderInfo.payWay !== 3}}'>
+        <button class="ol_btn o_pay ol_btn_last" form-type="submit">提醒发货</button>
+      </form>
+
+      <!-- 如果refundType是全部退款 2346789 -->
+      <form report-submit="true" bindsubmit='toRecord' wx:if='{{orderInfo.refundType === 1}}'>
+        <button class="ol_btn re_btn_cor ol_btn_last_cacel" form-type="submit">退款记录</button>
+      </form>
+    </view>
+  </block>
+
+  <!-- 订单被取消的 -->
+  <view class="f_row f_jc_sb f_r_cnt ol_i_operation o_l_item over_flow f_fixed_bottom" wx:if='{{orderStatus === 1 || orderStatus === 5 || orderStatus === 10}}'>
+    <form bindsubmit="delOrder" report-submit="true">
+      <button class="ol_btn ol_btn_last_cacel" form-type="submit">删除订单</button>
+    </form>
+  </view>
+
+  <!-- 等待买家退货、等待商家收货、等待商家同意退款的、订单退款成功的 -->
+  <view class="f_row f_jc_sb f_r_cnt ol_i_operation o_l_item over_flow f_fixed_bottom" wx:if='{{orderStatus >= 6 && orderStatus < 10 && orderInfo.refundType === 1}}'>
+    <!-- 如果refundType不是退款 2346789 -->
+    <form report-submit="true" bindsubmit='toRecord'>
+      <button class="ol_btn re_btn_cor ol_btn_last_cacel" form-type="submit">退款记录</button>
+    </form>
+  </view>
+
+  <!-- 虚拟商品储值卡充值弹框 -->
+  <view class='mask f_row f_r_cnt f_jc_cnt' wx:if='{{rechargeSlide}}'>
+    <view class='f_col mask_view'>
+      <text class='icon-close close' bindtap='toRecharge' data-type='close'></text>
+      <text class='mask_title f_row f_r_cnt f_jc_cnt'>确认充值到自己的储值账户吗？</text>
+      <view class='mask_btn_view f_row f_jc_sb f_jc_cnt f_r_cnt'>
+        <button class='btn cancel_btn re_btn_cor' bindtap='toRecharge' data-type='close'>再想想</button>
+        <button class='btn o_pay' bindtap='toConfirm'>确认充值</button>
+      </view>
+    </view>
+  </view>
+</view>

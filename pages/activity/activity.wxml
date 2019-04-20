@@ -1,0 +1,61 @@
+<import src="../template/countdown/countdown.wxml" />
+<view class='f_col'>
+  <view class='head_box f_row f_r_cnt'>
+    <image src='/static/ico/kown.png' class='known_icon'></image>
+    <view>下列是近期活动,提前做广告</view>
+    <navigator class='ac_list f_row f_r_cnt f_jc_cnt' open-type='switchTab' hover-class='none' url='/pages/index/index'>活动广场>></navigator>
+  </view>
+  <view class='f_row f_r_cnt f_jc_cnt count_box'>共上新{{activeCount}}个活动</view>
+  <view class="f_col g_main_box">
+    <block wx:for="{{shopList}}" wx:for-index="idx" wx:key="list" wx:for-item="item">
+      <view class="act_item f_col g_mt_20">
+        <view class="f_row f_r_cnt f_jc_sb act_hd" wx:if='{{item.runStatus == 1 || item.runStatus == 2}}'>
+          <view class="f_row f_r_cnt">
+            <view class="act_ico box_size bg_color" wx:if="{{item.type === 7}}">秒杀</view>
+            <view class="act_ico box_size bg_color" wx:elif="{{item.type === 9}}">满立减</view>
+            <view class="act_ico box_size bg_color" wx:elif="{{item.type === 11}}">限时特价</view>
+            <view class="act_ico box_size bg_color" wx:elif="{{item.type === 12}}">抱团购</view>
+            <view class="act_ico box_size bg_color" wx:elif="{{item.type === 13}}">代金券</view>
+            <text class="{{item.runStatus == 1 ? 'txt1_color':'txt1_color'}}">
+              <text wx:if="{{item.type === 7 || item.type === 12}}">{{item.lowPrice}}元起</text>
+              <text wx:elif="{{(item.type === 9 || item.type === 11) && item.privilege}}">{{item.privilege}}</text>
+            </text>
+          </view>
+          <view class='f_row act_c_show' wx:if='{{elActivityVo[idx].runStatus == 1}}'>
+            <view class='f_row' wx:if="{{!elActivityVo[idx].isCountDownEnd}}">
+              <text>还有</text>
+              <template is="countdown" data="{{...elActivityVo[idx]}}"></template>
+              <text>开始</text>
+            </view>
+            <view wx:else>活动已开始</view>
+          </view>
+          <view class="f_row act_c_show" wx:elif="{{elActivityVo[idx].runStatus == 2}}">
+            <view class='f_row' wx:if="{{!elActivityVo[idx].isCountDownEnd}}">
+              <text>仅剩</text>
+              <template is="countdown" data="{{...elActivityVo[idx]}}"></template>
+              <text>结束</text>
+            </view>
+            <view wx:else>活动已结束！</view>
+          </view>
+        </view>
+        <view wx:if='{{item.runStatus == 1}}'>
+          <navigator class="index-nav" url="/pages/secondshop/index/index?activityId={{item.id}}&activityType={{item.type}}" hover-class="none">
+            <image mode="widthFix" class="act_img" src="{{item.picUrl}}"></image>
+          </navigator>
+          <navigator class="index-nav" wx:if="{{item.type === 12}}" url="/pages/teamshop/index/index?activityId={{item.id}}&activityType={{item.type}}" hover-class="navigator-hover">
+            <image mode="widthFix" class="act_img" src="{{item.picUrl}}"></image>
+          </navigator>
+        </view>
+        <view wx:elif='{{item.runStatus == 2}}'>
+          <view class="aidx_nav" bindtap="gotoAct" data-atype="{{item.type}}" data-aid="{{item.id}}">
+            <image mode="widthFix" class="act_img" src="{{item.picUrl}}"></image>
+          </view>
+        </view>
+      </view>
+    </block>
+  </view>
+  <view class="f_col empty_box" wx:if="{{isshowEmpty}}">
+    <image src="/static/img/empty.png"></image>
+    <text>很抱歉，今日没有上新活动！</text>
+  </view>
+</view>

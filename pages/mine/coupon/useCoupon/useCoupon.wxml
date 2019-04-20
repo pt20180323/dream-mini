@@ -1,0 +1,24 @@
+<view class='page' style='background-color:{{pageBackgroundColor}}'>
+  <view class='content'>
+  <view class='head'>
+    <text class='cancel' style='color: {{pageBackgroundColor}}' bindtap='cancel'>取消</text>
+    <view class='txt'>
+      <text class='txt_title txt_common'>{{couponDet.cardType === 1 ? '代金券' : (couponDet.cardType === 2 ? '折扣券' : (couponDet.cardType === 3 ? '礼品券' : ''))}}</text>
+      <text class='txt_desc txt_common'>{{couponDet.cardName}}</text>
+    </view>
+    <view class='head-before' style='background: {{pageBackgroundColor}}'></view>
+     <view class='head-after' style='background: {{pageBackgroundColor}}'></view>
+  </view>
+    
+    <view class='qrcode'>
+    <view class='qr_img'>
+     <image src='{{couponDet.qrCodePic}}'></image>
+    </view>
+     
+      <view class='qr_txt'>
+        <text class='code'>{{couponDet.codeData}}</text>
+        <text class='desc'>使用时向服务员出示此卷</text>
+      </view>
+    </view>
+  </view>
+</view>
