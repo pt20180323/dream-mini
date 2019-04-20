@@ -1,25 +1,25 @@
 /*自定义换肤颜色*/
 .txt_color{
-  color:#f03 !important;
+  color:#FFDE09 !important;
 }
 .bg_color{
-  background-color:#f03 !important;
+  background-color:#FFDE09 !important;
 }
 .bd_color,.bf_bd_color,.af_bd_color{
-  border-color:#f03 !important;
+  border-color:#FFDE09 !important;
 }
 .bf_color:before{
-  background-color:#f03;
+  background-color:#FFDE09;
 }
 .af_color:after{
-  background-color:#f03;
+  background-color:#FFDE09;
 }
 .g_nav_c{
-  color:#f03 !important;
+  color:#FFDE09 !important;
 }
 .g_nav_c .g_n_txt:after{
-  background-color:#f03;
+  background-color:#FFDE09;
 }
 .chat_txt{
-  color: #f03;
+  color: #FFDE09;
 }

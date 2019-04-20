@@ -9,7 +9,7 @@ page {
   color: #666;
   display: flex;
   flex-direction: column;
-  background: #f2f2f2;
+  background: #fff;
 }
 
 button {
@@ -134,7 +134,7 @@ input {
   font-weight: 600;
 }
 .c_ff4949 {
-  color: #ff4949;
+  color: #FFDE09;
 }
 .textIcon{
   width: 34rpx;
@@ -142,12 +142,12 @@ input {
   color: #fff;
   text-align: center;
   line-height: 34rpx;
-  background: #ff0036;
+  background: #FFDE09;
   border-radius: 50%;
   margin-right: 10rpx;
 }
 .c_ff0036, .textWarning {
-  color: #ff0036;
+  color: #FFDE09;
 }
 
 .c_333 {

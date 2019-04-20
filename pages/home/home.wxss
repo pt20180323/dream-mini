@@ -18,7 +18,7 @@
 .search_item {
   flex: 1;
   position: relative;
-  padding: 15rpx 25rpx;
+  padding: 0rpx 25rpx 10rpx;
 }
 
 /*搜索框样式*/

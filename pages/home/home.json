@@ -2,5 +2,8 @@
   "enablePullDownRefresh": false,
   "usingComponents": {
     "pop": "../component/promotion/promotion"
-  }
+  },
+  "navigationBarTitleText": "开心生活",
+  "navigationBarBackgroundColor": "#FFF",
+  "navigationBarTextStyle": "black"
 }

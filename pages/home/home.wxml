@@ -1,6 +1,6 @@
 <view class='f_col'>   
   <!-- <view class='f_row f_r_cnt'> -->
-  <view class='hearder {{showTop ? "show_top" : "hide_top"}}' style='top:{{headTop}}px;'>
+  <view class='hearder {{showTop ? "show_top" : "hide_top"}}' style='top:{{headTop}}px;background-color:#fff'>
     <view class='f_row search_item box_size'>
       <input class="search_input box_size {{showTop ? 'search_i1':'search_i2'}}" placeholder-style="color:#aaa;opacity:1;" type="text" placeholder="请输入搜索关键字" confirm-type='search' bindconfirm='searchCustomer' value="{{value}}"/>
       <view class="search_i box_size"></view>
@@ -8,7 +8,7 @@
   </view>
 </view>
 <!-- 文章列表展示  -->
-<view class="list-g-box" style='margin-top:40px;'>
+<view class="list-g-box" style='margin-top:30px;'>
   <view class="f_col o_list">
     <!-- 第1篇文章 -->
     <view class="f_col">
