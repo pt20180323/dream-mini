@@ -81,7 +81,7 @@
       <block>
         <view class='o_l_item'>
           <view class="f_row f_jc_sb f_r_cnt">
-               <image class= "img" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1555759978782&di=9f0e34ccf1d212d1f57c44d1ef05e0aa&imgtype=0&src=http%3A%2F%2Fimg.mp.itc.cn%2Fupload%2F20160719%2F6eb2c7acd4f147cd9101925629dd3d7a.jpg"></image>
+               <image class= "img" src="http://192.168.1.100:8081/cas/image/view/e039beb5a79e48a585f48dcad38f"></image>
           </view>
         </view>
       </block>
