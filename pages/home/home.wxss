@@ -437,14 +437,17 @@ rich-text .rich-img {
   color: #f2f2f2;
   font-size: 24rpx;
 }
-
+.headTitle {
+margin-left: -100px;
+}
 .headImg {
-  width: 80rpx;
-  height: 80rpx;
+  width: 60rpx;
+  height: 60rpx;
   box-shadow: 0 0 10rpx 0 rgba(0, 0, 0, 0.38);
   border: solid 4rpx #fff;
   border-radius: 100%;
   margin-right: 14rpx;
+  margin-left: -10px;
 }
 
 .nick_box {
@@ -508,4 +511,268 @@ rich-text .rich-img {
   overflow:hidden;
   float:left;
   width:100%;
+}
+
+
+page {
+  background: #f2f2f2;
+  position: relative;
+  min-height: 100%;
+}
+
+.list-g-box {
+  margin-top: 100rpx;
+}
+
+.o_nav {
+  border-bottom: 1px solid #e3e3e3;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 99;
+  left: 0;
+}
+
+.over_flow {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.o_nav_i {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  height: 100rpx;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  color: #000;
+  background: #fff;
+}
+
+.o_nav_c {
+  color: #ff0036;
+}
+
+.o_nav_c:after {
+  content: '';
+  display: block;
+  position: absolute;
+  left: 25rpx;
+  right: 25rpx;
+  bottom: 0;
+  height: 5rpx;
+  background: #ff0036;
+}
+
+.o_l_item {
+  position: relative;
+  background: #fff;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.o_leader_ico {
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 80rpx;
+  z-index: 3;
+  width: 76rpx;
+  height: 76rpx;
+}
+
+.o_leader_ico:before {
+  content: '';
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 0;
+  border-width: 38rpx;
+  border-style: solid;
+  border-color: #ff4949 transparent transparent #ff4949;
+}
+
+.o_leader_ico text {
+  display: block;
+  width: 100%;
+  line-height: 24rpx;
+  text-align: center;
+  color: #fff;
+  font-size: 22rpx;
+  position: absolute;
+  top: 15rpx;
+  left: -12rpx;
+  transform: rotate(-45deg);
+  z-index: 2;
+}
+
+.ol_i_head {
+  position: relative;
+  height: 80rpx;
+  padding: 0 25rpx;
+  color: #999;
+}
+
+.ol_i_box {
+  position: relative;
+  padding: 10rpx 25rpx;
+  margin-bottom: 8rpx;
+}
+
+.ol_i_box:last-of-type {
+  margin-bottom: 0;
+}
+
+.ol_i_box>image {
+  flex-shrink: 0;
+  width: 180rpx;
+  height: 180rpx;
+  box-sizing: border-box;
+  border: 1px solid #e3e3e3;
+  margin-right: 30rpx;
+  flex: 0 1 180rpx;
+}
+
+.o_p_tit {
+  color: #000;
+  font-size: 28rpx;
+  margin-top: 25rpx;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.o_right {
+  flex: 1;
+}
+
+.o_p_pro {
+  font-size: 24rpx;
+  color: #878787;
+  margin-top: 16rpx;
+}
+
+.o_attribute {
+  width: 350rpx;
+}
+
+.o_p_price {
+  font-size: 28rpx;
+  text-align: right;
+}
+
+.o_price {
+  color: #000;
+  margin-top: 26rpx;
+}
+
+.o_orignPrice {
+  color: #999;
+  font-size: 24rpx;
+  text-decoration: line-through;
+}
+
+.o_goodNum {
+  color: #535353;
+  margin-top: 16rpx;
+}
+
+.ol_i_bot {
+  height: 82rpx;
+  margin: 0 25rpx;
+  border-bottom: 1px solid #e3e3e3;
+  font-size: 24rpx;
+  color: #000;
+  justify-content: flex-end;
+}
+
+.ol_i_operation {
+  height: 100rpx;
+  padding: 0 25rpx;
+  font-size: 24rpx;
+  color: #ff0036;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.o_text2 {
+  font-size: 28rpx;
+}
+
+.o_text3 {
+  color: #999;
+}
+
+.ol_i_bot>text {
+  line-height: 30rpx;
+}
+
+.ol_btn {
+  display: inline-block;
+  width: 171rpx;
+  height: 62rpx;
+  line-height: 62rpx;
+  text-align: center;
+  border: 1px solid #e3e3e3;
+  border-radius: 10rpx;
+  color: #000;
+  position: relative;
+  font-size: 28rpx;
+  background: #fff;
+  margin: 0;
+  margin-left: 10rpx;
+  /* box-sizing: border-box; */
+}
+
+.o_pay {
+  background: #ff0036;
+  border: 0;
+  color: #fff;
+}
+
+.ol_del_btn {
+  margin-left: 520rpx;
+}
+
+.g_red_btn {
+  background: #ff4949;
+  border-color: #ff4949;
+  color: #fff;
+}
+
+.form_id_mask {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: none;
+}
+
+.cencal-text {
+  position: absolute;
+  left: 25rpx;
+  width: 330rpx;
+}
+
+.second {
+  display: inline-block;
+  height: 29rpx;
+  background: #fe2915;
+  color: #fff;
+  line-height: 29rpx;
+  text-align: center;
+  border-radius: 5rpx;
+  padding: 0 5rpx;
+}
+
+.common_icon {
+  margin-right: 10rpx;
+  font-size: 22rpx;
+  vertical-align: bottom;
 }

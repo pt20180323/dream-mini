@@ -104,7 +104,7 @@
         "selectedIconPath": "/static/menu/list_c.png"
       },
       {
-        "pagePath": "pages/shopcart/shopcart",
+        "pagePath": "pages/mine/orderList/orderList",
         "text": "图文",
         "iconPath": "/static/menu/shopcart.png",
         "selectedIconPath": "/static/menu/shopcart_c.png"

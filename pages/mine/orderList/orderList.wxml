@@ -1,12 +1,5 @@
 <import src="../../template/loading/loading.wxml" />
-<view class="o_nav f_row">
-  <text data-type="-1" bindtap="changeTab" class="o_nav_i {{navTab === -1 ? 'o_nav_c' : ''}}">全部</text>
-  <text data-type="0" bindtap="changeTab" class="o_nav_i {{navTab === 0 ? 'o_nav_c' : ''}}">待付款</text>
-  <text data-type="2" bindtap="changeTab" class="o_nav_i {{navTab === 2 ? 'o_nav_c' : ''}}">待发货</text>
-  <text data-type="3" bindtap="changeTab" class="o_nav_i {{navTab === 3 ? 'o_nav_c' : ''}}">待收货</text>
-  <text data-type="4" bindtap="changeTab" class="o_nav_i {{navTab === 4 ? 'o_nav_c' : ''}}">已完成</text>
-  <text data-type="6" bindtap="changeTab" class="o_nav_i {{navTab === 6? 'o_nav_c' : ''}}">退款</text>
-</view>
+
 <view class="list-g-box">
   <view class="f_col o_list">
     <view class="f_col" wx:for="{{list}}" wx:key="keylist" wx:for-index="idx" wx:for-item="item">
