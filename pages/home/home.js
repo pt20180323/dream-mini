@@ -10,7 +10,7 @@ Page({
     scrollTop: 0,
     currentDis: 0,
     lastDis: 0,
-    headTop: 45,
+    headTop: 0,
     fixedTop: 45,
     showTop: true,
     isFirst: true,

@@ -2,7 +2,7 @@ const utils = require('utils/util.js')
 const dtime = '_deadtime'
 App({
   globalData: {
-    baseUrl: '',
+    baseUrl: '',//后台访问地址
     protocol: 'http:',
     appId: '',
     userBase: {},
@@ -25,7 +25,9 @@ App({
       _this.globalData.scene = opt.scene
       _this.globalData.authToPage = opt.path ? (opt.path + (_prm.indexOf('?') === 0 ? _prm : '?' + _prm)) : '/pages/home/home'
     }    
-    wx.getSystemInfo({ //企业微信运行时，会额外返回一个environment字段并赋值为wxwork，在微信里面运行时则不返回该字段
+
+    //获取系统信息--企业微信运行时，会额外返回一个environment=wxwork，在微信里面运行时则不返 回该字段
+    wx.getSystemInfo({ 
       success: function(res) {
         //判断是否是iphone手机
         let model = res.model
@@ -79,7 +81,7 @@ App({
     }
     return _prm.join('&')
   },
-  getUCode(callback) {
+  getUCode(callback) {//获取用户登录授权码
     let _this = this
     let _global = _this.globalData
     let _environment = _global.environment
@@ -93,7 +95,6 @@ App({
                 if (res.code) {
                   _this.globalData.code = res.code
                   _this.checkAuthUser(callback)
-                  //_this.getAppInfo(callback)
                 } else {
                   console.log('获取用户登录态失败！' + res.errMsg)
                 }
@@ -113,7 +114,6 @@ App({
                 if (res.code) {
                   _this.globalData.code = res.code
                   _this.checkAuthUser(callback)
-                  //_this.getAppInfo(callback)
                 } else {
                   console.log('获取用户登录态失败！' + res.errMsg)
                 }
@@ -141,7 +141,6 @@ App({
               if (res.code) {
                 _this.globalData.code = res.code
                 _this.checkAuthUser(callback)
-                //_this.getAppInfo(callback)
               } else {
                 console.log('获取用户登录态失败！' + res.errMsg)
               }
@@ -159,7 +158,6 @@ App({
               if (res.code) {
                 _this.globalData.code = res.code
                 _this.checkAuthUser(callback)
-                //_this.getAppInfo(callback)
               } else {
                 console.log('获取用户登录态失败！' + res.errMsg)
               }
@@ -206,7 +204,7 @@ App({
       console.log('获取用户信息设置信息失败，请升级到最新微信版本后重试')
     }
   },
-  getUserInfo(userInfoReadyCallback, callback) {
+  getUserInfo(userInfoReadyCallback, callback) {//获取用户信息
     let _this = this
     if (wx.getUserInfo) {
       wx.getUserInfo({
@@ -273,10 +271,7 @@ App({
       if (_this.getStorageSync("sessionKeyShopC")) {
         param.sessionKey = _this.getStorageSync("sessionKeyShopC")
       }
-      let _bid = _global.bindEmpId
-      if (_bid && _bid !== '') {
-        param.bindEmpId = _bid
-      }
+    
       utils.$http(_global.baseUrl + '/emallMiniApp/buyer/login', param, 'POST').then(res => {
         let _rst = res.result
         //console.log("login:" + JSON.stringify(res.result));
@@ -308,7 +303,7 @@ App({
       _this.getUCode(callback)
     }
   },  
-  gotoActive(callback) {
+  gotoActive(callback) {//用户激活，获取用户信息
     let _this = this
     let _global = _this.globalData
     wx.login({
@@ -324,39 +319,8 @@ App({
           param.environment = 'wx'
           if (_this.getStorageSync("sessionKeyShopC")) {
             param.sessionKey = _this.getStorageSync("sessionKeyShopC")
-          }
-          let _bid = _global.bindEmpId
-          if (_bid && _bid !== '') {
-            param.bindEmpId = _bid
-          }
-          utils.$http(_global.baseUrl + '/emallMiniApp/buyer/login', param, 'POST').then(res => {
-            let _rst = res.result
-            if (_rst) {
-              _global.bindEmpId = ''
-              _global.code = ''
-              if (_rst.reTry && _global.retryNo < 1) {
-                _global.retryNo = 1
-                _this.checkUnionId(callback)
-                return false
-              } else {
-                _global.retryNo = 0
-              }
-              _this.setGlobalData(_rst)
-              if (_rst.sessionKey) {
-                _this.setStorageSync("sessionKeyShopC", _rst.sessionKey, 1500)
-              }
-              if (!_rst.unionId || _rst.unionId === '') {
-                _global.isRepeatGet = true
-                _this.setUserInfo(callback)
-                return false
-              }
-              if (callback && typeof callback === 'function') {
-                callback()
-              }
-            }
-          }).catch(res => {
-            utils.globalShowTip()
-          })
+          }        
+         
 
         } else {
           console.log('获取用户登录态失败！' + res.errMsg)
@@ -420,7 +384,7 @@ App({
       utils.globalShowTip(false)
     })
   },
-  setGlobalData(res) {
+  setGlobalData(res) {//设置全局变量信息
     let _this = this
     let _global = _this.globalData
     let _rst = res || {}
@@ -428,9 +392,6 @@ App({
     if (_rst.userType) {
       _global.userType = _rst.userType
       obj.userType = _rst.userType
-    }
-    if (_rst.bindStatus) {
-      _global.bindStatus = _rst.bindStatus
     }
     if (_rst.sessionKey) {
       _global.sessionKey = _rst.sessionKey
@@ -452,9 +413,9 @@ App({
       _global.wxOpenId = _rst.openId
       obj.wxOpenId = _rst.openId
     }   
-    if (_rst.hyId) { //粉丝ID
-      _global.hyUserId = _rst.hyId
-      obj.hyUserId = _rst.hyId
+    if (_rst.userId) { //粉丝ID
+      _global.hyUserId = _rst.userId
+      obj.hyUserId = _rst.userId
     }
     if (_rst.wxName || _rst.nick) {
       _global.wxName = _rst.wxName || _rst.nick

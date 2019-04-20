@@ -1,25 +1,9 @@
-<view class='f_col'>
-  <view class='storeInfo f_row f_jc_sb f_r_cnt' wx:if='{{empId}}'>
-    <view class='f_row f_r_cnt'>
-      <image src='{{empInfo.wxPhoto || "/static/ico/header.png"}}' class='headImg'></image>
-      <view class='f_col nick_box'>
-        <text>专属顾问 {{empInfo.empName}}</text>
-        <text class='fs_24 n_store'>{{storeInfo.name}}</text>
-      </view>
-    </view>
-    <view class='link_btn f_row f_jc_cnt f_r_cnt' bindtap='toChat'>联系TA</view>
-  </view>
-  <view class='storeInfo store-info f_row f_jc_sb f_r_cnt' wx:else>
-    <view class='f_row nick_box f_r_cnt'>
-      <image src='/static/ico/store1.png' class='store_img'></image>
-      <text class='n_store'>{{storeInfo.name}}</text>
-    </view>
-    <view class='link_btn f_row f_jc_cnt f_r_cnt' bindtap='toChat'>联系TA</view>
-  </view>
+<view class='f_col'> 
+  
   <!-- <view class='f_row f_r_cnt'> -->
   <view class='hearder {{showTop ? "show_top" : "hide_top"}}' style='top:{{headTop}}px;'>
     <view class='f_row search_item box_size'>
-      <input class="search_input box_size {{showTop ? 'search_i1':'search_i2'}}" placeholder-style="color:#aaa;opacity:1;" type="text" placeholder="请输入商品名称" confirm-type='search' bindconfirm='searchCustomer' value="{{value}}"/>
+      <input class="search_input box_size {{showTop ? 'search_i1':'search_i2'}}" placeholder-style="color:#aaa;opacity:1;" type="text" placeholder="请输入搜索关键字" confirm-type='search' bindconfirm='searchCustomer' value="{{value}}"/>
       <view class="search_i box_size"></view>
     </view>
   </view>

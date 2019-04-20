@@ -93,25 +93,25 @@
     "list": [
       {
         "pagePath": "pages/home/home",
-        "text": "首页",
+        "text": "热门",
         "iconPath": "/static/menu/index.png",
         "selectedIconPath": "/static/menu/index_c.png"
       },
       {
         "pagePath": "pages/commonshop/shopList/shopList",
-        "text": "商品列表",
+        "text": "纯文",
         "iconPath": "/static/menu/list.png",
         "selectedIconPath": "/static/menu/list_c.png"
       },
       {
         "pagePath": "pages/shopcart/shopcart",
-        "text": "购物车",
+        "text": "图文",
         "iconPath": "/static/menu/shopcart.png",
         "selectedIconPath": "/static/menu/shopcart_c.png"
       },
       {
         "pagePath": "pages/mine/mine",
-        "text": "我的",
+        "text": "内涵",
         "iconPath": "/static/menu/mine.png",
         "selectedIconPath": "/static/menu/mine_c.png"
       }
