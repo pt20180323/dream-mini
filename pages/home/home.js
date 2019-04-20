@@ -11,7 +11,7 @@ Page({
     currentDis: 0,
     lastDis: 0,
     headTop: 0,
-    fixedTop: 45,
+    fixedTop: 0,//45
     showTop: true,
     isFirst: true,
     isLoad: false,
