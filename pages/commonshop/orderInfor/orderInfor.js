@@ -74,7 +74,7 @@ Page({
         skuId: opt.skuId || '',
         addId: opt.addid || ''
       })
-      // app.checkUnionId(_this.getOrderInfor)
+      // app.checkUserId(_this.getOrderInfor)
     }
   },
   // 优惠券选择按钮
@@ -235,7 +235,7 @@ Page({
         userAddr: sendAddObj,
         addId: sendAddObj.addId
       })
-      app.checkUnionId(_this.getOrderInfor)
+      app.checkUserId(_this.getOrderInfor)
     } else {
       utils.$http(baseUrl + '/emallMiniApp/address/getDefault/' + shopId + '/' + storeId, {}).then(res => {
         if (res) {
@@ -250,7 +250,7 @@ Page({
             if (_this.data.navTab == 3) {
               _this.checkAddr(_rst.addId || '').then(() => { })
             }
-            app.checkUnionId(_this.getOrderInfor)
+            app.checkUserId(_this.getOrderInfor)
           } else {
             wx.showModal({
               title: '完善地址',

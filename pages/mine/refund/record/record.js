@@ -23,7 +23,7 @@ Page({
     }
   },
   onShow () {
-    app.checkUnionId(this.getRecords)
+    app.checkUserId(this.getRecords)
   },
   // 点击撤销申请
   cancelApp() {

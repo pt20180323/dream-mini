@@ -36,7 +36,7 @@ Page({
       isQy:opt.isQy || '',
       img: opt.img || ''
     })
-    app.checkUnionId(this.getCouponList)
+    app.checkUserId(this.getCouponList)
   },
   changeTab: function(evt) {
     let dts = evt.currentTarget.dataset

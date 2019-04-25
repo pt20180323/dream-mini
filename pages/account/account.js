@@ -52,7 +52,7 @@ Page({
       })
     }
     let isIpx = _global.isIpx
-    app.checkUnionId(_this.getGoodsList)
+    app.checkUserId(_this.getGoodsList)
   },
   //获取商品列表
   getGoodsList: function(pageNo) {

@@ -19,7 +19,7 @@ Page({
     wx.setNavigationBarTitle({
       title: title
     })
-    app.checkUnionId(_this.initData)
+    app.checkUserId(_this.initData)
   },
   //初始化数据
   initData: function() {

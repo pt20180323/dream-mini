@@ -26,7 +26,7 @@ Page({
   },
   onLoad: function (opt) {
     let _this = this
-    app.checkUnionId(_this.getList)
+    app.checkUserId(_this.getList)
   },
   getList: function () {
     let _this = this

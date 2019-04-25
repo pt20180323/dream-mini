@@ -29,7 +29,7 @@ Page({
       taskId: opt.taskId || '', //任务中心里指定店员分享卡券列表
       wnjCoupon: opt.wnjCoupon || ''
     })
-    app.checkUnionId(_this.getCouponList)
+    app.checkUserId(_this.getCouponList)
   },
   //获取优惠券列表
   getCouponList: function(pageNo) {

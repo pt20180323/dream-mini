@@ -24,7 +24,7 @@ Page({
     this.setData({orderNo, detailNo})
     console.log(this.data)
     // 获取售后申请详情
-    app.checkUnionId(this.getToOrderAfterSale)
+    app.checkUserId(this.getToOrderAfterSale)
   },
   // 获取售后申请详情GET
   getToOrderAfterSale () {

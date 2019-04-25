@@ -19,7 +19,7 @@ Page({
     address: ''
   },
   onLoad: function (opt) {
-    app.checkUnionId(this.getTotalArea)
+    app.checkUserId(this.getTotalArea)
     console.log(opt)
     if (opt) {
       this.setData({

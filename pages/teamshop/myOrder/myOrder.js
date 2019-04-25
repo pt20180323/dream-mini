@@ -25,7 +25,7 @@ Page({
       _global.isOrdCancle = false
     }
     _data.isAgainRender = true
-    app.checkUnionId(_this.initData)
+    app.checkUserId(_this.initData)
   },
   onShow() {
 

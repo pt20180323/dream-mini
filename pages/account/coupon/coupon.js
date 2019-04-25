@@ -17,7 +17,7 @@ Page({
     this.setData({
       hyId: opt.cusId || ''
     })
-    app.checkUnionId(this.getCouponList)
+    app.checkUserId(this.getCouponList)
   },
   //获取优惠券列表
   getCouponList: function(pageNo) {

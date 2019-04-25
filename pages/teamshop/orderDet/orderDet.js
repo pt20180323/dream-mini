@@ -13,7 +13,7 @@ Page({
       _this.setData({
         orderNo: orderNo
       })
-      app.checkUnionId(_this.initData)
+      app.checkUserId(_this.initData)
     }    
   },
   initData(){

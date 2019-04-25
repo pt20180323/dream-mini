@@ -278,7 +278,7 @@ Page({
           isShow:true,
           showCar: true
       })
-    app.checkUnionId(this.initData)
+    app.checkUserId(this.initData)
   },
   onHide() {
     let {

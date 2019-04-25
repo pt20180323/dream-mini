@@ -24,7 +24,7 @@ Page({
       cardType: opt.cardType,
       taskId: opt.taskId || ''
     })
-    app.checkUnionId(this.getGroup)
+    app.checkUserId(this.getGroup)
   },
   getGroup: function() {
     let _this = this

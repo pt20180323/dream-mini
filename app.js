@@ -2,9 +2,9 @@ const utils = require('utils/util.js')
 const dtime = '_deadtime'
 App({
   globalData: {
-    baseUrl: '',//后台访问地址
+    baseUrl: 'http://localhost:8080',//后台访问地址
     protocol: 'http:',
-    appId: '',
+    appId: 'wx247f3c3cde3ba29c',
     userBase: {},
     retryNo: 0, //授权失败重新授权一次 
     shareTit: '',
@@ -92,6 +92,7 @@ App({
             wx.qy.login({
               success: res => {
                 // 发送 res.code 到后台换取 openId, sessionKey, unionId
+                console.info("code====>"+res.code)
                 if (res.code) {
                   _this.globalData.code = res.code
                   _this.checkAuthUser(callback)
@@ -137,6 +138,7 @@ App({
           // 登录
           wx.login({
             success: res => {
+              console.info("code====>" + res.code)
               // 发送 res.code 到后台换取 openId, sessionKey, unionId        
               if (res.code) {
                 _this.globalData.code = res.code
@@ -210,6 +212,7 @@ App({
       wx.getUserInfo({
         //withCredentials: true,
         success: res => {
+          console.info("微信用户信息:"+res)
           if (_this.globalData.isRepeatGet) {
             _this.globalData.iv = res.iv
             _this.globalData.encryptedData = res.encryptedData
@@ -234,7 +237,7 @@ App({
       _this.gotoAuth()
     }
   },
-  checkUnionId(callback) {
+  checkUserId(callback) {
     let _this = this
     let unionId = _this.globalData.unionId
     if (unionId && unionId !== '') {
@@ -272,15 +275,15 @@ App({
         param.sessionKey = _this.getStorageSync("sessionKeyShopC")
       }
     
-      utils.$http(_global.baseUrl + '/emallMiniApp/buyer/login', param, 'POST').then(res => {
+      utils.$http(_global.baseUrl + '/user/login', param, 'POST').then(res => {
         let _rst = res.result
-        //console.log("login:" + JSON.stringify(res.result));
+        console.log("login:" + JSON.stringify(res.result));
         if (_rst) {
           _global.bindEmpId = ''
           _global.code = ''
           if (_rst.reTry && _global.retryNo < 1) {
             _global.retryNo = 1
-            _this.checkUnionId(callback)
+            _this.checkUserId(callback)
             return false
           } else {
             _global.retryNo = 0
@@ -288,6 +291,13 @@ App({
           _this.setGlobalData(_rst)
           if (_rst.sessionKey) {
             _this.setStorageSync("sessionKeyShopC", _rst.sessionKey, 1500)
+          }
+
+         
+          if (!_rst.unionId || _rst.unionId === '') {
+            _global.isRepeatGet = true
+            _this.setUserInfo(callback)
+            return false
           }
          
           let params = {
@@ -370,7 +380,7 @@ App({
       nickname: _this.globalData.userBase.userInfo.nickName || '',
       environment: _this.globalData.environment || 'wx'
     }
-    utils.$http(_this.globalData.baseUrl + '/emallMiniApp/buyer/register', param, 'POST').then(res => {
+    utils.$http(_this.globalData.baseUrl + '/user/register', param, 'POST').then(res => {
       utils.globalShowTip(false)
       let _rst = res.result
       if (_rst) {

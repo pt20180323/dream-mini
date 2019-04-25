@@ -20,7 +20,7 @@ Page({
   onLoad: function (options) {
     let empId = options.empId;
     this.setData({empId})
-    app.checkUnionId(this.initData)
+    app.checkUserId(this.initData)
   },
 
   /**

@@ -29,7 +29,7 @@ Page({
     })
   },
   onShow() {
-    app.checkUnionId(this.getSkuGiftDetails)
+    app.checkUserId(this.getSkuGiftDetails)
   },
   getSkuGiftDetails() {
     let {

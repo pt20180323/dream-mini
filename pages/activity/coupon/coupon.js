@@ -28,7 +28,7 @@ Page({
     wx.setNavigationBarTitle({
       title: title
     })
-    app.checkUnionId(_this.getCouponList)
+    app.checkUserId(_this.getCouponList)
   },
   //获取优惠券列表
   getCouponList: function(pageNo) {

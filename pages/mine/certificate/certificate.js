@@ -9,7 +9,7 @@ Page({
       orderNo: opt.orderNo || '',
       detailNo: opt.detailNo || ''
     })
-    app.checkUnionId(_this.initData)    
+    app.checkUserId(_this.initData)
   },
   initData(){
     let _this = this

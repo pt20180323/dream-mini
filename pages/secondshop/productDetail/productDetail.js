@@ -88,7 +88,7 @@ Page({
       showSku: {},
       showCar:true
     })
-    app.checkUnionId(_this.initData)
+    app.checkUserId(_this.initData)
   },
   onHide() {
     let {

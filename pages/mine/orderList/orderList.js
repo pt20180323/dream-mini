@@ -17,7 +17,7 @@ Page({
       })
     }
     _this.getEnvironment()
-    app.checkUnionId(_this.getList)
+    app.checkUserId(_this.getList)
   },
   // 整单退款按钮
   toRefund(e) {

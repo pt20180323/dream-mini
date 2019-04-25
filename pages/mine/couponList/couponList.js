@@ -28,7 +28,7 @@ Page({
         useScenes: parseInt(opt.use || 1)
       })
     };
-    app.checkUnionId(_this.getList)
+    app.checkUserId(_this.getList)
   },
   getList: function () {
     let _this = this

@@ -11,7 +11,7 @@ Page({
     if (opt.bindEmpId && opt.bindEmpId !== '') {
       app.globalData.bindEmpId = opt.bindEmpId
     }
-    app.checkUnionId(()=>{
+    app.checkUserId(()=>{
       utils.globalShowTip(false)
       if (parseInt(app.globalData.bindStatus)) {
         wx.setStorageSync('_isNeedLoadB', true)

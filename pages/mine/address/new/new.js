@@ -42,7 +42,7 @@ Page({
       goodsId: opt.goodsId || '',
       addId: opt.addId || ''
     })
-    app.checkUnionId(this.initData)
+    app.checkUserId(this.initData)
   },
   initData() {
     let _addId = this.data.addId || ''

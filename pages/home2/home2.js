@@ -38,7 +38,7 @@ Page({
     let _this = this;
     //释放传入商品列表的主题id
     app.globalData.themeId = ''
-    app.checkUnionId(_this.initData)
+    app.checkUserId(_this.initData)
   },
   onHide() {
     let {

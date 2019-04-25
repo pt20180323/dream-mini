@@ -15,7 +15,7 @@ Page({
         idCard: opt.idCard
       })
     }
-    app.checkUnionId(this.initWeb)
+    app.checkUserId(this.initWeb)
   },
   initWeb() {
     utils.globalShowTip(false)

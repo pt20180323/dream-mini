@@ -16,7 +16,7 @@ Page({
         applyId: opt.applyId
       })
     }
-    app.checkUnionId(_this.getExp)
+    app.checkUserId(_this.getExp)
   },
   getExp() {
     let _this = this

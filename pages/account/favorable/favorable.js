@@ -27,7 +27,7 @@ Page({
       img: opt.img || '',
       cardType: opt.cardType
     })
-    app.checkUnionId(_this.initData)
+    app.checkUserId(_this.initData)
   },
   initData: function() {
     let _this = this

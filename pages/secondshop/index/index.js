@@ -28,8 +28,8 @@ Page({
       activityId: opt.activityId || '',
       activityType: opt.activityType || 7
     })
-    //app.checkUnionId(_this.setActivityPvuv)
-    app.checkUnionId(_this.initData)
+    //app.checkUserId(_this.setActivityPvuv)
+    app.checkUserId(_this.initData)
   },
   onUnload() {
     let _this = this;

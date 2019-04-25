@@ -64,7 +64,7 @@ Page({
         teamId: opt.teamId || '',
         skuId: opt.skuId
       })
-      app.checkUnionId(_this.getOrderInfor)
+      app.checkUserId(_this.getOrderInfor)
     }
   },
   onShow() {

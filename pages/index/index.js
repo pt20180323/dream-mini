@@ -24,7 +24,7 @@ Page({
   },
   onLoad(opt) {
     let _this = this
-    app.checkUnionId(this.initData)
+    app.checkUserId(this.initData)
     setTimeout(function() {
       _this.data.tabLoad = true
     }, 1000)
@@ -37,7 +37,7 @@ Page({
         pageNo: 1,
         loading: true
       }, () => {
-        app.checkUnionId(this.initData)
+        app.checkUserId(this.initData)
       })
       setTimeout(function() {
         wx.hideNavigationBarLoading()

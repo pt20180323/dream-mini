@@ -29,7 +29,7 @@ Page({
       cardType: opt.cardType,
       taskId: opt.taskId || ''
     })
-    app.checkUnionId(this.getList)
+    app.checkUserId(this.getList)
   },
   getList: function(pageNo) {
     let _this = this

@@ -18,7 +18,7 @@ Page({
         isQy: true
       })
     }
-    app.checkUnionId(() => {
+    app.checkUserId(() => {
       _this.initData()
     })
     setTimeout(function() {
@@ -31,7 +31,7 @@ Page({
       this.setData({
         isLoad: true
       }, () => {
-        app.checkUnionId(this.initData)
+        app.checkUserId(this.initData)
       })
       setTimeout(function() {
         wx.hideNavigationBarLoading()

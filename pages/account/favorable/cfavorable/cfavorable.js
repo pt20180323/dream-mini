@@ -21,7 +21,7 @@ Page({
       empId: opt.empId,
       cardId: opt.cardId
     },()=>{
-      app.checkUnionId(_this.initData)
+      app.checkUserId(_this.initData)
     })
    
   },

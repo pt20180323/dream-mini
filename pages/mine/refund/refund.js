@@ -31,7 +31,7 @@ Page({
         })
       }
     }
-    app.checkUnionId(_this.confirmRefund)
+    app.checkUserId(_this.confirmRefund)
   },
   openRefundMask () {
     this.setData({

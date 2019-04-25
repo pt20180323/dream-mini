@@ -19,7 +19,7 @@ Component({
   created: function () {
     let _that = this
     console.log(_that)
-    app.checkUnionId(_that.initData)
+    app.checkUserId(_that.initData)
     console.log('==========created==========');  
     let ss = setInterval(function(){
       if (app.globalData.shopId){
@@ -52,7 +52,7 @@ Component({
     getTheme22() {
       let _that = this
       if(!app.globalData.shopId){
-        app.checkUnionId(_that.initData)
+        app.checkUserId(_that.initData)
       }
       console.log(_that)
       let params = {

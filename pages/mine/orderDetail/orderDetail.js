@@ -25,7 +25,7 @@ Page({
   onShow () {
     let _this = this
     //查询订单详情
-    app.checkUnionId(_this.initData) 
+    app.checkUserId(_this.initData)
   },
   initData(){
     let _this = this

@@ -18,7 +18,7 @@ Page({
         applyId: opt.applyId
       })
     }
-    app.checkUnionId(_this.initData)
+    app.checkUserId(_this.initData)
   },
   initData() {
     let _this = this

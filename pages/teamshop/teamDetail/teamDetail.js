@@ -30,7 +30,7 @@ Page({
         storeId: opt.storeId || '',
         shopId: opt.shopId || ''
       })
-      app.checkUnionId(_this.getTeamDetail)
+      app.checkUserId(_this.getTeamDetail)
       _this.data.interval = setInterval(()=>{
         if (_this.data.teamDetailVo.countDownSeconds > 0) {
           _this.countDown(--_this.data.teamDetailVo.countDownSeconds)

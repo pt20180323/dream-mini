@@ -23,7 +23,7 @@ Page({
     this.setData({
       orderNo: opt.orderNo
     })
-    app.checkUnionId(this.initWeb)
+    app.checkUserId(this.initWeb)
   },
   // 当组件输入数字6位数时的自定义函数
   valueSix(evt){

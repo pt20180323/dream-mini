@@ -16,7 +16,7 @@ Page({
         couponList: app.globalData.ableCoupon
       })
     } else {
-      app.checkUnionId(_this.getCalcVoucher)
+      app.checkUserId(_this.getCalcVoucher)
     }
   },
   // 获取用户代金券

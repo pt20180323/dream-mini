@@ -16,7 +16,7 @@ Page({
     let _this = this
     let _data = _this.data
     _data.activityId = opt.activityId || ''
-    app.checkUnionId(_this.getShopList)    
+    app.checkUserId(_this.getShopList)
   },
   countDown(num){
     let _this = this

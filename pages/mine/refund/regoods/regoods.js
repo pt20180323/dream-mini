@@ -14,8 +14,8 @@ Page({
     let _this = this
     let { applyId, isset } = opt
     if (applyId) _this.setData({applyId})
-    app.checkUnionId(_this.getExp)
-    if (Number(isset)) app.checkUnionId(_this.setExp()) // 修改快递信息
+    app.checkUserId(_this.getExp)
+    if (Number(isset)) app.checkUserId(_this.setExp()) // 修改快递信息
   },
   setExp() {
     let _this = this

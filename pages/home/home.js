@@ -24,7 +24,7 @@ Page({
         templateId: opt.templateId || ''
       })
     }
-    app.checkUnionId(this.initData)
+    app.checkUserId(this.initData)
     setTimeout(function() {
       _this.data.tabLoad = true
     }, 1000)
@@ -49,7 +49,7 @@ Page({
         pageNumber: 1,
         isLoad: true
       }, () => {
-        app.checkUnionId(this.initData)
+        app.checkUserId(this.initData)
       })
       setTimeout(function() {
         wx.hideNavigationBarLoading()

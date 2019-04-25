@@ -47,7 +47,7 @@ Page({
         multiOneIndex: [1, 2]
       })
 
-      app.checkUnionId(this.getTotalArea)
+      app.checkUserId(this.getTotalArea)
     }
     qqmapsdk = new QQMapWX({
       key: 'AGFBZ-A5OR4-PD3UF-DJTZ2-GTUI7-6GBV2'

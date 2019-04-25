@@ -18,7 +18,7 @@ Page({
     }
   },
   onShow(){
-    app.checkUnionId(this.initData)
+    app.checkUserId(this.initData)
   },
   initData(){
     this.getVoucherDetail()

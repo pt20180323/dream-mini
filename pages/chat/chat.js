@@ -86,7 +86,7 @@ Page({
         toView: 'a123456'
       })
     })
-    app.checkUnionId(_this.initUserinfo)
+    app.checkUserId(_this.initUserinfo)
   },
   /**
    * 初始化用户信息

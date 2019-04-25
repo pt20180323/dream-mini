@@ -35,7 +35,7 @@ Page({
     this.setData({
       windowHeight: res.windowHeight - 60, //减去导航和缝隙的高度
     })
-    app.checkUnionId(this.initData)
+    app.checkUserId(this.initData)
     setTimeout(function() {
       _this.data.tabLoad = true
     }, 1000)

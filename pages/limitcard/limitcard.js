@@ -31,7 +31,7 @@ Page({
         activityId: opt.activityId,
         activityType: opt.activityType || 13
       })
-      app.checkUnionId(_this.initData)
+      app.checkUserId(_this.initData)
     }
   },
   onHide() {

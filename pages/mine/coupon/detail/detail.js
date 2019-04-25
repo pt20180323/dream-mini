@@ -36,7 +36,7 @@ Page({
           isShare: true
         })
       }
-      app.checkUnionId(_this.initData)
+      app.checkUserId(_this.initData)
     }
   },
   initData: function() {
