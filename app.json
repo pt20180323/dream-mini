@@ -1,11 +1,7 @@
 {
   "pages": [
-    "pages/article/detail/articleDetail",
-    "pages/home/home",   
-    "pages/limitbuy/limitbuy",
-    "pages/limitcard/limitcard",
-    "pages/reduce/reduce",
-    "pages/payment/payment",
+    "pages/home/home",    
+    "pages/article/detail/articleDetail",    
     "pages/component/pwd/pwd",
     "pages/mine/coin/coin",
     "pages/mine/coinpay/coinpay",
@@ -41,14 +37,11 @@
     "pages/mine/address/select/select",
     "pages/mine/address/new/new",
     "pages/mine/coupon/useCoupon/useCoupon",
-    "pages/mine/coupon/store/store",
-    "pages/mine/coupon/couponDet/couponDet",
     "pages/mine/coupon/detail/detail",
     "pages/mine/coupon/unDetail/unDetail",
     "pages/mine/ableCoupon/ableCoupon",
     "pages/mine/orderList/orderList",
     "pages/mine/orderDetail/orderDetail",
-    "pages/mine/newAddr/newAddr",
     "pages/mine/certificate/certificate",
     "pages/chat/chat",
     "pages/account/account",
@@ -58,17 +51,8 @@
     "pages/activity/activity",
     "pages/activity/shopList/shopList",
     "pages/activity/coupon/coupon",
-    "pages/account/shareCoupon/shareCoupon",
-    "pages/verificationResult/verificationResult",
-    "pages/goodsRecommend/goodsRecommend",
-    "pages/commonshop/skuGiftdetails/skuGiftdetails",
-    "pages/expressDelivery/expressDelivery",
-    "pages/account/groupList/groupList",
-    "pages/account/customList/customList",
-    "pages/AfterSale/SaleDetails",
-    "pages/AfterSale/expressInfo/expressInfo",
-    "pages/AfterSale/serviceSale/serviceSale",
-    "pages/AfterSale/handleDetails/handleDetails"
+    "pages/expressDelivery/expressDelivery"
+   
   ],
   "permission": {
     "scope.userLocation": {
@@ -87,33 +71,33 @@
   },
   "tabBar": {
     "color": "#666",
-    "selectedColor": "#fff",
-    "backgroundColor": "#FFDE09",
-    "borderStyle": "white",
+    "selectedColor": "#FFFF00",
+    "backgroundColor": "#fff",
+    "borderStyle": "black",
     "list": [
       {
         "pagePath": "pages/home/home",
         "text": "热门",
-        "iconPath": "/static/menu/index.png",
-        "selectedIconPath": "/static/menu/index_c.png"
+        "iconPath": "/static/menu/hot-60-black.png",
+        "selectedIconPath": "/static/menu/hot-60-yellow.png"
       },
       {
         "pagePath": "pages/commonshop/shopList/shopList",
         "text": "纯文",
-        "iconPath": "/static/menu/list.png",
-        "selectedIconPath": "/static/menu/list_c.png"
+        "iconPath": "/static/menu/text-60-black.png",
+        "selectedIconPath": "/static/menu/text-60-yellow.png"
       },
       {
         "pagePath": "pages/mine/orderList/orderList",
         "text": "图文",
-        "iconPath": "/static/menu/shopcart.png",
-        "selectedIconPath": "/static/menu/shopcart_c.png"
+        "iconPath": "/static/menu/image-60-black.png",
+        "selectedIconPath": "/static/menu/image-60-yellow.png"
       },
       {
         "pagePath": "pages/mine/mine",
         "text": "内涵",
-        "iconPath": "/static/menu/mine.png",
-        "selectedIconPath": "/static/menu/mine_c.png"
+        "iconPath": "/static/menu/nh-60-black.png",
+        "selectedIconPath": "/static/menu/nh-60-yellow.png"
       }
     ]
   },
