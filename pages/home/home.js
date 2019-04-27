@@ -400,27 +400,16 @@ Page({
       return false
     }
   },
+  //进入文章详情
   toDetail(opt) {
     let {
       type,
-      gid,
-      aid,
-      sid,
-      stid
+      articleid
     } = opt.currentTarget.dataset
-    if (type === 7) { //秒杀
-      wx.navigateTo({
-        url: '/pages/secondshop/productDetail/productDetail?activityId=' + aid + '&goodsId=' + gid
-      })
-    } else if (type === 12) { //抱团
-      wx.navigateTo({
-        url: '/pages/teamshop/productDetail/productDetail?activityId=' + aid + '&goodsId=' + gid + '&storeId=' + stid
-      })
-    } else {
-      wx.navigateTo({
-        url: '/pages/commonshop/productDetail/productDetail?goodsId=' + gid + '&storeId=' + stid + '&shopId=' + sid
-      })
-    }
+    
+    wx.navigateTo({
+      url: '/pages/article/detail/articleDetail?articleid=' + articleid + '&type=' + type
+    })
   },
   toChat() {
     let _this = this
@@ -501,5 +490,20 @@ Page({
         }
       }
     }).catch(e => {})
+  },
+  up:function (e) {
+    wx.showToast({
+      title: '感谢您的点赞',
+      icon: 'success',
+      duration: 1000
+    })
+  },
+  share:function(e){
+    wx.updateShareMenu({
+      withShareTicket: true,
+      success() {
+         console.info("分享成功==========")
+      }
+    })
   }
 })

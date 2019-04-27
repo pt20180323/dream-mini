@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/home/home",
-    "pages/home2/home2",
+    "pages/article/detail/articleDetail",
+    "pages/home/home",   
     "pages/limitbuy/limitbuy",
     "pages/limitcard/limitcard",
     "pages/reduce/reduce",

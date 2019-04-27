@@ -70,6 +70,12 @@
   margin-left:20px;
 
 }
+.img-19{
+  width: 19px;
+  height: 19px;
+  margin-left:2px;
+
+}
 .img_box {
   position: relative;
   margin-right: 25rpx;
@@ -449,6 +455,9 @@ rich-text .rich-img {
 .home-right {
   margin-right:1%;
 }
+.home-left {
+  margin-left:-10px;
+}
 .up-home-right {
   margin-right:-15%;
 }
@@ -797,5 +806,12 @@ page {
   margin-right: 10rpx;
   font-size: 22rpx;
   vertical-align: bottom;
+}
+
+.view-img{
+  margin-left: 10px;
+}
+.hover-view{
+  color: #FFDE09
 }
 

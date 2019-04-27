@@ -239,8 +239,8 @@ App({
   },
   checkUserId(callback) {
     let _this = this
-    let unionId = _this.globalData.unionId
-    if (unionId && unionId !== '') {
+    let userId = _this.globalData.userId
+    if (userId && userId !== '') {
       if (callback && typeof callback === 'function') {
         callback()
       }
@@ -383,6 +383,7 @@ App({
     utils.$http(_this.globalData.baseUrl + '/user/register', param, 'POST').then(res => {
       utils.globalShowTip(false)
       let _rst = res.result
+      console.log("register:" + JSON.stringify(_rst));
       if (_rst) {
         _this.setGlobalData(_rst)
         if (callback && typeof callback === 'function') {
@@ -424,8 +425,8 @@ App({
       obj.wxOpenId = _rst.openId
     }   
     if (_rst.userId) { //粉丝ID
-      _global.hyUserId = _rst.userId
-      obj.hyUserId = _rst.userId
+      _global.userId = _rst.userId
+      obj.userId = _rst.userId
     }
     if (_rst.wxName || _rst.nick) {
       _global.wxName = _rst.wxName || _rst.nick

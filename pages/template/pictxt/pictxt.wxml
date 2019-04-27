@@ -14,9 +14,11 @@
     </view>
   </view>
   <!-- 详情视频end -->
+  <!--
   <view class="prd_des_top f_row f_r_cnt">
     <text class="txt_color af_color">图文详情</text>
   </view>
+  -->
   <view class="prd_desc_box break_all">
     <rich-text class='box_rich_text' nodes="{{pictxt}}"></rich-text>
   </view>

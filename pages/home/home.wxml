@@ -11,7 +11,8 @@
 <view class="list-g-box" style='margin-top:30px;'>
   <view class="f_col o_list">
     <!-- 第1篇文章 -->
-    <view class="f_col">
+    <view class="f_col" bindtap='toDetail' 
+    data-type="10" data-articleid="59edc5fb4e6e48fcaf9ba2f73809">
       <view class="g_blank_20"></view>
       <!-- 文章标题信息头像信息 -->
       <view class='o_l_item'>       
@@ -43,12 +44,24 @@
       <block>
       <view class='o_l_item ol_i_bot-bottom'>
        <view class='f_row f_jc_sb f_r_cnt wrap'>
-          <view class='left'>
-            浏览数:<text>100</text>  评论数:<text>10</text>
+          <view class='left f_row'>
+            <text>100</text>阅读  <text>10</text>评论
           </view>         
           <view class='home-right f_row'>
-            <image src='/static/ico/up-32.png' class='up-img-32' ></image>100
-            <image src='/static/ico/share-32.png' class='up-img-32' ></image>100
+            <view class="flex-item view-img"  bindtap='up'>
+              <image src='/static/ico/up-25.png' class='img-19'></image>
+            </view>
+            <view class="flex-item">
+              100
+            </view>
+            <view class="flex-item view-img" hover-class="hover-view" bindtap='share'>
+             <button class='share_common' open-type='share'>
+              <image src='/static/ico/share-25.png' class='img-19'></image> 
+             </button>
+            </view>
+            <view class="flex-item">
+              200
+            </view>
           </view>          
         </view>
       
@@ -57,7 +70,7 @@
 
     </view>
     <!-- 第2篇文章 -->
-    <view class="f_col">
+    <view class="f_col" bindtap='toDetail' data-type="10" data-articleid="be74dd7aebcd4bbeaeb2ba402a69">
       <view class="g_blank_20"></view>
       <!-- 文章标题信息头像信息 -->
       <view class='o_l_item'>       
@@ -81,7 +94,7 @@
       <block>
         <view class='o_l_item'>
           <view class="f_row f_jc_sb f_r_cnt">
-               <image class= "img" src="http://192.168.1.100:8081/cas/image/view/e039beb5a79e48a585f48dcad38f"></image>
+               <image class= "img"  src="http://192.168.1.101:8081/cas/image/view/e039beb5a79e48a585f48dcad38f"></image>
           </view>
         </view>
       </block>
@@ -89,12 +102,20 @@
       <block>
       <view class='o_l_item ol_i_bot-bottom'>
        <view class='f_row f_jc_sb f_r_cnt wrap'>
-          <view class='left'>
-            浏览数:<text>100</text>  评论数:<text>10</text>
-          </view>         
+          <view class='left f_row'>
+            <text>100</text>阅读  <text>10</text>评论
+          </view>          
           <view class='home-right f_row'>
-            <image src='/static/ico/up-32.png' class='up-img-32' ></image>100
-            <image src='/static/ico/share-32.png' class='up-img-32' ></image>100
+            <view class="flex-item view-img"  bindtap='up'>
+              <image src='/static/ico/up-25.png' class='img-19'></image>
+            </view>
+            <view class="flex-item">100</view>
+            <view class="flex-item view-img"  bindtap='share'>              
+              <button class='share_common' open-type='share'>
+               <image src='/static/ico/share-25.png' class='img-19'></image> 
+              </button>
+            </view>
+            <view class="flex-item">200</view>
           </view>          
         </view>
       

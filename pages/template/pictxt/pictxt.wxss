@@ -10,6 +10,11 @@
   justify-content: center;
   position: relative;
 }
+.prd_desc_box{
+  margin-left:10rpx;
+  margin-right:5rpx;
+  color:#2c2c2c;
+}
 
 .prd_des_top>text {
   display: inline-block;
