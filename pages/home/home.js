@@ -2,7 +2,7 @@ const utils = require('../../utils/util.js')
 let app = getApp()
 Page({
   data: {
-    themeObj: [], //主题
+    articleList: [], // 文章资讯列表
     currentSwiper: 0,
     imgheights: [],
     isRequest: false,
@@ -91,14 +91,7 @@ Page({
       })
       return
     }
-    app.linecarCount()
-    app.unReadMsgCount().then(res => {
-      _global.empId = res.empId || ''
-      _global.empName = res.empName
-      _this.setData({
-        empObj: res
-      })
-    })
+    
     if (isFirst) {
       app.reanderZj(2).then(res => {
         _this.setData({
@@ -106,8 +99,7 @@ Page({
         })
       })
     }
-    _this.getTheme()
-    _this.getStoreInfor()
+    _this.getArticleList()
   },
   jumpApp() {
     let _this = this
@@ -124,75 +116,59 @@ Page({
       fail(res) {}
     })
   },
-  //查询粉丝对应的员工和门店信息
-  getStoreInfor: function() {
+  // 获取文章资讯数据
+  getArticleList: function (pageNo) {
     let _this = this
-    let _global = app.globalData
-    if (_global.empId) {
-      _this.setData({
-        empId: _global.empId,
-        headTop: 60,
-        fixedTop: 60
-      })
-    }
-    let params = {
-      empId: _global.empId || ''
-    }
-    utils.$http(app.globalData.baseUrl + '/emallMiniApp/emp/storeAndEmp/' + _global.shopId + '/' + _global.storeId, params, '', 1).then(res => {
-      if (res) {
-        _this.setData({
-          empInfo: res.result.employee,
-          storeInfo: res.result.store
-        })
-      }
-    }).catch(error => {})
-  },
-  // 获取主题数据
-  getTheme() {
-    let _this = this
+    let _data = _this.data
+    _this.setData({
+      pageNo: pageNo || 1,
+      isRequest: false
+    })
+    // 路径上的参数
     let {
-      shopId,
-      storeId,
-      baseUrl
+      baseUrl,
     } = app.globalData
-    let data = {
-      templateId: _this.data.templateId || ''
+    //携带参数
+    let _params = {
+      pageNo: pageNo || 1,
+      key:""
     }
-    //正常进首页
-    utils.$http(baseUrl + '/emallMiniApp/home/index/' + shopId + '/' + storeId, data, '', _this.data.isLoad).then(res => {
-      if (res) {
-        _this.themeRender(res)
-      }
-    }).catch(error => {})
-  },
-  themeRender(res) {
-    let _this = this
-    let result = res.result
-    if (result) {
-      let _cnt = result.customTheme || []
-      let appletName = app.globalData.appletName
-      let cstName = result.customName
-      if (getCurrentPages()[0].route.toString().indexOf('pages/home/home') > -1) {
-        wx.setNavigationBarTitle({
-          title: cstName || appletName || ''
+    if (_data.sortFlag || _data.sortFlag === 0) {
+      _params.sortFlag = _data.sortFlag
+    }
+    utils.$http(baseUrl + '/article/hot', _params, 'POST', _data.loading).then(res => {
+     
+      if (res) {       
+        utils.globalShowTip(false)
+        _this.setData({
+          isLastPage: !res.result.hasNextPage,
+          isRequest: true,
+          loading: false
         })
-      }
-      let _prm = {}
-      // 获取富文本主题 给富文本图片添加样式
-      _cnt.map(item => {
-        const _idx = parseInt(item.style)
-        if (_idx === 7) {
-          if (item.theme.richText) {
-            item.theme.richText = item.theme.richText.toString().replace(/\<img/gi, '<img class="rich-img" ')
-          }
-        } else if (_idx === 4) {
-          _prm['prm' + item.sort] = new Promise((resolve, reject) => {
-            _this.getShopList(1, item, resolve, reject)
+       
+        if (_data.pageNo === 1) {
+          _this.setData({
+            articleList: res.result.items
+          })
+        } else {
+          _this.setData({
+            articleList: _data.articleList.concat(res.result.items)
           })
         }
-      })
-      _this.asyncFun(_prm, _cnt)
-    }
+        console.info("文章资讯信息记录数:" + articleList.length)
+        if (!_data.articleList.length) {
+          _this.setData({
+            isshowEmpty: true
+          })
+        } else {
+          _this.setData({
+            isshowEmpty: false
+          })
+        }
+      }
+    }).catch(e => {
+      utils.globalShowTip(false)
+    })
   },
   //异步处理商品
   asyncFun(_prm, _cnt) {

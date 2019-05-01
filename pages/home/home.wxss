@@ -374,7 +374,7 @@ image {
 
 .left, .right {
   display: inline-block;
-  width: 49.5%;
+  width: 90%;
   vertical-align: top;
 }
 
@@ -450,10 +450,11 @@ rich-text .rich-img {
   font-size: 24rpx;
 }
 .headTitle {
-  margin-right:40%;
+  margin-right:0%;
 }
 .home-right {
   margin-right:1%;
+  min-width:200rpx;
 }
 .home-left {
   margin-left:-10px;
@@ -633,7 +634,7 @@ page {
 
 .ol_i_head {
   position: relative;
-  height: 80rpx;
+  height: 100rpx;
   padding: 0 25rpx;
   color: #999;
 }

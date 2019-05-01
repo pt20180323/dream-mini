@@ -9,17 +9,18 @@
 </view>
 <!-- 文章列表展示  -->
 <view class="list-g-box" style='margin-top:30px;'>
-  <view class="f_col o_list">
+  <view class="f_col o_list" wx:for='{{articleList}}' wx:for-index='{{idx}}' 
+      wx:key='{{list}}' wx:for-item="item">
     <!-- 第1篇文章 -->
     <view class="f_col" bindtap='toDetail' 
-    data-type="10" data-articleid="59edc5fb4e6e48fcaf9ba2f73809">
+    data-type="10" data-articleid="{{item.id}}">
       <view class="g_blank_20"></view>
       <!-- 文章标题信息头像信息 -->
       <view class='o_l_item'>       
           <view class="f_row f_jc_sb f_r_cnt ol_i_head">
-                <image src='{{empInfo.wxPhoto || "/static/ico/header.png"}}' class='headImg'></image>
+                <image src='{{item.wxPhoto || "/static/ico/header.png"}}' class='headImg'></image>
                 <view class='left headTitle'>
-                  <text>搞笑标题</text>
+                  <text>{{item.title}}</text>
                 </view>
                 <!-- <text class="txt_color"></text> -->
                 
@@ -29,14 +30,17 @@
       <block>
         <view class='o_l_item'>
           <view class="f_row f_jc_sb f_r_cnt">
-                <text>瑜伽教练，有没有一起去转行的，我有个同学在长沙做健身教练，就找了个富婆结婚，比他大8岁。。。。。瑜伽姿势</text>
+                <text>{{item.content}}</text>
           </view>
         </view>
       </block>
       <block>
-        <view class='o_l_item'>
-          <view class="f_row f_jc_sb f_r_cnt">
-               <image class= "img" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1555759978782&di=9f0e34ccf1d212d1f57c44d1ef05e0aa&imgtype=0&src=http%3A%2F%2Fimg.mp.itc.cn%2Fupload%2F20160719%2F6eb2c7acd4f147cd9101925629dd3d7a.jpg"></image>
+        <view class='o_l_item'  >
+          <view class="f_row f_jc_sb f_r_cnt f_row" 
+                wx:for='{{item.dreamArticelPictureVideoLinkRespVos}}'
+                wx:for-index='{{idx}}' 
+                wx:key='{{list}}' wx:for-item="linkeItem">
+               <image class= "img" src="{{linkeItem.url}}"></image>
           </view>
         </view>
       </block>
@@ -45,14 +49,14 @@
       <view class='o_l_item ol_i_bot-bottom'>
        <view class='f_row f_jc_sb f_r_cnt wrap'>
           <view class='left f_row'>
-            <text>100</text>阅读  <text>10</text>评论
+            <text>{{item.pv}}</text>阅读  <text>{{item.replyNum}}</text>评论
           </view>         
           <view class='home-right f_row'>
             <view class="flex-item view-img"  bindtap='up'>
               <image src='/static/ico/up-25.png' class='img-19'></image>
             </view>
             <view class="flex-item">
-              100
+              {{item.thumbsUpNum}}
             </view>
             <view class="flex-item view-img" hover-class="hover-view" bindtap='share'>
              <button class='share_common' open-type='share'>
@@ -60,7 +64,7 @@
              </button>
             </view>
             <view class="flex-item">
-              200
+              {{item.forwardedNum}}
             </view>
           </view>          
         </view>
@@ -69,59 +73,6 @@
       </block>
 
     </view>
-    <!-- 第2篇文章 -->
-    <view class="f_col" bindtap='toDetail' data-type="10" data-articleid="be74dd7aebcd4bbeaeb2ba402a69">
-      <view class="g_blank_20"></view>
-      <!-- 文章标题信息头像信息 -->
-      <view class='o_l_item'>       
-          <view class="f_row f_jc_sb f_r_cnt ol_i_head">
-                <image src='{{empInfo.wxPhoto || "/static/ico/header.png"}}' class='headImg'></image>
-                <view class='left headTitle'>
-                  <text>搞笑标题</text>
-                </view>
-                <!-- <text class="txt_color"></text> -->
-                
-          </view>
-      </view>
-       <!-- 文章内容信息 -->
-      <block>
-        <view class='o_l_item'>
-          <view class="f_row f_jc_sb f_r_cnt">
-                <text>瑜伽教练，有没有一起去转行的，我有个同学在长沙做健身教练，就找了个富婆结婚，比他大8岁。。。。。瑜伽姿势</text>
-          </view>
-        </view>
-      </block>
-      <block>
-        <view class='o_l_item'>
-          <view class="f_row f_jc_sb f_r_cnt">
-               <image class= "img"  src="http://192.168.1.101:8081/cas/image/view/e039beb5a79e48a585f48dcad38f"></image>
-          </view>
-        </view>
-      </block>
-      <!-- 展示浏览数、点赞数(点赞)、转发  -->
-      <block>
-      <view class='o_l_item ol_i_bot-bottom'>
-       <view class='f_row f_jc_sb f_r_cnt wrap'>
-          <view class='left f_row'>
-            <text>100</text>阅读  <text>10</text>评论
-          </view>          
-          <view class='home-right f_row'>
-            <view class="flex-item view-img"  bindtap='up'>
-              <image src='/static/ico/up-25.png' class='img-19'></image>
-            </view>
-            <view class="flex-item">100</view>
-            <view class="flex-item view-img"  bindtap='share'>              
-              <button class='share_common' open-type='share'>
-               <image src='/static/ico/share-25.png' class='img-19'></image> 
-              </button>
-            </view>
-            <view class="flex-item">200</view>
-          </view>          
-        </view>
-      
-      </view>
-      </block>
-
-    </view>
+    
   </view>
 </view>
