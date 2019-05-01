@@ -1,0 +1,158 @@
+<import src="../../template/label/label.wxml" />
+<import src="../../template/pictxt/pictxt.wxml" />
+<view>
+  <poster id="poster" config="{{config}}" bind:success="onPosterSuccess" bind:fail="onPosterFail" hide-loading="{{true}}"></poster>
+  <view>
+    <view class='title'>{{articleDetail.title}}</view>
+    <view class='f_row author'>
+      <image src='{{empInfo.wxPhoto || "https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKjAvfjOlO0sKDQ3GMZkWtsovdiaX5ziaAXMIsNM8L8uicz2aqqaUKMbvE4UfhsjDxfAu5oMmDAgB3wg/132"}}' class='headImg'></image>
+      <view class='f_col nick_box'>
+        <text>彭甜</text>
+        <text class='fs_24 n_store'>{{articleDetail.simpleTimeStr}}</text>
+      </view>
+    </view>
+    <template is="pictxt" data="{{pictxt}}"></template>
+ 
+
+   
+    <swiper class="swp_box" bindchange='swiperChange' current='{{currIndex}}' circular>
+      <swiper-item wx:if='{{hasGoodsVideo}}'>
+        <video class='c_video' id="myVideo" src="{{videoObj.goodsFluentVideoUrl}}" controls show-center-play-btn='{{false}}' wx:if='{{pauseVideo}}' bindplay='continuePlay' show-fullscreen-btn='{{false}}'>
+          <cover-image class='exit_video' src="/static/img/exit.png" catchtap='goBack' />
+        </video>
+        <view class="controls f_row f_r_cnt f_jc_cnt" bindtap='toPlay' wx:if='{{!pauseVideo}}'>
+          <image class="video_img" src="{{videoObj.goodsCoverUrl}}" class='slide_img' />
+          <image class='pause_img' src="/static/img/play.png" />
+        </view>
+      </swiper-item>
+      <block wx:for="{{picLinkList}}" wx:key="key" wx:for-index="idx" wx:for-item="item">
+        <swiper-item>
+          <image src="{{item.url}}" class="slide_img" />
+        </swiper-item>
+      </block>
+    </swiper>
+    <view class='img_point' wx:if='{{isShowImg}}'>
+      <text>{{sidx}}</text>/
+      <text>{{picLinkList.length}}</text>
+    </view>
+  </view>
+  <!-- 图片end -->
+
+  <view class="g_blank_20"></view>
+  <view class="prd_des_top f_row f_r_cnt">
+     <text class="txt_color af_color">评论</text>
+  </view>
+  <view class="g_blank_100 {{isIpx ? 'is_iphoneX' : ''}}" style="margin-bottom:150px">
+    <view class='f_col nick_box right-col'>
+        <view class="flex-item view-img"  bindtap='up'>
+          <image src='/static/ico/up-25.png' class='img-19'></image>
+        </view>
+    </view>
+    <view class='f_row'>
+      <image src='{{empInfo.wxPhoto || "https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKjAvfjOlO0sKDQ3GMZkWtsovdiaX5ziaAXMIsNM8L8uicz2aqqaUKMbvE4UfhsjDxfAu5oMmDAgB3wg/132"}}' class='headImg'></image>
+      <view class='f_col nick_box'>
+        <text>彭甜</text>
+        <text class='fs_24 n_store'>我们期待同各方一道，完善合作理念</text>
+        <text class='fs_24'>12分钟之前</text>
+      </view>      
+    </view>
+    <view class='f_col nick_box right-col'>
+        <view class="flex-item view-img"  bindtap='up'>
+          <image src='/static/ico/up-25.png' class='img-19'></image>
+        </view>
+    </view>
+    <view class='f_row'>
+      <image src='{{empInfo.wxPhoto || "https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKjAvfjOlO0sKDQ3GMZkWtsovdiaX5ziaAXMIsNM8L8uicz2aqqaUKMbvE4UfhsjDxfAu5oMmDAgB3wg/132"}}' class='headImg'></image>
+      <view class='f_col nick_box'>
+        <text>胡美云</text>
+        <text class='fs_24 n_store'>我相信，在大家共同努力下，今天的会议一定会凝聚更多共识</text>
+        <text class='fs_24'>15分钟之前</text>
+      </view>
+    </view>
+         
+  </view>
+
+
+  <!-- 导航 -->
+  <view class="bot_box {{isIpx?'fix-iphonex-button':''}}" wx:if='{{showCar && !IsPromotion}}'> 
+    <view class='left_box'>      
+      <view class="back_idx" bindtap='toPage' data-type='1'>
+        <image src="/static/menu/index.png" class='back_idx_img'></image>
+        <view class='back_idx_text'>首页</view>
+      </view>
+      <view bindtap='toPage' class="back_idx" data-type='2'>
+        <image src="/static/ico/up-25.png" class='back_idx_img'></image>
+        <view class='back_idx_text'>点赞</view>
+        <view class="sc_num" wx:if="{{sc_num}}">{{sc_num}}</view>
+      </view>
+      <view  class="back_idx" data-type='3'>
+      </view>
+    </view>
+    <view class="bot_btn_s">      
+      <view class="bb_btn" bindtap='gotoOffer' data-utype="2" wx:if="{{goodsDetail.stock !== 0 && !environment}}">
+        <view class="o_key_add {{(warningData && !warningData.result) || IsWarning || perfectaddr?'btn_gray':'bg_color'}}">写评论</view>
+      </view>
+      <view class="bb_btn" bindtap='gotoOffer' data-utype="1" >
+        <view class="o_key_add {{(warningData && !warningData.result) || IsWarning || perfectaddr?'btn_gray': 'bg_yel'}}">分享</view>
+      </view>
+     
+      
+    </view>
+  </view>
+</view>
+
+<!-- 评论弹窗 -->
+<view class="mask" wx:if="{{slideUp}}" bindtap='closeSlide' catchtouchmove='stopScroll'>
+  <view class="m_bot_box f_col" catchtap='stopScroll'>
+    <view class="pp_prod_s g_line_bot f_row">      
+      <view class="f_col pp_prod_r f_jc_sb">
+      <textarea class='r_textarea s_price' name='desc' maxlength="300" placeholder="写评论"  bindblur='bindblur' value='{{textVal}}' cursor-spacing='10'/>      
+      </view>
+    </view>    
+    <view class="f_row">
+      <form bindsubmit="gotoOrder" class="form_i" report-submit="true" wx:if="{{utype === 1 || utype === 2}}">
+        <button class="pp_attr_btn" form-type="submit">
+          <cover-view class='bg_color'>确定</cover-view>
+        </button>
+      </form>
+    </view>
+    <view class="pp_close box_size" bindtap="closeSlide">
+      <image src="/static/ico/close.png" class='pp_close_img'></image>
+    </view>
+  </view>
+</view>
+
+<!-- 分享弹窗 -->
+<cover-view class="mask" wx:if="{{shareSlideUp}}" bindtap='toCancel' catchtouchmove='stopScroll'>
+  <cover-view class="m_bot_box" catchtap='stopScroll'>
+    <cover-view class='share_box'>
+      <button class='share_common' open-type='share' wx:if='{{!environment}}'>
+        <cover-image src='/static/ico/wx.png' class='share_img'></cover-image>
+        <cover-view class='share_text'>微信好友</cover-view>
+      </button>
+      <button class='share_common' open-type='share' wx:if='{{environment}}'>
+        <cover-image src='/static/ico/qywx.png' class='share_img'></cover-image>
+        <cover-view class='share_text'>企业微信好友</cover-view>
+      </button>
+      <button class='share_common' bindtap='toPoster'>
+        <cover-image src='/static/ico/poster.png' class='share_img'></cover-image>
+        <cover-view class='share_text'>生成海报</cover-view>
+      </button>
+    </cover-view>
+    <cover-view class="share_cancel" bindtap='toCancel'>取消</cover-view>
+  </cover-view>
+</cover-view>
+<!-- 海报弹窗 -->
+<cover-view class="mask poster_mask" wx:if="{{posterSlideUp}}" bindtap='cancelPoster' catchtouchmove='stopScroll'>
+  <cover-view wx:if='{{posterPath}}' class='poster_box'>
+    <cover-image src='{{posterPath}}' class='poster_img' catchtap='stopScroll'></cover-image>
+    <cover-view class='poster_btn_box'>
+      <cover-view class='share_poster' catchtap='saveImg'>
+        <cover-image src='/static/ico/save.png' class='posterImg'></cover-image>
+        <cover-view class='save_txt'>保存图片</cover-view>
+      </cover-view>
+    </cover-view>
+  </cover-view>
+</cover-view>
+<!-- 佣金弹窗 -->
+
