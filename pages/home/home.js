@@ -72,6 +72,7 @@ Page({
   },
   //初始化数据
   initData() {
+    console.info("home初始化数据加载。。。。。。。。。。。。。。")
     let _this = this
     let {
       storeId,
@@ -93,11 +94,7 @@ Page({
     }
     
     if (isFirst) {
-      app.reanderZj(2).then(res => {
-        _this.setData({
-          behaviorId: res
-        })
-      })
+       console.info("session失效时候的，第一次登陆")
     }
     _this.getArticleList()
   },
