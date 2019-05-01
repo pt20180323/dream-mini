@@ -384,7 +384,7 @@ Page({
     } = opt.currentTarget.dataset
     
     wx.navigateTo({
-      url: '/pages/article/detail/articleDetail?articleid=' + articleid + '&type=' + type
+      url: '/pages/article/detail/articleDetail?articleId=' + articleid + '&type=' + type
     })
   },
   toChat() {

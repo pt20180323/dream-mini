@@ -10,10 +10,9 @@
 <!-- 文章列表展示  -->
 <view class="list-g-box" style='margin-top:30px;'>
   <view class="f_col o_list" wx:for='{{articleList}}' wx:for-index='{{idx}}' 
-      wx:key='{{list}}' wx:for-item="item">
-    <!-- 第1篇文章 -->
+      wx:key='{{list}}' wx:for-item="item">    
     <view class="f_col" bindtap='toDetail' 
-    data-type="10" data-articleid="{{item.id}}">
+    data-type="10" data-articleId="{{item.id}}">
       <view class="g_blank_20"></view>
       <!-- 文章标题信息头像信息 -->
       <view class='o_l_item'>       
