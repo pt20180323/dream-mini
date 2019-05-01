@@ -35,11 +35,11 @@
         </view>
       </block>
       <block>
-        <view class='o_l_item'  >
-          <view class="f_row f_jc_sb f_r_cnt f_row" 
+        <view class='o_l_item'  >          
+          <view class="f_row f_jc_sb f_r_cnt" 
                 wx:for='{{item.dreamArticelPictureVideoLinkRespVos}}'
                 wx:for-index='{{idx}}' 
-                wx:key='{{list}}' wx:for-item="linkeItem">
+                wx:key='{{list}}' wx:for-item="linkeItem"    >              
                <image class= "img" src="{{linkeItem.url}}"></image>
           </view>
         </view>
