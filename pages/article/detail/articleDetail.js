@@ -193,23 +193,28 @@ Page({
     utils.$http(baseUrl + '/comment/publish', _params, 'POST', _data.loading).then(res => {
 
       if (res) {
-        let statusCode = res.statusCode;
+        let statusCode = res.code;
         utils.globalShowTip(false)
         _this.setData({
-          isLastPage: !res.result.hasNextPage,
           isRequest: true,
           loading: false
         })
         if (statusCode==0){
-          if(articleList.length>0){
+          var commentList_ = res.result;
+          if (commentList_.length>0){
             _this.setData({
-              commentList: _data.commentList.concat(res.result.items)
+              commentList: _data.commentList.concat(commentList_)
             })
-            console.info("评论信息记录数:" + articleList.length)
+            console.info("评论信息记录数:" + _data.commentList.length)
             wx.showToast({
               title: '发表成功',
               icon: 'success',
               duration: 1000
+            })
+            this.setData({
+              slideUp: false,
+              isShow: true,
+              showCar: true
             })
             if (!_data.commentList.length) {
               _this.setData({
