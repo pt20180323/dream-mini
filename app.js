@@ -2,7 +2,7 @@ const utils = require('utils/util.js')
 const dtime = '_deadtime'
 App({
   globalData: {
-    baseUrl: 'http://192.168.1.101:8080',//后台访问地址
+    baseUrl: 'http://192.168.1.104:8080',//后台访问地址
     protocol: 'http:',
     appId: 'wx247f3c3cde3ba29c',
     userBase: {},

@@ -9,6 +9,7 @@ Page({
     articleId:"",//文章ID
     articleDetail: {}, //文章详情信息
     picLinkList: [], //图片列表
+    commentList:[],//评论列表
     homeValue: 1,
     DefAddress: '暂无默认地址',
     AddressAddId: null,
@@ -71,10 +72,12 @@ Page({
     this.setData({
       isIpx: isIpx
     })
-    // 获取默认地址
+    // 获取文章详情信息
     getArticleDetail();
+    // 获取评论信息
+    getComment();
   },
-  // 获取默认地址
+  // 获取文章详情信息
   getArticleDetail() {
     let {
       articleId
@@ -109,6 +112,134 @@ Page({
       utils.globalShowTip(false)
     })
   },
+  // 获取评论信息
+  getComment(pageNo) {
+    let _this = this
+    let _data = _this.data
+    _this.setData({
+      pageNo: pageNo || 1,
+      isRequest: false
+    })
+    let {
+      articleId
+    } = this.data
+    let {
+      baseUrl
+    } = app.globalData
+    //携带参数
+    let _params = {
+      pageNo: pageNo || 1,
+      articleNewsId: articleId
+    }
+    utils.$http(baseUrl + '/comment/list', _params, 'POST', _data.loading).then(res => {
+
+      if (res) {
+        utils.globalShowTip(false)
+        _this.setData({
+          isLastPage: !res.result.hasNextPage,
+          isRequest: true,
+          loading: false
+        })
+
+        if (_data.pageNo === 1) {
+          _this.setData({
+            commentList: res.result.items
+          })
+        } else {
+          _this.setData({
+            commentList: _data.commentList.concat(res.result.items)
+          })
+        }
+        console.info("评论信息记录数:" + articleList.length)
+        if (!_data.commentList.length) {
+          _this.setData({
+            isshowEmpty: true
+          })
+        } else {
+          _this.setData({
+            isshowEmpty: false
+          })
+        }
+      }
+    }).catch(e => {
+      utils.globalShowTip(false)
+    })
+  },
+  // 发布评论信息
+  publishComment() {
+    let _this = this
+    let _data = _this.data
+  
+    let {
+      articleId,
+      commentContent
+    } = _this.data
+    let {
+      baseUrl
+    } = app.globalData
+    if (!commentContent){
+      wx.showToast({
+        title: '请写入评论',
+        icon: 'success',
+        duration: 1000
+      })
+      return false;
+    }
+    //携带参数
+    let _params = {
+      articleNewsId: articleId,
+      commentContent:commentContent
+    }
+    utils.$http(baseUrl + '/comment/publish', _params, 'POST', _data.loading).then(res => {
+
+      if (res) {
+        let statusCode = res.statusCode;
+        utils.globalShowTip(false)
+        _this.setData({
+          isLastPage: !res.result.hasNextPage,
+          isRequest: true,
+          loading: false
+        })
+        if (statusCode==0){
+          if(articleList.length>0){
+            _this.setData({
+              commentList: _data.commentList.concat(res.result.items)
+            })
+            console.info("评论信息记录数:" + articleList.length)
+            wx.showToast({
+              title: '发表成功',
+              icon: 'success',
+              duration: 1000
+            })
+            if (!_data.commentList.length) {
+              _this.setData({
+                isshowEmpty: true
+              })
+            } else {
+              _this.setData({
+                isshowEmpty: false
+              })
+            }
+          }
+        } else {
+          wx.showToast({
+            title: '评论失败',
+            icon: 'success',
+            duration: 1000
+          })
+        }
+      }
+    }).catch(e => {
+      utils.globalShowTip(false)
+    })
+  },
+  commentContentInput(evt){//评论留言
+    let temp = evt.detail.value;
+    console.info("commentContent:" + temp);
+    this.setData({
+      commentContent: evt.detail.value
+    })
+  },
   // 促销弹出框打开
   Promotion () {
     this.setData({
@@ -120,10 +251,6 @@ Page({
     this.setData({
       IsPromotion: false
     })
-  },
-  // 获取默认地址
-  getDefault () {
-    
   },
   // 检查 是否支持退货、是否可售、是否有促销商品
   Judge() {
@@ -204,6 +331,7 @@ Page({
   initData() {      
     this.getEnvironment()
     this.getArticleDetail()
+    this.getComment();
   },
   checkShopActivity() { //检查商品是否参与活动
     

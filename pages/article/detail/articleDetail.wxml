@@ -5,9 +5,9 @@
   <view>
     <view class='title'>{{articleDetail.title}}</view>
     <view class='f_row author'>
-      <image src='{{empInfo.wxPhoto || "https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKjAvfjOlO0sKDQ3GMZkWtsovdiaX5ziaAXMIsNM8L8uicz2aqqaUKMbvE4UfhsjDxfAu5oMmDAgB3wg/132"}}' class='headImg'></image>
+      <image src='{{articleDetail.wxPhoto || "/static/ico/header.png"}}' class='headImg'></image>
       <view class='f_col nick_box'>
-        <text>彭甜</text>
+        <text>{{articleDetail.wxNickName || articleDetail.contentSource}}</text>
         <text class='fs_24 n_store'>{{articleDetail.simpleTimeStr}}</text>
       </view>
     </view>
@@ -42,33 +42,25 @@
   <view class="prd_des_top f_row f_r_cnt">
      <text class="txt_color af_color">评论</text>
   </view>
-  <view class="g_blank_100 {{isIpx ? 'is_iphoneX' : ''}}" style="margin-bottom:150px">
-    <view class='f_col nick_box right-col'>
-        <view class="flex-item view-img"  bindtap='up'>
-          <image src='/static/ico/up-25.png' class='img-19'></image>
-        </view>
-    </view>
-    <view class='f_row'>
-      <image src='{{empInfo.wxPhoto || "https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKjAvfjOlO0sKDQ3GMZkWtsovdiaX5ziaAXMIsNM8L8uicz2aqqaUKMbvE4UfhsjDxfAu5oMmDAgB3wg/132"}}' class='headImg'></image>
-      <view class='f_col nick_box'>
-        <text>彭甜</text>
-        <text class='fs_24 n_store'>我们期待同各方一道，完善合作理念</text>
-        <text class='fs_24'>12分钟之前</text>
-      </view>      
-    </view>
-    <view class='f_col nick_box right-col'>
-        <view class="flex-item view-img"  bindtap='up'>
-          <image src='/static/ico/up-25.png' class='img-19'></image>
-        </view>
-    </view>
-    <view class='f_row'>
-      <image src='{{empInfo.wxPhoto || "https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKjAvfjOlO0sKDQ3GMZkWtsovdiaX5ziaAXMIsNM8L8uicz2aqqaUKMbvE4UfhsjDxfAu5oMmDAgB3wg/132"}}' class='headImg'></image>
-      <view class='f_col nick_box'>
-        <text>胡美云</text>
-        <text class='fs_24 n_store'>我相信，在大家共同努力下，今天的会议一定会凝聚更多共识</text>
-        <text class='fs_24'>15分钟之前</text>
+  <view class=" {{isIpx ? 'is_iphoneX' : ''}}" style="margin-bottom:100px">
+    <view  
+        wx:for='{{commentList}}' wx:for-index='{{idx}}' 
+        wx:key='{{list}}' wx:for-item="item">   
+      <view class='f_col nick_box right-col'>
+          <view class="flex-item view-img"  bindtap='up'>
+            <image src='/static/ico/up-25.png' class='img-19'></image>
+          </view>
       </view>
-    </view>
+      <view class='f_row'>
+        <image src='{{item.wxPhoto || "/static/ico/header.png"}}' class='headImg'></image>
+        <view class='f_col nick_box'>
+          <text>{{item.wxNickName || item.commentator}}</text>
+          <text class='fs_24 n_store textView'>{{item.commentContent }}</text>
+          <text class='fs_24'>{{item.simpleTimeStr}}</text>
+        </view>      
+      </view>
+    </view> 
+    
          
   </view>
 
@@ -106,11 +98,14 @@
   <view class="m_bot_box f_col" catchtap='stopScroll'>
     <view class="pp_prod_s g_line_bot f_row">      
       <view class="f_col pp_prod_r f_jc_sb">
-      <textarea class='r_textarea s_price' name='desc' maxlength="300" placeholder="写评论"  bindblur='bindblur' value='{{textVal}}' cursor-spacing='10'/>      
+      <textarea class='r_textarea s_price' name='desc' 
+          maxlength="300" placeholder="写评论"  
+          bindblur='bindblur' value='{{textVal}}' 
+          cursor-spacing='10' bindinput="commentContentInput"/>      
       </view>
     </view>    
     <view class="f_row">
-      <form bindsubmit="gotoOrder" class="form_i" report-submit="true" wx:if="{{utype === 1 || utype === 2}}">
+      <form bindsubmit="publishComment" class="form_i" report-submit="true" wx:if="{{utype === 1 || utype === 2}}">
         <button class="pp_attr_btn" form-type="submit">
           <cover-view class='bg_color'>确定</cover-view>
         </button>
