@@ -44,21 +44,28 @@
   </view>
   <view class=" {{isIpx ? 'is_iphoneX' : ''}}" style="margin-bottom:100px">
     <view  
-        wx:for='{{commentList}}' wx:for-index='{{idx}}' 
-        wx:key='{{list}}' wx:for-item="item">   
+        wx:for='{{commentList}}' wx:for-index='idx' 
+        wx:key='list' wx:for-item="item">   
       <view class='f_col nick_box right-col'>
           <view class="flex-item view-img"  bindtap='up'>
             <image src='/static/ico/up-25.png' class='img-19'></image>
+          </view>         
+          <view class="flex-item view-img fs_24 del"  bindtap='delComment' 
+          data-index='{{idx}}' data-commentid='{{item.id}}' 
+          wx:if='{{userId == item.userId}}'>
+            删除
           </view>
       </view>
       <view class='f_row'>
         <image src='{{item.wxPhoto || "/static/ico/header.png"}}' class='headImg'></image>
-        <view class='f_col nick_box'>
+        <view class='f_col nick_box' data-index='{{idx}}'>
           <text>{{item.wxNickName || item.commentator}}</text>
-          <text class='fs_24 n_store textView'>{{item.commentContent }}</text>
+          <text class='fs_24 n_store textView' 
+          data-bindex='{{idx}}'>{{item.commentContent }}</text>
           <text class='fs_24'>{{item.simpleTimeStr}}</text>
         </view>      
-      </view>
+      </view>    
+      
     </view> 
     
          

@@ -56,6 +56,9 @@ page {
   background: #fff;
   position: relative;
 }
+.del{
+  margin-top:20rpx;
+}
 
 .pause_img {
   position: absolute;

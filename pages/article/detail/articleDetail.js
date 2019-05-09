@@ -60,12 +60,15 @@ Page({
       key: 'AGFBZ-A5OR4-PD3UF-DJTZ2-GTUI7-6GBV2'
     })
     let {
-      isIpx
+      isIpx,
+      userId
     } = app.globalData
+    console.info("userId------------->"+userId);
     if (opt) {
       this.setData({
         type: opt.type || '',
-        articleId: opt.articleId || ''
+        articleId: opt.articleId || '',
+        userId: userId
       })
     }
     console.info("请求参数,articleId:" + opt.articleId)
@@ -244,6 +247,42 @@ Page({
     this.setData({
       commentContent: evt.detail.value
     })
+  },
+  delComment(evt){//删除评论
+    let that = this;
+    let index = evt.target.dataset.index;
+    let commentId = evt.target.dataset.commentid;
+    let commentArrayLength = that.data.commentList.length;
+    let newCommentList=[];
+    if (commentArrayLength>1){
+      for (let i = 0; i < commentArrayLength;i++){
+        if (i != index){
+          newCommentList.push(that.data.commentList[i]);
+        }
+      }
+      that.setData({
+        commentList: newCommentList
+      })
+      let {
+        baseUrl
+      } = app.globalData;
+
+      let url = `${baseUrl}/comment/del/${commentId}`
+      utils.$http(url, {}).then(res => {
+        if (res) {
+          let code = res.code;
+          if (code==0){
+            wx.showToast({
+              title: '删除成功',
+              icon: 'success',
+              duration: 500
+            })
+          }
+        }
+      }).catch((res) => { })
+      
+    }
+
   },
   // 促销弹出框打开
   Promotion () {

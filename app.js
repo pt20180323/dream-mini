@@ -14,7 +14,8 @@ App({
     isIpx: false, //判断是否是iPhoneX
     isIos: false,
     isActive: false, //判断激活
-    jumpAppB: false
+    jumpAppB: false,
+    userId:''//用户ID
   },
   onLaunch(opt) {
     let _this = this
