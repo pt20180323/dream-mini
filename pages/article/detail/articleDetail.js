@@ -231,6 +231,8 @@ Page({
                 isshowEmpty: false
               })
             }
+          }else{
+            this.getComment(1);
           }
         } else {
           wx.showToast({
