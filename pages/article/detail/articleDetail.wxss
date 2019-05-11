@@ -57,7 +57,10 @@ page {
   position: relative;
 }
 .del{
-  margin-top:20rpx;
+  margin-top:15rpx;
+}
+.margin-bottom-5{
+  margin-bottom: 5rpx;
 }
 
 .pause_img {
@@ -921,6 +924,12 @@ word-wrap: break-word
   height: 19px;
   margin-left:2px;
 }
+.img-22{
+  width: 22px;
+  height: 22px;
+  margin-left:2px;
+}
+
 .home-right {
   margin-right:1%;
 }

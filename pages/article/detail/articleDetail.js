@@ -5,7 +5,7 @@ let app = getApp()
 let qqmapsdk = null
 Page({
   data: {
-    pictxt:"西安奔驰女车主称被收取金融服务费 官方：正在核实调查",
+    pictxt:"",
     articleId:"",//文章ID
     articleDetail: {}, //文章详情信息
     picLinkList: [], //图片列表
@@ -114,6 +114,9 @@ Page({
     }).catch(e => {
       utils.globalShowTip(false)
     })
+  },
+  refreshComment(){//重新刷新评论信息
+    this.getComment(1);
   },
   // 获取评论信息
   getComment(pageNo) {
@@ -283,6 +286,52 @@ Page({
       
     }
 
+  },
+  commentUp(evt) {//点赞||取消点赞
+    let _this = this
+    let _data = _this.data
+    let upid = evt.currentTarget.dataset.upid;
+    let upstatus = evt.currentTarget.dataset.upstatus;
+    let index = evt.currentTarget.dataset.index;
+    let commentId = evt.currentTarget.dataset.commentid;
+    let upOrCancel=0;
+    if (upid && upstatus==0){
+      console.info("取消点赞")
+      upOrCancel=1
+    }else{
+      console.info("点赞") 
+    }
+    //携带参数
+    let _params = {
+      upId: upid,
+      upOrCancel: upOrCancel
+    }   
+    let {
+      baseUrl
+    } = app.globalData;   
+
+    let url = `${baseUrl}/comment/commentUp/${commentId}`
+    utils.$http(url, _params, "POST", _data.loading).then(res => {
+      utils.globalShowTip(false)
+      _this.setData({
+        isRequest: true,
+        loading: false
+      })
+      if (res) {
+        let code = res.code;
+        if (code == 0) {
+          let result = res.result;
+          let commentUpNum = "commentList["+index+"].commentUpNum";
+          let upId = "commentList[" + index + "].upId";
+          let upStatus = "commentList[" + index + "].upStatus";
+          _this.setData({
+            [commentUpNum] :result.commentUpNum,
+            [upId]:result.upId,
+            [upStatus]: result.upStatus
+          })
+        }
+      }
+    }).catch((res) => { })
   },
   // 促销弹出框打开
   Promotion () {

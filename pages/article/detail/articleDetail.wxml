@@ -39,16 +39,23 @@
   <!-- 图片end -->
 
   <view class="g_blank_20"></view>
-  <view class="prd_des_top f_row f_r_cnt">
+  <view class="prd_des_top f_row f_r_cnt" bindtap='refreshComment'>
      <text class="txt_color af_color">评论</text>
   </view>
   <view class=" {{isIpx ? 'is_iphoneX' : ''}}" style="margin-bottom:100px">
     <view  
         wx:for='{{commentList}}' wx:for-index='idx' 
-        wx:key='list' wx:for-item="item">   
+        wx:key='list' wx:for-item="item" class='margin-bottom-5'>   
       <view class='f_col nick_box right-col'>
-          <view class="flex-item view-img"  bindtap='up'>
-            <image src='/static/ico/up-25.png' class='img-19'></image>
+          <view class="flex-item view-img f_row"    bindtap='commentUp'
+           data-upid='{{item.upId}}' data-upstatus='{{item.upStatus}}'
+           data-index='{{idx}}' data-commentid='{{item.id}}'>
+            <image wx:if='{{item.upId && item.upStatus==0 }}'
+            src='/static/ico/up-25-hover.png' class='img-22'></image>
+            <image wx:if='{{!item.upId || item.upStatus==1 }}' 
+            src='/static/ico/up-25.png' class='img-19'></image>
+            <view class='f_row'>
+            {{item.commentUpNum>=1000?(item.commentUpNum/1000)+'k':item.commentUpNum}} </view>
           </view>         
           <view class="flex-item view-img fs_24 del"  bindtap='delComment' 
           data-index='{{idx}}' data-commentid='{{item.id}}' 
